@@ -6,11 +6,11 @@
 }
 
 :root {
-  --navy:   #0f172a;
-  --navy2:  #1e293b;
-  --blue:   #3b82f6;
-  --blue-d: #2563eb;
-  --teal:   #0ea5e9;
+  --navy:   #1c2c5b;
+  --navy2:  #243775;
+  --blue:   #6cabdd;
+  --blue-d: #4a8dc4;
+  --teal:   #98c8e8;
   --light:  #f8fafc;
   --mid:    #e2e8f0;
   --text:   #334155;
@@ -164,7 +164,7 @@ nav {
 
 .hero-tag {
   display: inline-block;
-  background: rgba(59,130,246,0.2);
+  background: rgba(108,171,221,0.2);
   color: var(--teal);
   font-size: 0.8rem;
   font-weight: 600;
@@ -173,7 +173,7 @@ nav {
   padding: 0.3rem 0.9rem;
   border-radius: 20px;
   margin-bottom: 1.5rem;
-  border: 1px solid rgba(59,130,246,0.3);
+  border: 1px solid rgba(108,171,221,0.3);
 }
 
 .hero h1 {
@@ -220,7 +220,7 @@ nav {
   background: var(--blue-d);
   color: var(--white);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(59,130,246,0.35);
+  box-shadow: 0 6px 20px rgba(108,171,221,0.45);
 }
 
 .btn-outline {
@@ -327,8 +327,8 @@ nav {
   margin-top: 0.25rem;
 }
 .tag {
-  background: #eff6ff;
-  color: var(--blue-d);
+  background: #e4f2fb;
+  color: #2a6fa8;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.2rem 0.6rem;
