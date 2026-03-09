@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects – Sam Husbands</title>
+  <meta name="description" content="Projects by Sam Husbands – AI, data analysis and full-stack web." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .projects-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      padding: 4rem 0 3rem;
+      color: var(--white);
+    }
+    .projects-header h1 { color: var(--white); margin-bottom: 0.5rem; }
+    .projects-header p { color: #94a3b8; font-size: 1.05rem; }
+
+    .projects-body { padding: 4rem 0; }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      color: var(--muted);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: var(--white);
+    }
+
+    .project-group {
+      margin-bottom: 3rem;
+    }
+    .project-group-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Sam Husbands</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="documents.html">Research</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="projects-header">
+    <div class="container">
+      <h1>Projects</h1>
+      <p>Things I'm building — AI, data analysis, full-stack web and more.</p>
+    </div>
+  </div>
+
+  <!-- PROJECTS BODY -->
+  <div class="projects-body">
+    <div class="container">
+
+      <!-- ACTIVE PROJECTS -->
+      <div class="project-group">
+        <div class="project-group-title">In progress</div>
+        <div class="card-grid">
+
+          <!-- AI FOR CLUEDO -->
+          <div class="project-card">
+            <div class="project-card-header">
+              <span class="project-icon">🕵️</span>
+              <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span class="status-badge status-wip">In progress</span>
+              </div>
+            </div>
+            <h3>AI for Cluedo</h3>
+            <p>
+              Optimising AI decision-making for the board game Cluedo. Uses probabilistic reasoning
+              to model what each player knows, minimise wasted moves and maximise information gain
+              from each suggestion.
+            </p>
+            <div class="tag-list">
+              <span class="tag">Python</span>
+              <span class="tag">AI</span>
+              <span class="tag">Probability</span>
+              <span class="tag">Game Theory</span>
+            </div>
+            <div class="project-links" style="margin-top:0.5rem;">
+              <a href="https://github.com/SamHusbands42" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+
+          <!-- UK POLITICAL POLLING -->
+          <div class="project-card">
+            <div class="project-card-header">
+              <span class="project-icon">📊</span>
+              <span class="status-badge status-wip">In progress</span>
+            </div>
+            <h3>UK Political Polling Analysis</h3>
+            <p>
+              Aggregating UK political polling data from multiple sources, smoothing the noise
+              and visualising trends to understand the state of UK public opinion over time.
+            </p>
+            <div class="tag-list">
+              <span class="tag">Python</span>
+              <span class="tag">pandas</span>
+              <span class="tag">plotly</span>
+              <span class="tag">Data Viz</span>
+            </div>
+            <div class="project-links" style="margin-top:0.5rem;">
+              <a href="https://github.com/SamHusbands42" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PLANNED PROJECTS -->
+      <div class="project-group">
+        <div class="project-group-title">Planned</div>
+        <div class="card-grid">
+
+          <!-- SPORTS BETTING -->
+          <div class="project-card">
+            <div class="project-card-header">
+              <span class="project-icon">🏈</span>
+              <span class="status-badge status-planned">Planned</span>
+            </div>
+            <h3>Sports Betting Opportunities</h3>
+            <p>
+              Identifying statistical edges in sports betting markets by modelling true probabilities
+              and comparing them against bookmaker odds to find positive expected value bets.
+            </p>
+            <div class="tag-list">
+              <span class="tag">Python</span>
+              <span class="tag">Statistics</span>
+              <span class="tag">APIs</span>
+              <span class="tag">Flask</span>
+            </div>
+          </div>
+
+          <!-- MEAL LOGGER -->
+          <div class="project-card">
+            <div class="project-card-header">
+              <span class="project-icon">🍽️</span>
+              <span class="status-badge status-planned">Planned</span>
+            </div>
+            <h3>Favourite Meal Logger</h3>
+            <p>
+              A full-stack web app to log, rate and rediscover favourite meals. Built with Flask
+              and SQLite, with a clean frontend to browse and filter entries.
+            </p>
+            <div class="tag-list">
+              <span class="tag">Python</span>
+              <span class="tag">Flask</span>
+              <span class="tag">SQLite</span>
+              <span class="tag">Full-stack</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MORE COMING SOON -->
+      <div style="text-align:center;padding:2rem;color:var(--muted);">
+        <p style="font-size:0.95rem;">More projects added as they're built. All code on
+          <a href="https://github.com/SamHusbands42" target="_blank" rel="noopener">GitHub</a>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/SamHusbands42" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="documents.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+    <p>&copy; <span id="year"></span> Sam Husbands</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sam Husbands</title>
+  <meta name="description" content="Sam Husbands – personal portfolio, CV, research and projects." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Sam Husbands</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="documents.html">Research</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-tag">Available for opportunities</span>
+        <h1>Hi, I'm <span>Sam Husbands</span></h1>
+        <!--
+          PLACEHOLDER – paste your personal summary here.
+          Replace the paragraph below with your actual text.
+        -->
+        <p class="hero-summary">
+          [Your personal summary goes here — share it with me and I'll drop it in.]
+        </p>
+        <div class="hero-actions">
+          <a href="cv.html" class="btn btn-primary">View my CV</a>
+          <a href="projects.html" class="btn btn-outline">See my projects</a>
+          <a href="https://github.com/SamHusbands42" target="_blank" rel="noopener" class="btn btn-outline">
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SNAPSHOT -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">About me</h2>
+      <p class="section-subtitle">A quick snapshot of what I do and what I'm building.</p>
+      <div class="card-grid">
+
+        <div class="card">
+          <div style="font-size:2rem;margin-bottom:0.75rem;">🎓</div>
+          <h3>Academic background</h3>
+          <p style="color:var(--muted);font-size:0.92rem;margin-top:0.5rem;">
+            <!-- Populate with your degree/university once you share your CV -->
+            [Degree, university and graduation year — to be added.]
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="font-size:2rem;margin-bottom:0.75rem;">🔬</div>
+          <h3>Research</h3>
+          <p style="color:var(--muted);font-size:0.92rem;margin-top:0.5rem;">
+            I've written a thesis and dissertation spanning [your topic areas]. Both are available to read in the
+            <a href="documents.html">research section</a>.
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="font-size:2rem;margin-bottom:0.75rem;">⚙️</div>
+          <h3>Projects</h3>
+          <p style="color:var(--muted);font-size:0.92rem;margin-top:0.5rem;">
+            I'm building tools across AI, data analysis and full-stack web — from optimising AI for Cluedo to
+            analysing UK political polling. <a href="projects.html">See what I'm working on.</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS PREVIEW -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Featured projects</h2>
+      <p class="section-subtitle">A selection of things I'm building. More on the way.</p>
+      <div class="card-grid">
+
+        <div class="project-card">
+          <div class="project-card-header">
+            <span class="project-icon">🕵️</span>
+            <span class="status-badge status-wip">In progress</span>
+          </div>
+          <h3>AI for Cluedo</h3>
+          <p>Optimising AI decision-making strategies for the board game Cluedo using probabilistic reasoning and game theory.</p>
+          <div class="tag-list">
+            <span class="tag">Python</span>
+            <span class="tag">AI</span>
+            <span class="tag">Game Theory</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-card-header">
+            <span class="project-icon">📊</span>
+            <span class="status-badge status-wip">In progress</span>
+          </div>
+          <h3>UK Political Polling Analysis</h3>
+          <p>Aggregating and visualising UK political polling data to identify trends and forecast electoral outcomes.</p>
+          <div class="tag-list">
+            <span class="tag">Python</span>
+            <span class="tag">pandas</span>
+            <span class="tag">Data Viz</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-card-header">
+            <span class="project-icon">🏈</span>
+            <span class="status-badge status-planned">Planned</span>
+          </div>
+          <h3>Sports Betting Opportunities</h3>
+          <p>Finding statistical edges in sports betting markets through data analysis and expected value modelling.</p>
+          <div class="tag-list">
+            <span class="tag">Python</span>
+            <span class="tag">Statistics</span>
+            <span class="tag">APIs</span>
+          </div>
+        </div>
+
+      </div>
+      <div style="margin-top:2rem;">
+        <a href="projects.html" class="btn btn-outline-dark">View all projects →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/SamHusbands42" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="documents.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+    <p>&copy; <span id="year"></span> Sam Husbands</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+  </script>
+</body>
+</html>

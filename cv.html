@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV – Sam Husbands</title>
+  <meta name="description" content="CV of Sam Husbands." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .cv-page-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      padding: 4rem 0 3rem;
+      color: var(--white);
+    }
+    .cv-page-header h1 { color: var(--white); margin-bottom: 0.5rem; }
+    .cv-page-header p { color: #94a3b8; margin-bottom: 1.5rem; font-size: 1.05rem; }
+    .cv-body { padding: 4rem 0; }
+    .cv-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 3rem;
+      align-items: start;
+    }
+    .cv-sidebar {
+      position: sticky;
+      top: 80px;
+    }
+    .cv-contact-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--mid);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .cv-contact-card h4 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+    .cv-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+    .cv-contact-item a { color: var(--text); }
+    .cv-contact-item a:hover { color: var(--blue); }
+    @media (max-width: 760px) {
+      .cv-layout { grid-template-columns: 1fr; }
+      .cv-sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Sam Husbands</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cv.html" class="active">CV</a></li>
+        <li><a href="documents.html">Research</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="cv-page-header">
+    <div class="container">
+      <h1>Curriculum Vitae</h1>
+      <p>My background, experience, education and skills.</p>
+      <a href="assets/cv.pdf" class="btn btn-primary" download>Download PDF ↓</a>
+    </div>
+  </div>
+
+  <!-- CV BODY -->
+  <div class="cv-body">
+    <div class="container">
+      <div class="cv-layout">
+
+        <!-- MAIN COLUMN -->
+        <main>
+
+          <!-- PERSONAL SUMMARY -->
+          <div class="cv-section">
+            <div class="cv-section-title">Personal Summary</div>
+            <!--
+              PLACEHOLDER – replace the paragraph below with your actual summary.
+            -->
+            <p>
+              [Your personal summary goes here. Share it with me and I'll drop it straight in.]
+            </p>
+          </div>
+
+          <!-- EDUCATION -->
+          <div class="cv-section">
+            <div class="cv-section-title">Education</div>
+
+            <!--
+              PLACEHOLDER – add your degrees here. Example format:
+            -->
+            <div class="cv-entry">
+              <div class="cv-entry-header">
+                <h3>[Degree Title, e.g. BSc Economics]</h3>
+                <span class="cv-entry-date">[Start] – [End]</span>
+              </div>
+              <div class="cv-entry-org">[University Name]</div>
+              <ul>
+                <li>[Grade / classification, e.g. First Class Honours]</li>
+                <li>[Relevant modules, dissertation title, or achievements]</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!-- EXPERIENCE -->
+          <div class="cv-section">
+            <div class="cv-section-title">Experience</div>
+
+            <div class="cv-entry">
+              <div class="cv-entry-header">
+                <h3>[Job Title]</h3>
+                <span class="cv-entry-date">[Month Year] – [Month Year]</span>
+              </div>
+              <div class="cv-entry-org">[Company / Organisation]</div>
+              <ul>
+                <li>[Key responsibility or achievement]</li>
+                <li>[Key responsibility or achievement]</li>
+              </ul>
+            </div>
+
+            <!-- Duplicate the cv-entry block above for each role -->
+
+          </div>
+
+          <!-- SKILLS -->
+          <div class="cv-section">
+            <div class="cv-section-title">Skills</div>
+            <div class="skills-grid">
+
+              <div class="skill-group">
+                <h4>Programming</h4>
+                <div class="tag-list">
+                  <span class="tag">Python</span>
+                  <span class="tag">SQL</span>
+                  <span class="tag">HTML/CSS</span>
+                </div>
+              </div>
+
+              <div class="skill-group">
+                <h4>Data & Analysis</h4>
+                <div class="tag-list">
+                  <span class="tag">pandas</span>
+                  <span class="tag">matplotlib</span>
+                  <span class="tag">NumPy</span>
+                </div>
+              </div>
+
+              <div class="skill-group">
+                <h4>Tools</h4>
+                <div class="tag-list">
+                  <span class="tag">Git</span>
+                  <span class="tag">GitHub</span>
+                  <span class="tag">VS Code</span>
+                </div>
+              </div>
+
+              <!-- Add more skill groups as needed -->
+
+            </div>
+          </div>
+
+        </main>
+
+        <!-- SIDEBAR -->
+        <aside class="cv-sidebar">
+
+          <div class="cv-contact-card">
+            <h4>Contact & Links</h4>
+            <div class="cv-contact-item">
+              📧 <a href="mailto:[your@email.com]">[your@email.com]</a>
+            </div>
+            <div class="cv-contact-item">
+              🐙 <a href="https://github.com/SamHusbands42" target="_blank" rel="noopener">github.com/SamHusbands42</a>
+            </div>
+            <!-- Add LinkedIn, location, phone as needed -->
+          </div>
+
+          <div class="cv-contact-card">
+            <h4>Research</h4>
+            <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1rem;">My thesis and dissertation are available to read online.</p>
+            <a href="documents.html" class="btn btn-outline-dark" style="width:100%;justify-content:center;">View documents →</a>
+          </div>
+
+          <div class="cv-contact-card">
+            <h4>Download</h4>
+            <a href="assets/cv.pdf" class="btn btn-primary" style="width:100%;justify-content:center;" download>Download CV (PDF)</a>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/SamHusbands42" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="documents.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+    <p>&copy; <span id="year"></span> Sam Husbands</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+  </script>
+</body>
+</html>
