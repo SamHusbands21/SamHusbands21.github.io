@@ -68,6 +68,7 @@
         <li><a href="cv.html">CV</a></li>
         <li><a href="documents.html">Research</a></li>
         <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="betting.html">Betting Model</a></li>
       </ul>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -150,41 +151,29 @@
           <!-- SPORTS BETTING -->
           <div class="project-card">
             <div class="project-card-header">
-              <span class="project-icon">🏈</span>
-              <span class="status-badge status-planned">Planned</span>
+              <span class="project-icon">⚽</span>
+              <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span class="status-badge status-wip">In progress</span>
+              </div>
             </div>
-            <h3>Sports Betting Opportunities</h3>
+            <h3>PL Betting Model</h3>
             <p>
-              Identifying statistical edges in sports betting markets by modelling true probabilities
-              and comparing them against bookmaker odds to find positive expected value bets.
+              Premier League match outcome model using result-based and xG-based Elo ratings, rolling
+              form features, and an XGBoost/Random Forest ensemble. Identifies value bets against
+              Betfair Exchange odds with daily live recommendations.
             </p>
             <div class="tag-list">
               <span class="tag">Python</span>
-              <span class="tag">Statistics</span>
-              <span class="tag">APIs</span>
-              <span class="tag">Flask</span>
+              <span class="tag">XGBoost</span>
+              <span class="tag">ELO</span>
+              <span class="tag">xG</span>
+              <span class="tag">Betfair API</span>
+            </div>
+            <div class="project-links" style="margin-top:0.5rem;">
+              <a href="betting.html">Live →</a>
+              <a href="https://github.com/SamHusbands21" target="_blank" rel="noopener">GitHub ↗</a>
             </div>
           </div>
-
-          <!-- MEAL LOGGER -->
-          <div class="project-card">
-            <div class="project-card-header">
-              <span class="project-icon">🍽️</span>
-              <span class="status-badge status-planned">Planned</span>
-            </div>
-            <h3>Favourite Meal Logger</h3>
-            <p>
-              A full-stack web app to log, rate and rediscover favourite meals. Built with Flask
-              and SQLite, with a clean frontend to browse and filter entries.
-            </p>
-            <div class="tag-list">
-              <span class="tag">Python</span>
-              <span class="tag">Flask</span>
-              <span class="tag">SQLite</span>
-              <span class="tag">Full-stack</span>
-            </div>
-          </div>
-
         </div>
       </div>
 
@@ -205,6 +194,7 @@
       <li><a href="cv.html">CV</a></li>
       <li><a href="documents.html">Research</a></li>
       <li><a href="projects.html">Projects</a></li>
+      <li><a href="betting.html">Betting Model</a></li>
     </ul>
     <p>&copy; <span id="year"></span> Sam Husbands</p>
   </footer>
