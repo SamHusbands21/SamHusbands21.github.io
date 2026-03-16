@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PL Betting Model – Project Paper – Sam Husbands</title>
+  <meta name="description" content="Project paper: Premier League match outcome model. Methodology, performance metrics, calibration and gambling returns on the unseen test set." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Header ── */
+    .paper-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      padding: 4rem 0 3rem;
+      color: var(--white);
+    }
+    .paper-header h1 { color: var(--white); margin-bottom: 0.5rem; }
+    .paper-header p  { color: #94a3b8; font-size: 1.05rem; max-width: 620px; }
+    .paper-header .header-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+    .paper-header .header-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+    /* ── Body ── */
+    .paper-body { padding: 4rem 0; }
+
+    /* ── Section headings ── */
+    .paper-section { margin-bottom: 3.5rem; }
+    .paper-section-heading {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--blue);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--mid);
+    }
+
+    /* ── At-a-glance metric tiles ── */
+    .metric-tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .metric-tile {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      padding: 1.25rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .metric-tile .tile-val {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.1;
+    }
+    .metric-tile .tile-val.pending { color: var(--muted); font-size: 1.2rem; }
+    .metric-tile .tile-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+    .metric-tile .tile-sub {
+      font-size: 0.7rem;
+      color: #94a3b8;
+      margin-top: 0.2rem;
+    }
+
+    /* ── Methodology bullets ── */
+    .method-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .method-step {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      box-shadow: var(--shadow);
+    }
+    .method-step-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--white);
+      background: var(--blue);
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .method-step-body h4 {
+      font-size: 0.92rem;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+    .method-step-body p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    /* ── Precision / recall table ── */
+    .pr-table {
+      width: 100%;
+      max-width: 440px;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .pr-table th {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding: 0.4rem 1rem 0.4rem 0;
+      border-bottom: 2px solid var(--mid);
+      text-align: left;
+    }
+    .pr-table td {
+      padding: 0.5rem 1rem 0.5rem 0;
+      border-bottom: 1px solid var(--mid);
+      color: var(--text);
+    }
+    .pr-table td:first-child { font-weight: 600; color: var(--navy); }
+    .pr-table .pending-cell { color: var(--muted); font-style: italic; }
+
+    /* ── Plot containers ── */
+    .plot-frame {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-top: 1rem;
+    }
+    .plot-frame img {
+      width: 100%;
+      display: block;
+    }
+    .plot-placeholder {
+      padding: 3.5rem 2rem;
+      text-align: center;
+      color: var(--muted);
+    }
+    .plot-placeholder .ph-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .plot-placeholder p { font-size: 0.88rem; margin-bottom: 0; }
+    .plot-caption {
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding: 0.65rem 1.25rem;
+      border-top: 1px solid var(--mid);
+      background: var(--light);
+    }
+
+    /* ── Two-column layout for metrics + plot ── */
+    .metrics-plot-row {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 2rem;
+      align-items: start;
+      margin-top: 1rem;
+    }
+    @media (max-width: 700px) {
+      .metrics-plot-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── Gambling performance ── */
+    .gambling-tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .gambling-tile {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .gambling-tile .gt-val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .gambling-tile .gt-val.positive { color: #16a34a; }
+    .gambling-tile .gt-val.negative { color: #dc2626; }
+    .gambling-tile .gt-val.pending  { color: var(--muted); font-size: 1.15rem; }
+    .gambling-tile .gt-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+    .gambling-tile .gt-desc {
+      font-size: 0.76rem;
+      color: #94a3b8;
+      margin-top: 0.2rem;
+      line-height: 1.4;
+    }
+
+    /* ── Info note ── */
+    .info-note {
+      background: var(--light);
+      border: 1px solid var(--mid);
+      border-left: 4px solid var(--blue);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+
+    /* ── Disclaimer ── */
+    .disclaimer {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      color: #92400e;
+      font-size: 0.85rem;
+      line-height: 1.65;
+      margin-top: 2rem;
+    }
+    .disclaimer strong { color: #78350f; }
+
+    /* ── Nav actions ── */
+    .paper-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Sam Husbands</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="documents.html" class="active">Research</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="paper-header">
+    <div class="container">
+      <h1>PL Betting Model</h1>
+      <p>Project paper — methodology, classification performance, calibration, and gambling returns on the unseen test set.</p>
+      <div class="header-meta">
+        <span>⚽ Premier League</span>
+        <span>📅 Test set: 2022/23–2024/25</span>
+        <span>🤖 XGBoost + Random Forest ensemble</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAPER BODY -->
+  <div class="paper-body">
+    <div class="container">
+
+      <!-- AT A GLANCE -->
+      <section class="paper-section">
+        <div class="paper-section-heading">At a glance</div>
+        <div class="metric-tiles" id="glanceTiles">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- METHODOLOGY -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Methodology</div>
+        <p style="font-size:0.95rem; color:var(--text); margin-bottom:1.25rem; max-width:720px;">
+          A multiclass classifier predicting Premier League match outcomes (Home win / Draw / Away win) for upcoming fixtures.
+          Training data covers seasons 2014/15–2021/22; the model has never seen 2022/23 onward.
+        </p>
+        <div class="method-steps">
+          <div class="method-step">
+            <div class="method-step-num">1</div>
+            <div class="method-step-body">
+              <h4>Elo &amp; xG-Elo ratings</h4>
+              <p>Two parallel Elo systems. A standard result-based Elo (K=20, 75-point home advantage) and an xG-Elo updated using expected-goals share rather than binary results — far less noisy and more reflective of underlying quality.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">2</div>
+            <div class="method-step-body">
+              <h4>Feature engineering</h4>
+              <p>Elo deltas, rolling points-per-game (last 5 &amp; 10), rolling xG for/against, goals for/against, days of rest, and head-to-head win rate over the last 5 meetings. All features calculated strictly before match kick-off.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">3</div>
+            <div class="method-step-body">
+              <h4>Ensemble model</h4>
+              <p>An XGBoost classifier and an isotonic-calibrated Random Forest, trained independently with walk-forward time-series cross-validation. Final match probabilities are an equal-weight average of both calibrated outputs.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">4</div>
+            <div class="method-step-body">
+              <h4>Value bet identification</h4>
+              <p>A bet is flagged when <em>model probability × Betfair decimal odds &gt; 1.05</em> — implying at least a 5% positive expected value. Kelly fraction (capped at 25%) is shown as a suggested stake size.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLASSIFICATION PERFORMANCE -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Classification performance — test set</div>
+        <div class="metrics-plot-row">
+
+          <div>
+            <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1rem;">Per-outcome precision and recall on the held-out test seasons.</p>
+            <table class="pr-table" id="prTable">
+              <thead>
+                <tr>
+                  <th>Outcome</th>
+                  <th>Precision</th>
+                  <th>Recall</th>
+                </tr>
+              </thead>
+              <tbody id="prTableBody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+
+            <div class="info-note" id="prNote" style="display:none;">
+              Metrics will populate here once <code>evaluate.py</code> has been run and
+              <code>data/evaluation.json</code> updated.
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size:0.88rem; color:var(--muted); margin-bottom:0.5rem;">Calibration plot: predicted probability vs. observed frequency by outcome.</p>
+            <div class="plot-frame" id="calibrationFrame">
+              <img id="calibrationImg"
+                   src="data/calibration.png"
+                   alt="Calibration curve"
+                   style="display:none;"
+                   onload="this.style.display='block'; document.getElementById('calibrationPh').style.display='none';" />
+              <div id="calibrationPh" class="plot-placeholder">
+                <div class="ph-icon">📈</div>
+                <p>Calibration plot will appear here once generated by the model pipeline.</p>
+              </div>
+            </div>
+            <div class="plot-caption">
+              A well-calibrated model tracks the diagonal — 60% predicted probability should correspond to a 60% observed win rate.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- GAMBLING PERFORMANCE -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Gambling performance — unseen test set (2022/23–2024/25)</div>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1.25rem; max-width:680px;">
+          Simulated staking on all value bets identified in the test seasons. Flat staking uses 1 unit per bet;
+          Kelly staking uses the fraction suggested by the model. Both strategies run against Betfair Exchange odds.
+        </p>
+        <div class="gambling-tiles" id="gamblingTiles">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- SHAP / FEATURE IMPORTANCE -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Feature importance (SHAP)</div>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:0.5rem; max-width:680px;">
+          SHAP (SHapley Additive exPlanations) values show which features most influence the model's output.
+          Features are ordered by mean absolute impact across all test-set predictions.
+        </p>
+        <div class="plot-frame" id="shapFrame" style="max-width:700px;">
+          <img id="shapImg"
+               src="data/shap_summary.png"
+               alt="SHAP summary plot"
+               style="display:none;"
+               onload="this.style.display='block'; document.getElementById('shapPh').style.display='none';" />
+          <div id="shapPh" class="plot-placeholder">
+            <div class="ph-icon">🔍</div>
+            <p>SHAP summary plot will appear here once generated by the model pipeline.</p>
+          </div>
+        </div>
+        <div class="plot-caption" style="max-width:700px; border:1px solid var(--mid); border-top:none; border-radius:0 0 var(--radius) var(--radius); background:var(--light); padding:0.65rem 1.25rem; font-size:0.8rem; color:var(--muted);">
+          High SHAP value (red) = feature pushed prediction toward that class; low (blue) = pushed away.
+        </div>
+      </section>
+
+      <!-- DISCLAIMER + ACTIONS -->
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> This is a personal research project for educational purposes.
+        Nothing here constitutes financial advice. Historical test-set performance does not guarantee future profitability.
+        Gambling carries risk; never bet more than you can afford to lose.
+      </div>
+
+      <div class="paper-actions">
+        <a href="betting.html" class="btn btn-primary">Live predictions →</a>
+        <a href="documents.html" class="btn btn-outline-dark">← Back to Research</a>
+        <a href="https://github.com/SamHusbands21" target="_blank" rel="noopener" class="btn btn-outline-dark">GitHub ↗</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/SamHusbands21" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="documents.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+    <p>&copy; <span id="year"></span> Sam Husbands</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+    // ── Helpers ──────────────────────────────────────────────
+
+    function fmt(val, decimals, suffix) {
+      if (val === null || val === undefined) return null;
+      return val.toFixed(decimals) + (suffix || '');
+    }
+
+    function pctFmt(val) {
+      if (val === null || val === undefined) return null;
+      return (val * 100).toFixed(1) + '%';
+    }
+
+    function orDash(v) { return v !== null ? v : '—'; }
+
+    // ── Load evaluation data ──────────────────────────────────
+
+    async function loadEvaluation() {
+      let e = null;
+      try {
+        const resp = await fetch('data/evaluation.json?t=' + Date.now());
+        if (resp.ok) e = await resp.json();
+      } catch (_) { /* graceful */ }
+
+      renderGlance(e);
+      renderPrTable(e);
+      renderGambling(e);
+    }
+
+    // ── At-a-glance tiles ─────────────────────────────────────
+
+    function makeTile(val, label, sub) {
+      const isPending = val === null || val === undefined;
+      return `
+        <div class="metric-tile">
+          <div class="tile-val${isPending ? ' pending' : ''}">${isPending ? '—' : val}</div>
+          <div class="tile-label">${label}</div>
+          ${sub ? `<div class="tile-sub">${sub}</div>` : ''}
+        </div>`;
+    }
+
+    function renderGlance(e) {
+      const rocAuc    = e && e.roc_auc    !== null ? fmt(e.roc_auc,    3) : null;
+      const brier     = e && e.brier_score !== null ? fmt(e.brier_score, 3) : null;
+      const logLoss   = e && e.log_loss   !== null ? fmt(e.log_loss,   3) : null;
+      const accuracy  = e && e.accuracy   !== null ? pctFmt(e.accuracy)   : null;
+      const seasons   = (e && e.test_seasons) || '2022/23–2024/25';
+      const nMatches  = e && e.n_test_matches !== null ? e.n_test_matches : null;
+
+      document.getElementById('glanceTiles').innerHTML =
+        makeTile(rocAuc,   'ROC-AUC',    'multiclass OVR') +
+        makeTile(brier,    'Brier score', 'lower is better') +
+        makeTile(logLoss,  'Log loss',    'lower is better') +
+        makeTile(accuracy, 'Accuracy',    'vs ~47% baseline') +
+        makeTile(nMatches ? nMatches + ' matches' : null, 'Test set', seasons);
+    }
+
+    // ── Precision / recall table ──────────────────────────────
+
+    function renderPrTable(e) {
+      const body = document.getElementById('prTableBody');
+      const note = document.getElementById('prNote');
+
+      const hasPR = e && e.precision &&
+        (e.precision.home !== null || e.precision.draw !== null || e.precision.away !== null);
+
+      if (!hasPR) {
+        body.innerHTML = `
+          <tr><td>Home</td><td class="pending-cell">—</td><td class="pending-cell">—</td></tr>
+          <tr><td>Draw</td><td class="pending-cell">—</td><td class="pending-cell">—</td></tr>
+          <tr><td>Away</td><td class="pending-cell">—</td><td class="pending-cell">—</td></tr>`;
+        note.style.display = 'block';
+        return;
+      }
+
+      const p = e.precision;
+      const r = e.recall || {};
+      function cell(v) { return v !== null ? (v * 100).toFixed(1) + '%' : '—'; }
+
+      body.innerHTML = `
+        <tr><td>Home</td><td>${cell(p.home)}</td><td>${cell(r.home)}</td></tr>
+        <tr><td>Draw</td><td>${cell(p.draw)}</td><td>${cell(r.draw)}</td></tr>
+        <tr><td>Away</td><td>${cell(p.away)}</td><td>${cell(r.away)}</td></tr>`;
+    }
+
+    // ── Gambling tiles ────────────────────────────────────────
+
+    function makeGamblingTile(val, label, desc, cssClass) {
+      const isPending = val === null || val === undefined;
+      const cls = isPending ? 'pending' : (cssClass || '');
+      return `
+        <div class="gambling-tile">
+          <div class="gt-val ${cls}">${isPending ? '—' : val}</div>
+          <div class="gt-label">${label}</div>
+          <div class="gt-desc">${desc}</div>
+        </div>`;
+    }
+
+    function renderGambling(e) {
+      const g = e && e.gambling;
+      const flatRoi   = g && g.flat_roi_pct !== null ? fmt(g.flat_roi_pct, 1, '%') : null;
+      const flatBets  = g && g.flat_bets    !== null ? g.flat_bets + ' bets'       : null;
+      const flatPnl   = g && g.flat_pnl     !== null ? fmt(g.flat_pnl,     2)      : null;
+      const kellyPnl  = g && g.kelly_pnl    !== null ? fmt(g.kelly_pnl,    2)      : null;
+      const sharpe    = g && g.sharpe_ratio  !== null ? fmt(g.sharpe_ratio, 2)      : null;
+      const threshold = (g && g.value_bet_threshold) || 1.05;
+
+      const flatRoiClass  = (g && g.flat_roi_pct !== null) ? (g.flat_roi_pct >= 0 ? 'positive' : 'negative') : '';
+      const kellyPnlClass = (g && g.kelly_pnl    !== null) ? (g.kelly_pnl    >= 0 ? 'positive' : 'negative') : '';
+
+      document.getElementById('gamblingTiles').innerHTML =
+        makeGamblingTile(flatRoi,  'Flat ROI',    `1 unit per value bet (edge > ${((threshold - 1) * 100).toFixed(0)}%)`, flatRoiClass) +
+        makeGamblingTile(flatBets, 'Value bets',  'Total flagged in test period', '') +
+        makeGamblingTile(flatPnl,  'Flat P&amp;L', 'Net units at 1 unit per bet', flatRoiClass) +
+        makeGamblingTile(kellyPnl, 'Kelly P&amp;L','Net units using Kelly fraction', kellyPnlClass) +
+        makeGamblingTile(sharpe,   'Sharpe ratio', 'Risk-adjusted return (flat)', '');
+    }
+
+    loadEvaluation();
+  </script>
+</body>
+</html>

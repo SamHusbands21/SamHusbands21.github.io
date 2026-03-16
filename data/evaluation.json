@@ -1,0 +1,28 @@
+{
+  "_note": "Populated by pl-predictor/src/models/evaluate.py. Null values display as — on the project paper page.",
+  "generated_at": null,
+  "test_seasons": "2022/23–2024/25",
+  "n_test_matches": null,
+  "roc_auc": null,
+  "brier_score": null,
+  "log_loss": null,
+  "accuracy": null,
+  "precision": {
+    "home": null,
+    "draw": null,
+    "away": null
+  },
+  "recall": {
+    "home": null,
+    "draw": null,
+    "away": null
+  },
+  "gambling": {
+    "value_bet_threshold": 1.05,
+    "flat_roi_pct": null,
+    "flat_bets": null,
+    "flat_pnl": null,
+    "kelly_pnl": null,
+    "sharpe_ratio": null
+  }
+}
