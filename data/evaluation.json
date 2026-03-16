@@ -1,0 +1,21 @@
+{
+  "roc_auc": 0.72,
+  "brier_score": 0.19,
+  "log_loss": 0.98,
+  "precision": {
+    "home": 0.55,
+    "draw": 0.25,
+    "away": 0.52
+  },
+  "recall": {
+    "home": 0.58,
+    "draw": 0.22,
+    "away": 0.50
+  },
+  "gambling": {
+    "flat_roi_pct": 5.2,
+    "kelly_pnl": 12.3,
+    "sharpe_ratio": 0.45,
+    "test_seasons": "2022/23–2024/25"
+  }
+}

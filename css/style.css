@@ -356,6 +356,10 @@ nav {
   background: #f1f5f9;
   color: var(--muted);
 }
+.status-complete {
+  background: #dcfce7;
+  color: #16a34a;
+}
 
 /* ===== CV ===== */
 .cv-section {
