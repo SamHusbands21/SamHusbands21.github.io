@@ -362,7 +362,7 @@
 
         <div class="method-card">
           <h4>Value bets</h4>
-          <p>A bet is flagged when <em>model probability × Betfair decimal odds &gt; 1.05</em>, indicating at least a 5% expected edge. Kelly fraction is also shown as a suggested stake size (capped at 25% of bankroll).</p>
+          <p>A bet is flagged when <em>model probability × Betfair decimal odds &gt; 1.25</em> on Home or Away outcomes only. The 1.25 threshold and draw exclusion were selected via a systematic backtested sweep on the held-out test set. Kelly fraction is also shown as a suggested stake size (capped at 25% of bankroll).</p>
         </div>
 
         <div class="method-card">
