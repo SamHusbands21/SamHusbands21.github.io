@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-16T17:13:39.111416+00:00",
+  "updated_at": "2026-03-16T17:25:44.468996+00:00",
   "fixtures": [
     {
       "home": "Brentford",
@@ -13,7 +13,7 @@
       "betfair_odds": {
         "home": 1.61,
         "draw": 4.5,
-        "away": 6.2
+        "away": 6.0
       },
       "value_bets": []
     },
@@ -126,7 +126,7 @@
       },
       "betfair_odds": {
         "home": 1.67,
-        "draw": 4.3,
+        "draw": 4.2,
         "away": 5.8
       },
       "value_bets": [
