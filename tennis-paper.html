@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tennis Betting Model – Project Paper – Sam Husbands</title>
+  <meta name="description" content="Project paper: ATP tennis match outcome model. Methodology, performance metrics, calibration, and gambling returns on the unseen test set." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Header ── */
+    .paper-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      padding: 4rem 0 3rem;
+      color: var(--white);
+    }
+    .paper-header h1 { color: var(--white); margin-bottom: 0.5rem; }
+    .paper-header p  { color: #94a3b8; font-size: 1.05rem; max-width: 620px; }
+    .paper-header .header-meta {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      margin-top: 1.25rem; font-size: 0.82rem; color: #64748b;
+    }
+    .paper-header .header-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+    /* ── Body ── */
+    .paper-body { padding: 4rem 0; }
+
+    /* ── Section headings ── */
+    .paper-section { margin-bottom: 3.5rem; }
+    .paper-section-heading {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--blue);
+      margin-bottom: 1.25rem; padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--mid);
+    }
+
+    /* ── At-a-glance metric tiles ── */
+    .metric-tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem; margin-bottom: 1rem;
+    }
+    .metric-tile {
+      background: var(--white); border: 1px solid var(--mid);
+      border-radius: var(--radius); padding: 1.25rem 1rem;
+      text-align: center; box-shadow: var(--shadow);
+    }
+    .metric-tile .tile-val {
+      font-size: 1.65rem; font-weight: 700; color: var(--navy); line-height: 1.1;
+    }
+    .metric-tile .tile-val.pending { color: var(--muted); font-size: 1.2rem; }
+    .metric-tile .tile-label {
+      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); margin-top: 0.4rem;
+    }
+    .metric-tile .tile-sub { font-size: 0.7rem; color: #94a3b8; margin-top: 0.2rem; }
+
+    /* ── Methodology steps ── */
+    .method-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem; margin-top: 1rem;
+    }
+    .method-step {
+      background: var(--white); border: 1px solid var(--mid);
+      border-radius: var(--radius); padding: 1.25rem 1.5rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+      box-shadow: var(--shadow);
+    }
+    .method-step-num {
+      font-size: 0.75rem; font-weight: 700; color: var(--white);
+      background: var(--blue); border-radius: 50%;
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .method-step-body h4 { font-size: 0.92rem; color: var(--navy); margin-bottom: 0.3rem; }
+    .method-step-body p  { font-size: 0.86rem; color: var(--muted); line-height: 1.6; margin-bottom: 0; }
+
+    /* ── Precision / recall table ── */
+    .pr-table { width: 100%; max-width: 380px; border-collapse: collapse; font-size: 0.88rem; }
+    .pr-table th {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted);
+      padding: 0.4rem 1rem 0.4rem 0; border-bottom: 2px solid var(--mid); text-align: left;
+    }
+    .pr-table td { padding: 0.5rem 1rem 0.5rem 0; border-bottom: 1px solid var(--mid); color: var(--text); }
+    .pr-table td:first-child { font-weight: 600; color: var(--navy); }
+    .pr-table .pending-cell { color: var(--muted); font-style: italic; }
+
+    /* ── Plot containers ── */
+    .plot-frame {
+      background: var(--white); border: 1px solid var(--mid);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-top: 1rem;
+    }
+    .plot-frame img { width: 100%; display: block; }
+    .plot-placeholder { padding: 3.5rem 2rem; text-align: center; color: var(--muted); }
+    .plot-placeholder .ph-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .plot-placeholder p { font-size: 0.88rem; margin-bottom: 0; }
+    .plot-caption {
+      font-size: 0.8rem; color: var(--muted);
+      padding: 0.65rem 1.25rem; border-top: 1px solid var(--mid); background: var(--light);
+    }
+
+    /* ── Two-column layout ── */
+    .metrics-plot-row {
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      gap: 2rem; align-items: start; margin-top: 1rem;
+    }
+    @media (max-width: 700px) { .metrics-plot-row { grid-template-columns: 1fr; } }
+
+    /* ── Gambling performance ── */
+    .gambling-tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem; margin-bottom: 1.25rem;
+    }
+    .gambling-tile {
+      background: var(--white); border: 1px solid var(--mid);
+      border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow);
+    }
+    .gambling-tile .gt-val { font-size: 1.5rem; font-weight: 700; color: var(--navy); }
+    .gambling-tile .gt-val.positive { color: #16a34a; }
+    .gambling-tile .gt-val.negative { color: #dc2626; }
+    .gambling-tile .gt-val.pending  { color: var(--muted); font-size: 1.15rem; }
+    .gambling-tile .gt-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); margin-top: 0.3rem;
+    }
+    .gambling-tile .gt-desc { font-size: 0.76rem; color: #94a3b8; margin-top: 0.2rem; line-height: 1.4; }
+
+    /* ── Info note ── */
+    .info-note {
+      background: var(--light); border: 1px solid var(--mid);
+      border-left: 4px solid var(--blue); border-radius: var(--radius);
+      padding: 1rem 1.25rem; font-size: 0.85rem; color: var(--muted); margin-top: 1rem;
+    }
+
+    /* ── Disclaimer ── */
+    .disclaimer {
+      background: #fffbeb; border: 1px solid #fde68a;
+      border-radius: var(--radius); padding: 1.25rem 1.5rem;
+      color: #92400e; font-size: 0.85rem; line-height: 1.65; margin-top: 2rem;
+    }
+    .disclaimer strong { color: #78350f; }
+
+    .paper-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Sam Husbands</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="documents.html" class="active">Research</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="paper-header">
+    <div class="container">
+      <h1>Tennis Betting Model</h1>
+      <p>Project paper — methodology, classification performance, calibration, and gambling returns on the unseen test set.</p>
+      <div class="header-meta">
+        <span>🎾 ATP Tour</span>
+        <span>📅 Test set: 2021–present</span>
+        <span>🤖 XGBoost + Random Forest ensemble</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAPER BODY -->
+  <div class="paper-body">
+    <div class="container">
+
+      <!-- AT A GLANCE -->
+      <section class="paper-section">
+        <div class="paper-section-heading">At a glance</div>
+        <div class="metric-tiles" id="glanceTiles">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- METHODOLOGY -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Methodology</div>
+        <p style="font-size:0.95rem; color:var(--text); margin-bottom:1.25rem; max-width:720px;">
+          A binary classifier predicting the outcome of ATP singles matches (player1 wins vs. player2 wins).
+          Training data covers ATP matches 2005–2020; the model has never seen 2021 onward.
+          Player1 / player2 assignment is randomised 50/50 during training to prevent any positional bias.
+        </p>
+        <div class="method-steps">
+          <div class="method-step">
+            <div class="method-step-num">1</div>
+            <div class="method-step-body">
+              <h4>Overall &amp; surface Elo</h4>
+              <p>Two parallel Elo systems (K=32, no home advantage). An overall Elo tracking form across all surfaces, and separate Hard / Clay / Grass Elo pools updated only for matches on that surface. This captures surface specialists — a player's clay Elo may be far above their grass Elo.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">2</div>
+            <div class="method-step-body">
+              <h4>Form &amp; serve features</h4>
+              <p>Rolling win rates (last 5 and 10 matches overall; last 10 surface-specific). Rolling serve quality metrics over the last 10 matches: 1st serve percentage, 1st serve points won, and break-point save rate. All features use a shift-then-roll pattern to ensure strict pre-match exclusivity.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">3</div>
+            <div class="method-step-body">
+              <h4>Fatigue &amp; recovery</h4>
+              <p>Days of rest since the previous match (capped at 21) and the duration in minutes of that previous match. Captures physical load: a player finishing a 4-hour semi-final then playing a final 24 hours later is measurably disadvantaged.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">4</div>
+            <div class="method-step-body">
+              <h4>Context features</h4>
+              <p>Head-to-head win rate over the last 10 meetings, ATP ranking differential, ranking points, tournament level (Grand Slam / Masters / 500 / 250), best-of-3 vs best-of-5, and surface one-hot encoding.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">5</div>
+            <div class="method-step-body">
+              <h4>Ensemble model</h4>
+              <p>XGBoost (<em>binary:logistic</em>) and an isotonic-calibrated Random Forest, each tuned independently with walk-forward TimeSeriesSplit CV. Final win probabilities are an equal-weight average of both calibrated outputs.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">6</div>
+            <div class="method-step-body">
+              <h4>Value bet identification</h4>
+              <p>A bet is flagged when <em>model probability × Betfair decimal odds &gt; 1.20</em>. Kelly fraction (capped at 25%) is shown as a suggested stake size. The 1.20 threshold was chosen via a systematic sweep on the held-out test set.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLASSIFICATION PERFORMANCE -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Classification performance — test set</div>
+        <div class="metrics-plot-row">
+
+          <div>
+            <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1rem;">Per-outcome precision and recall on held-out test years (2021–present).</p>
+            <table class="pr-table" id="prTable">
+              <thead>
+                <tr>
+                  <th>Outcome</th>
+                  <th>Precision</th>
+                  <th>Recall</th>
+                </tr>
+              </thead>
+              <tbody id="prTableBody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+            <div class="info-note" id="prNote" style="display:none;">
+              Metrics will populate once <code>evaluate.py</code> has been run and
+              <code>data/tennis_evaluation.json</code> updated.
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size:0.88rem; color:var(--muted); margin-bottom:0.5rem;">Calibration plot: predicted probability vs. observed frequency.</p>
+            <div class="plot-frame" id="calibrationFrame">
+              <img id="calibrationImg"
+                   src="data/tennis_calibration.png"
+                   alt="Calibration curve"
+                   style="display:none;"
+                   onload="this.style.display='block'; document.getElementById('calibrationPh').style.display='none';" />
+              <div id="calibrationPh" class="plot-placeholder">
+                <div class="ph-icon">📈</div>
+                <p>Calibration plot will appear here once generated by the model pipeline.</p>
+              </div>
+            </div>
+            <div class="plot-caption">
+              A well-calibrated model tracks the diagonal — a 65% predicted probability should correspond to a ~65% observed win rate.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- GAMBLING PERFORMANCE -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Gambling performance — unseen test set (2021–present)</div>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1.25rem; max-width:680px;">
+          Simulated staking using the deployed strategy: EV &gt; 1.20. Flat staking uses 1 unit per bet;
+          Kelly staking uses the model's suggested fraction. Both strategies run against Betfair Exchange odds
+          on the fully unseen test years. Note: odds availability depends on the historical data source used.
+        </p>
+        <div class="gambling-tiles" id="gamblingTiles">
+          <!-- Populated by JS -->
+        </div>
+        <div class="plot-frame" id="pnlFrame" style="max-width:860px; margin-top:1.5rem;">
+          <img id="pnlImg"
+               src="data/tennis_pnl_curve.png"
+               alt="Cumulative P&L curve"
+               style="display:none;"
+               onload="this.style.display='block'; document.getElementById('pnlPh').style.display='none';" />
+          <div id="pnlPh" class="plot-placeholder">
+            <div class="ph-icon">📈</div>
+            <p>Cumulative P&amp;L chart will appear once generated by the model pipeline.</p>
+          </div>
+        </div>
+        <div class="plot-caption">
+          Cumulative flat P&amp;L per bet, ordered by match date. EV threshold: 1.20. Pre-commission.
+        </div>
+      </section>
+
+      <!-- THRESHOLD SWEEP -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Strategy selection — EV threshold sweep</div>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1rem; max-width:700px;">
+          A systematic backtest across EV thresholds 1.05–1.50 on the held-out test years was used to select
+          the deployment threshold. The 1.20 value balances positive ROI with a sufficient volume of bets
+          to form a meaningful sample.
+        </p>
+        <div class="plot-frame" id="sweepFrame" style="max-width:860px;">
+          <img id="sweepImg"
+               src="data/tennis_threshold_sweep.png"
+               alt="EV threshold sweep"
+               style="display:none;"
+               onload="this.style.display='block'; document.getElementById('sweepPh').style.display='none';" />
+          <div id="sweepPh" class="plot-placeholder">
+            <div class="ph-icon">🔬</div>
+            <p>Threshold sweep plot will appear once generated by the model pipeline.</p>
+          </div>
+        </div>
+        <div class="plot-caption">
+          Left: flat ROI at each EV threshold. Right: number of qualifying bets.
+        </div>
+      </section>
+
+      <!-- SHAP / FEATURE IMPORTANCE -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Feature importance (SHAP)</div>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:0.5rem; max-width:680px;">
+          SHAP values quantify which features most influence the model's win probability estimates.
+          Features are ranked by mean absolute impact across all test-set predictions.
+        </p>
+        <div class="plot-frame" id="shapFrame" style="max-width:700px;">
+          <img id="shapImg"
+               src="data/tennis_shap_summary.png"
+               alt="SHAP summary plot"
+               style="display:none;"
+               onload="this.style.display='block'; document.getElementById('shapPh').style.display='none';" />
+          <div id="shapPh" class="plot-placeholder">
+            <div class="ph-icon">🔍</div>
+            <p>SHAP summary plot will appear once generated by the model pipeline.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIMITATIONS & NEXT STEPS -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Limitations &amp; next steps</div>
+
+        <div class="method-steps" style="margin-bottom:2rem;">
+
+          <div class="method-step" style="border-left:4px solid #f59e0b;">
+            <div class="method-step-num" style="background:#f59e0b;">!</div>
+            <div class="method-step-body">
+              <h4>Approximate match dates</h4>
+              <p>Jeff Sackmann's data provides tournament start dates rather than exact per-match dates. Match dates are approximated using round offsets. This slightly blurs the days-rest feature for matches within the same tournament week.</p>
+            </div>
+          </div>
+
+          <div class="method-step" style="border-left:4px solid #f59e0b;">
+            <div class="method-step-num" style="background:#f59e0b;">!</div>
+            <div class="method-step-body">
+              <h4>Missing serve statistics</h4>
+              <p>Older match records (pre-2005) and some Davis Cup ties lack detailed serve statistics. Rows with missing stats fall back to ATP average defaults. This introduces noise in the serve feature signals for less-documented players.</p>
+            </div>
+          </div>
+
+          <div class="method-step" style="border-left:4px solid #f59e0b;">
+            <div class="method-step-num" style="background:#f59e0b;">!</div>
+            <div class="method-step-body">
+              <h4>No injury / withdrawal data</h4>
+              <p>The model does not capture player fitness. A player managing a shoulder injury who is 80% fit will be assigned the same features as a fully healthy player — a material source of edge lost. Mid-match retirements are filtered out but pre-match fitness state is not modelled.</p>
+            </div>
+          </div>
+
+          <div class="method-step" style="border-left:4px solid #f59e0b;">
+            <div class="method-step-num" style="background:#f59e0b;">!</div>
+            <div class="method-step-body">
+              <h4>Betfair player name matching</h4>
+              <p>Betfair runner names are matched to Sackmann player IDs by last name and first initial. Unusual name formats or players with the same surname can cause a lookup miss, resulting in default feature values being used for that player.</p>
+            </div>
+          </div>
+
+          <div class="method-step" style="border-left:4px solid #f59e0b;">
+            <div class="method-step-num" style="background:#f59e0b;">!</div>
+            <div class="method-step-body">
+              <h4>Commission not deducted</h4>
+              <p>Betfair charges approximately 5% commission on net winnings. Reported ROI is pre-commission and therefore slightly optimistic. Commission-adjusted Kelly sizing would reduce recommended stake fractions accordingly.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <p style="font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--blue); margin-bottom:1rem;">Next steps</p>
+
+        <div class="method-steps">
+
+          <div class="method-step">
+            <div class="method-step-num">A</div>
+            <div class="method-step-body">
+              <h4>Injury &amp; fitness signals</h4>
+              <p>Binary flags for known injuries sourced from ATP Tour medical records or a tennis news API. Even a "playing through pain" flag derived from a player's recent withdrawal patterns would significantly improve calibration for vulnerable matches.</p>
+            </div>
+          </div>
+
+          <div class="method-step">
+            <div class="method-step-num">B</div>
+            <div class="method-step-body">
+              <h4>Exact match timestamps</h4>
+              <p>Obtaining the actual match date (not just tournament start date) would make the days-rest and previous-match-minutes features exact. Sources include the ATP Tour official website or the OpenSkill tennis database.</p>
+            </div>
+          </div>
+
+          <div class="method-step">
+            <div class="method-step-num">C</div>
+            <div class="method-step-body">
+              <h4>Return game speed &amp; shot statistics</h4>
+              <p>Return games won percentage, average rally length, and winner/unforced-error ratios are available from Match Charting Project data (also maintained by Jeff Sackmann). These granular rally-level stats are among the strongest known predictors of serve-return balance.</p>
+            </div>
+          </div>
+
+          <div class="method-step">
+            <div class="method-step-num">D</div>
+            <div class="method-step-body">
+              <h4>Tournament draw position</h4>
+              <p>Knowing where both players sit in the draw — and therefore who they are likely to face in subsequent rounds — would allow modelling of the fatigue trajectory through a tournament. A player in a weaker half of the draw faces cumulatively easier opponents, which affects late-round performance.</p>
+            </div>
+          </div>
+
+          <div class="method-step">
+            <div class="method-step-num">E</div>
+            <div class="method-step-body">
+              <h4>Odds movement tracking</h4>
+              <p>The difference between opening and closing odds on Betfair is one of the strongest known edges in tennis betting. Tracking how odds move in the 24 hours before a match start encodes information from sharp bettors that the model's statistical features cannot capture.</p>
+            </div>
+          </div>
+
+          <div class="method-step">
+            <div class="method-step-num">F</div>
+            <div class="method-step-body">
+              <h4>Player age &amp; career stage</h4>
+              <p>Career age curves differ markedly between serve-dominant and return-dominant players. Including player age and a "career stage" proxy (years on tour, peak ranking relative to current) would help the model better handle ageing veteran vs rising junior matchups.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- DISCLAIMER + ACTIONS -->
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> This is a personal research project for educational purposes.
+        Nothing here constitutes financial advice. Historical test-set performance does not guarantee future profitability.
+        Gambling carries risk; never bet more than you can afford to lose.
+      </div>
+
+      <div class="paper-actions">
+        <a href="tennis.html" class="btn btn-primary">Live predictions →</a>
+        <a href="documents.html" class="btn btn-outline-dark">← Back to Research</a>
+        <a href="https://github.com/SamHusbands21" target="_blank" rel="noopener" class="btn btn-outline-dark">GitHub ↗</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/SamHusbands21" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="documents.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+    <p>&copy; <span id="year"></span> Sam Husbands</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+
+    function fmt(val, decimals, suffix) {
+      if (val === null || val === undefined) return null;
+      return val.toFixed(decimals) + (suffix || '');
+    }
+
+    function pctFmt(val) {
+      if (val === null || val === undefined) return null;
+      return (val * 100).toFixed(1) + '%';
+    }
+
+    // ── Load evaluation data ──────────────────────────────────────────────────
+
+    async function loadEvaluation() {
+      let e = null;
+      try {
+        const resp = await fetch('data/tennis_evaluation.json?t=' + Date.now());
+        if (resp.ok) e = await resp.json();
+      } catch (_) { /* graceful degradation */ }
+
+      renderGlance(e);
+      renderPrTable(e);
+      renderGambling(e);
+    }
+
+    // ── At-a-glance tiles ─────────────────────────────────────────────────────
+
+    function makeTile(val, label, sub) {
+      const isPending = val === null || val === undefined;
+      return `
+        <div class="metric-tile">
+          <div class="tile-val${isPending ? ' pending' : ''}">${isPending ? '—' : val}</div>
+          <div class="tile-label">${label}</div>
+          ${sub ? `<div class="tile-sub">${sub}</div>` : ''}
+        </div>`;
+    }
+
+    function renderGlance(e) {
+      const rocAuc   = e && e.roc_auc    !== null ? fmt(e.roc_auc,    3) : null;
+      const brier    = e && e.brier_score !== null ? fmt(e.brier_score, 3) : null;
+      const logLoss  = e && e.log_loss   !== null ? fmt(e.log_loss,   3) : null;
+      const accuracy = e && e.accuracy   !== null ? pctFmt(e.accuracy)   : null;
+      const nMatches = e && e.n_test_matches !== null ? e.n_test_matches  : null;
+      const period   = (e && e.test_year_range) || '2021–present';
+
+      document.getElementById('glanceTiles').innerHTML =
+        makeTile(rocAuc,   'ROC-AUC',    'binary') +
+        makeTile(brier,    'Brier score', 'lower is better') +
+        makeTile(logLoss,  'Log loss',    'lower is better') +
+        makeTile(accuracy, 'Accuracy',    'vs ~50% baseline') +
+        makeTile(nMatches ? nMatches + ' matches' : null, 'Test set', period);
+    }
+
+    // ── Precision / recall table ──────────────────────────────────────────────
+
+    function renderPrTable(e) {
+      const body = document.getElementById('prTableBody');
+      const note = document.getElementById('prNote');
+
+      const hasPR = e && e.precision &&
+        (e.precision.p1 !== null || e.precision.p2 !== null);
+
+      if (!hasPR) {
+        body.innerHTML = `
+          <tr><td>Player 1 wins</td><td class="pending-cell">—</td><td class="pending-cell">—</td></tr>
+          <tr><td>Player 2 wins</td><td class="pending-cell">—</td><td class="pending-cell">—</td></tr>`;
+        note.style.display = 'block';
+        return;
+      }
+
+      const p = e.precision;
+      const r = e.recall || {};
+      function cell(v) { return v !== null ? (v * 100).toFixed(1) + '%' : '—'; }
+
+      body.innerHTML = `
+        <tr><td>Player 1 wins</td><td>${cell(p.p1)}</td><td>${cell(r.p1)}</td></tr>
+        <tr><td>Player 2 wins</td><td>${cell(p.p2)}</td><td>${cell(r.p2)}</td></tr>`;
+    }
+
+    // ── Gambling tiles ────────────────────────────────────────────────────────
+
+    function makeGamblingTile(val, label, desc, cssClass) {
+      const isPending = val === null || val === undefined;
+      const cls = isPending ? 'pending' : (cssClass || '');
+      return `
+        <div class="gambling-tile">
+          <div class="gt-val ${cls}">${isPending ? '—' : val}</div>
+          <div class="gt-label">${label}</div>
+          <div class="gt-desc">${desc}</div>
+        </div>`;
+    }
+
+    function renderGambling(e) {
+      const g = e && e.gambling;
+      const hasOdds = e && e.strategy && e.strategy.has_odds;
+
+      const flatRoi  = g && g.flat_roi_pct !== null  ? fmt(g.flat_roi_pct,  1, '%') : null;
+      const flatBets = g && g.flat_bets    !== null  ? g.flat_bets + ' bets'        : null;
+      const flatPnl  = g && g.flat_pnl     !== null  ? fmt(g.flat_pnl,      2)      : null;
+      const kellyPnl = g && g.kelly_pnl    !== null  ? fmt(g.kelly_pnl,     2)      : null;
+      const sharpe   = g && g.sharpe_ratio !== null  ? fmt(g.sharpe_ratio,  2)      : null;
+      const threshold = (g && g.value_bet_threshold) || 1.20;
+
+      const flatRoiClass  = (g && g.flat_roi_pct !== null) ? (g.flat_roi_pct >= 0 ? 'positive' : 'negative') : '';
+      const kellyPnlClass = (g && g.kelly_pnl    !== null) ? (g.kelly_pnl    >= 0 ? 'positive' : 'negative') : '';
+      const edgePct = ((threshold - 1) * 100).toFixed(0);
+
+      const noOddsNote = !hasOdds
+        ? `<div class="info-note" style="margin-top:0.75rem;">Historical odds were not available for this test set. Gambling metrics will appear once an odds data source is configured.</div>`
+        : '';
+
+      document.getElementById('gamblingTiles').innerHTML =
+        makeGamblingTile(flatRoi,  'Flat ROI',     `1 unit per bet · EV > ${edgePct}%`, flatRoiClass) +
+        makeGamblingTile(flatBets, 'Value bets',   'Total qualifying bets in test period', '') +
+        makeGamblingTile(flatPnl,  'Flat P&amp;L', 'Net units at 1 unit per bet', flatRoiClass) +
+        makeGamblingTile(kellyPnl, 'Kelly P&amp;L','Net units using Kelly fraction', kellyPnlClass) +
+        makeGamblingTile(sharpe,   'Sharpe ratio', 'Risk-adjusted return (flat)', '');
+
+      if (noOddsNote) {
+        document.getElementById('gamblingTiles').insertAdjacentHTML('afterend', noOddsNote);
+      }
+    }
+
+    loadEvaluation();
+  </script>
+
+</body>
+</html>

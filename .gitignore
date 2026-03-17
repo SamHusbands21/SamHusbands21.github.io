@@ -1,0 +1,6 @@
+# Tennis predictor lives in its own repo — exclude entirely
+tennis-predictor/
+
+# OS
+.DS_Store
+Thumbs.db

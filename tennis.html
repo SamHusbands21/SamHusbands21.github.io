@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tennis Betting Model – Sam Husbands</title>
+  <meta name="description" content="Live ATP tennis value bet recommendations powered by Elo, surface Elo, serve stats, and an XGBoost/Random Forest ensemble." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Page header ── */
+    .betting-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      padding: 4rem 0 3rem;
+      color: var(--white);
+    }
+    .betting-header h1 { color: var(--white); margin-bottom: 0.5rem; }
+    .betting-header p  { color: #94a3b8; font-size: 1.05rem; }
+
+    /* ── Main body ── */
+    .betting-body { padding: 4rem 0; }
+
+    /* ── Meta bar ── */
+    .meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--mid);
+    }
+    .meta-bar .updated { font-size: 0.85rem; color: var(--muted); }
+    .live-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      margin-right: 0.4rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.35; }
+    }
+
+    /* ── Match cards ── */
+    .match-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .match-card {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .match-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    }
+    .match-card.has-value { border-left: 4px solid #22c55e; }
+
+    /* ── Card top: date + tournament + surface badge ── */
+    .match-top {
+      padding: 1.25rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--mid);
+    }
+    .match-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.6rem;
+    }
+    .match-date {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .surface-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+    }
+    .surface-hard  { background: #dbeafe; color: #1d4ed8; }
+    .surface-clay  { background: #fed7aa; color: #c2410c; }
+    .surface-grass { background: #dcfce7; color: #166534; }
+
+    .match-players {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .player-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 40%;
+    }
+    .match-vs {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .match-tournament {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .match-round {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-left: 0.4rem;
+    }
+
+    /* ── Probability bar ── */
+    .prob-row {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--mid);
+    }
+    .prob-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    .prob-bar {
+      display: flex;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      gap: 2px;
+    }
+    .prob-segment-p1 { background: #6cabdd; }
+    .prob-segment-p2 { background: #f87171; }
+    .prob-values {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 0.4rem;
+    }
+    .prob-values .p1 { color: #2563eb; }
+    .prob-values .p2 { color: #dc2626; }
+
+    /* ── Odds row ── */
+    .odds-row {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--mid);
+    }
+    .odds-cell {
+      flex: 1;
+      text-align: center;
+      padding: 0.75rem 0.5rem;
+      border-right: 1px solid var(--mid);
+      position: relative;
+    }
+    .odds-cell:last-child { border-right: none; }
+    .odds-cell .odds-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      display: block;
+    }
+    .odds-cell .odds-val {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .odds-cell.value-bet { background: #f0fdf4; }
+    .odds-cell.value-bet .odds-val { color: #16a34a; }
+
+    /* ── Value bets ── */
+    .value-bets-row { padding: 0.9rem 1.5rem; }
+    .value-bets-row .vb-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+    .vb-chip-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .vb-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #dcfce7;
+      color: #15803d;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      letter-spacing: 0.02em;
+    }
+    .vb-chip .kelly { font-weight: 500; opacity: 0.75; }
+    .no-value { font-size: 0.82rem; color: var(--muted); }
+
+    /* ── Empty / loading states ── */
+    .state-box { text-align: center; padding: 4rem 2rem; color: var(--muted); }
+    .state-box .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .state-box h3 { color: var(--muted); font-size: 1.1rem; margin-bottom: 0.5rem; }
+
+    /* ── Methodology ── */
+    .method-section { background: var(--white); padding: 4rem 0; }
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .method-card {
+      background: var(--light);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .method-card h4 { color: var(--navy); margin-bottom: 0.5rem; font-size: 0.95rem; }
+    .method-card p  { color: var(--muted); font-size: 0.87rem; line-height: 1.65; }
+
+    .disclaimer {
+      margin-top: 3rem;
+      padding: 1.25rem 1.5rem;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius);
+      color: #92400e;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+    .disclaimer strong { color: #78350f; }
+
+    @media (max-width: 640px) {
+      .match-players { flex-wrap: wrap; }
+      .player-name { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Sam Husbands</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="documents.html">Research</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="betting-header">
+    <div class="container">
+      <h1>Tennis Betting Model</h1>
+      <p>Live value bet recommendations for upcoming ATP matches, updated daily.</p>
+    </div>
+  </div>
+
+  <!-- MAIN BODY -->
+  <div class="betting-body">
+    <div class="container">
+
+      <div class="meta-bar">
+        <div>
+          <span class="live-dot"></span>
+          <span style="font-size:0.85rem;font-weight:600;color:var(--navy);">Live recommendations</span>
+        </div>
+        <div class="updated" id="updatedAt">Loading…</div>
+      </div>
+
+      <div id="matchContainer">
+        <div class="state-box">
+          <div class="icon">🎾</div>
+          <h3>Loading matches…</h3>
+          <p>Fetching the latest recommendations.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- METHODOLOGY -->
+  <div class="method-section">
+    <div class="container">
+      <h2 class="section-title">How it works</h2>
+      <p class="section-subtitle">A quick overview of the model and how value bets are identified. For full performance metrics and analysis, see the <a href="tennis-paper.html">project paper →</a></p>
+
+      <div class="method-grid">
+
+        <div class="method-card">
+          <h4>Overall Elo</h4>
+          <p>Each player carries a standard Elo rating (K=32) updated after every result. Unlike football, there is no home advantage — courts are neutral for both players.</p>
+        </div>
+
+        <div class="method-card">
+          <h4>Surface Elo</h4>
+          <p>Three separate Elo pools are maintained for Hard, Clay, and Grass courts. Only the surface-specific rating is updated each match, capturing specialists like clay-court dominators whose overall Elo understates their surface strength.</p>
+        </div>
+
+        <div class="method-card">
+          <h4>Form &amp; serve quality</h4>
+          <p>Rolling win rates over the last 5 and 10 matches (overall and surface-specific). Rolling serve statistics — 1st serve percentage, 1st serve points won, and break-point save rate — all shift-rolled over the last 10 matches to prevent leakage.</p>
+        </div>
+
+        <div class="method-card">
+          <h4>Recovery &amp; fatigue</h4>
+          <p>Days of rest since the previous match (capped at 21 days) and the duration in minutes of that previous match. A player coming off a 3-hour five-setter two days ago is materially more fatigued than one who had a week's rest after a straight-sets win.</p>
+        </div>
+
+        <div class="method-card">
+          <h4>Model</h4>
+          <p>An XGBoost classifier and a calibrated Random Forest trained on ATP matches 2005–2020 with walk-forward time-series cross-validation. Final probabilities average both calibrated outputs. Training data is randomly flipped 50/50 to prevent positional bias.</p>
+        </div>
+
+        <div class="method-card">
+          <h4>Value bets</h4>
+          <p>A bet is flagged when <em>model probability × Betfair decimal odds &gt; 1.20</em>. The Kelly fraction (capped at 25%) is shown as a suggested stake size. Recommendations are sourced from Betfair Exchange live odds.</p>
+        </div>
+
+      </div>
+
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> This is a personal research project for educational purposes. No recommendations here constitute financial advice. Gambling carries risk; never bet more than you can afford to lose. Results on a historical test set do not guarantee future profitability.
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/SamHusbands21" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="documents.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+    <p>&copy; <span id="year"></span> Sam Husbands</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+
+    const SURFACE_LABELS = { Hard: 'Hard', Clay: 'Clay', Grass: 'Grass' };
+    const ROUND_LABELS = {
+      F: 'Final', SF: 'Semi-final', QF: 'Quarter-final',
+      R16: 'Round of 16', R32: 'Round of 32', R64: 'R64', R128: 'R128',
+      RR: 'Round Robin',
+    };
+
+    function surfaceBadge(surface) {
+      const cls = surface ? `surface-${surface.toLowerCase()}` : 'surface-hard';
+      const label = SURFACE_LABELS[surface] || surface || 'Hard';
+      return `<span class="surface-badge ${cls}">${label}</span>`;
+    }
+
+    function roundLabel(round) {
+      return ROUND_LABELS[round] || round || '';
+    }
+
+    function formatDate(iso) {
+      const d = new Date(iso);
+      return d.toLocaleDateString('en-GB', {
+        weekday: 'short', day: 'numeric', month: 'short',
+        hour: '2-digit', minute: '2-digit',
+      });
+    }
+
+    function formatUpdated(iso) {
+      if (!iso) return 'Not yet updated';
+      const d = new Date(iso);
+      return 'Updated ' + d.toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', timeZoneName: 'short',
+      });
+    }
+
+    function pct(p) { return (p * 100).toFixed(0) + '%'; }
+
+    // ── Build a single match card ─────────────────────────────────────────────
+
+    function buildCard(match) {
+      const { player1, player2, tournament, surface, round, date,
+              model_probs, betfair_odds, value_bets } = match;
+
+      const hasValue   = value_bets && value_bets.length > 0;
+      const pP1 = model_probs.p1;
+      const pP2 = model_probs.p2;
+
+      const valuedOutcomes = new Set((value_bets || []).map(v => v.outcome));
+
+      function oddsCell(outcome, player) {
+        const odds    = betfair_odds ? betfair_odds[outcome] : null;
+        const isValue = valuedOutcomes.has(outcome);
+        const shortName = player.split(' ').pop();  // surname only for cell label
+        return `
+          <div class="odds-cell${isValue ? ' value-bet' : ''}">
+            <span class="odds-label" title="${player}">${shortName}</span>
+            <div class="odds-val">${odds ? odds.toFixed(2) : '—'}</div>
+          </div>`;
+      }
+
+      const valueBetsHtml = hasValue
+        ? value_bets.map(vb => {
+            const pLabel = vb.outcome === 'p1' ? player1.split(' ').pop()
+                                               : player2.split(' ').pop();
+            return `
+              <span class="vb-chip">
+                ${pLabel}
+                <span>EV ${vb.ev.toFixed(3)}</span>
+                <span class="kelly">· Kelly ${(vb.kelly_fraction * 100).toFixed(1)}%</span>
+              </span>`;
+          }).join('')
+        : '<span class="no-value">No value bets identified</span>';
+
+      const rLabel = roundLabel(round);
+      const tournamentLine = tournament
+        ? `${tournament}${rLabel ? ` <span class="match-round">· ${rLabel}</span>` : ''}`
+        : rLabel;
+
+      return `
+        <div class="match-card${hasValue ? ' has-value' : ''}">
+          <div class="match-top">
+            <div class="match-meta">
+              <span class="match-date">${formatDate(date)}</span>
+              ${surfaceBadge(surface)}
+            </div>
+            <div class="match-players">
+              <span class="player-name">${player1}</span>
+              <span class="match-vs">vs</span>
+              <span class="player-name">${player2}</span>
+            </div>
+            ${tournamentLine ? `<div class="match-tournament">${tournamentLine}</div>` : ''}
+          </div>
+
+          <div class="prob-row">
+            <div class="prob-labels">
+              <span>${player1.split(' ').pop()}</span>
+              <span>${player2.split(' ').pop()}</span>
+            </div>
+            <div class="prob-bar">
+              <div class="prob-segment-p1" style="flex:${pP1}"></div>
+              <div class="prob-segment-p2" style="flex:${pP2}"></div>
+            </div>
+            <div class="prob-values">
+              <span class="p1">${pct(pP1)}</span>
+              <span class="p2">${pct(pP2)}</span>
+            </div>
+          </div>
+
+          <div class="odds-row">
+            ${oddsCell('p1', player1)}
+            ${oddsCell('p2', player2)}
+          </div>
+
+          <div class="value-bets-row">
+            <div class="vb-title">Value bets</div>
+            <div class="vb-chip-list">${valueBetsHtml}</div>
+          </div>
+        </div>`;
+    }
+
+    // ── Fetch and render ──────────────────────────────────────────────────────
+
+    async function loadRecommendations() {
+      const container = document.getElementById('matchContainer');
+      const updatedEl = document.getElementById('updatedAt');
+
+      try {
+        const resp = await fetch('data/tennis_recommendations.json?t=' + Date.now());
+        if (!resp.ok) throw new Error('Failed to fetch tennis_recommendations.json');
+        const data = await resp.json();
+
+        updatedEl.textContent = formatUpdated(data.updated_at);
+
+        const matches = (data.matches || []).filter(m => new Date(m.date) > new Date());
+
+        if (!matches.length) {
+          container.innerHTML = `
+            <div class="state-box">
+              <div class="icon">📅</div>
+              <h3>No upcoming matches</h3>
+              <p>The model runs daily at 08:00 UTC. Check back when the next ATP events begin.</p>
+            </div>`;
+          return;
+        }
+
+        container.innerHTML = `<div class="match-grid">${matches.map(buildCard).join('')}</div>`;
+
+      } catch (err) {
+        updatedEl.textContent = 'Could not load data';
+        container.innerHTML = `
+          <div class="state-box">
+            <div class="icon">⚠️</div>
+            <h3>Could not load recommendations</h3>
+            <p>${err.message}</p>
+          </div>`;
+      }
+    }
+
+    loadRecommendations();
+  </script>
+
+</body>
+</html>
