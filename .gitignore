@@ -1,5 +1,6 @@
-# Tennis predictor lives in its own repo — exclude entirely
+# These subdirectories are their own git repos — exclude entirely
 tennis-predictor/
+uk-polling-model/
 
 # OS
 .DS_Store
