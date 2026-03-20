@@ -80,8 +80,8 @@
           <div style="font-size:2rem;margin-bottom:0.75rem;">⚙️</div>
           <h3>Projects</h3>
           <p style="color:var(--muted);font-size:0.92rem;margin-top:0.5rem;">
-            I'm building tools across AI, data analysis and full-stack web — from optimising AI for Cluedo to
-            analysing UK political polling. <a href="projects.html">See what I'm working on.</a>
+            I've built a tennis bet recommender, a Premier League bet recommender, and a UK political polling
+            tracker with MRP seat projections — with more in progress. <a href="projects.html">See all my projects.</a>
           </p>
         </div>
 
@@ -92,8 +92,8 @@
   <!-- FEATURED PROJECTS PREVIEW -->
   <section>
     <div class="container">
-      <h2 class="section-title">Featured projects</h2>
-      <p class="section-subtitle">A selection of things I'm building. More on the way.</p>
+      <h2 class="section-title">Projects</h2>
+      <p class="section-subtitle">Three complete and three in the pipeline.</p>
       <div class="card-grid">
 
         <div class="project-card">
@@ -136,6 +136,25 @@
 
         <div class="project-card">
           <div class="project-card-header">
+            <span class="project-icon">📊</span>
+            <span class="status-badge status-complete">Complete</span>
+          </div>
+          <h3>UK Political Polling Tracker</h3>
+          <p>Kalman-filter poll aggregator with MRP and XGBoost seat models. Weekly projections across all 650 GB constituencies with historical tracking and top-20 marginals.</p>
+          <div class="tag-list">
+            <span class="tag">Python</span>
+            <span class="tag">Kalman Filter</span>
+            <span class="tag">MRP</span>
+            <span class="tag">Monte Carlo</span>
+          </div>
+          <div class="project-links" style="margin-top:0.5rem;">
+            <a href="polling.html">Live tracker →</a>
+            <a href="polling-paper.html">Project paper →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-card-header">
             <span class="project-icon">🕵️</span>
             <span class="status-badge status-wip">In progress</span>
           </div>
@@ -150,19 +169,31 @@
 
         <div class="project-card">
           <div class="project-card-header">
-            <span class="project-icon">📊</span>
+            <span class="project-icon">📄</span>
             <span class="status-badge status-wip">In progress</span>
           </div>
-          <h3>UK Political Polling Tracker</h3>
-          <p>Kalman-filter poll aggregator with MRP and XGBoost seat models. Weekly projections across all 650 constituencies with historical tracking.</p>
+          <h3>Document Research Automator</h3>
+          <p>Upload a document, ask a question, and the tool returns candidate answers with cited source passages. Accept or reject each answer to iteratively refine the research output.</p>
           <div class="tag-list">
             <span class="tag">Python</span>
-            <span class="tag">Kalman Filter</span>
-            <span class="tag">MRP</span>
-            <span class="tag">Monte Carlo</span>
+            <span class="tag">LLM</span>
+            <span class="tag">RAG</span>
+            <span class="tag">NLP</span>
           </div>
-          <div class="project-links" style="margin-top:0.5rem;">
-            <a href="polling.html">Live tracker →</a>
+        </div>
+
+        <div class="project-card">
+          <div class="project-card-header">
+            <span class="project-icon">📉</span>
+            <span class="status-badge status-wip">In progress</span>
+          </div>
+          <h3>Customer Churn Predictor</h3>
+          <p>Predicts customer churn likelihood at a company level, using account-level signals and engagement data to surface at-risk accounts before they lapse.</p>
+          <div class="tag-list">
+            <span class="tag">Python</span>
+            <span class="tag">XGBoost</span>
+            <span class="tag">Classification</span>
+            <span class="tag">CRM</span>
           </div>
         </div>
 

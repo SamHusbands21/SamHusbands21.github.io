@@ -377,6 +377,20 @@
         <div class="loading-msg">Loading seat projections…</div>
       </div>
 
+      <!-- ── Seat Charts (static PNGs from pipeline) ───────────────── -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:2.5rem;">
+        <div class="plot-frame">
+          <div style="font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Model Comparison</div>
+          <img src="data/model_comparison.png" alt="MRP vs ML model seat comparison"
+               onerror="this.parentElement.style.display='none'" />
+        </div>
+        <div class="plot-frame">
+          <div style="font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Seat Distribution (Monte Carlo)</div>
+          <img src="data/seat_distribution.png" alt="Monte Carlo seat distribution"
+               onerror="this.parentElement.style.display='none'" />
+        </div>
+      </div>
+
       <!-- ── Top Marginals Table ──────────────────────────────────── -->
       <div class="marginals-section">
         <div class="section-heading">Top 20 Marginal Seats</div>
@@ -422,8 +436,12 @@
       <div class="disclaimer">
         <strong>Disclaimer:</strong> These projections are a personal research project and are not
         intended as political advice. Polling averages and seat models carry substantial uncertainty,
-        especially between elections. Scotland and Wales are modelled with regional party adjustments;
-        Pinnacle Sports odds are used as a proxy for exchange pricing in the betting model.
+        especially between elections. Scotland and Wales are modelled with dedicated regional party
+        adjustments (SNP calibrated within Scottish seats; Plaid Cymru shares derived directly from
+        BES microdata for Welsh constituencies). <strong>Northern Ireland's 18 seats are not
+        modelled</strong> — the NI party system is entirely separate from GB polling, so the 650-seat
+        total used here should be read as the 632 GB seats only. A full NI treatment is planned for
+        a future release.
       </div>
 
     </div>
