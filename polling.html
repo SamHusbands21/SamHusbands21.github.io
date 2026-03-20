@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UK Polling Tracker – Sam Husbands</title>
+  <meta name="description" content="UK political polling aggregator with MRP and ML seat projections. Updated weekly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Chart.js for historical trend lines -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* ── Page header ── */
+    .polling-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      padding: 4rem 0 3rem;
+      color: var(--white);
+    }
+    .polling-header h1 { color: var(--white); margin-bottom: 0.5rem; }
+    .polling-header p  { color: #94a3b8; font-size: 1.05rem; }
+
+    .polling-body { padding: 4rem 0; }
+
+    /* ── Meta bar ── */
+    .meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--mid);
+    }
+    .meta-bar .updated { font-size: 0.85rem; color: var(--muted); }
+    .live-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      margin-right: 0.4rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.35; }
+    }
+    .meta-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .meta-pill {
+      background: var(--mid);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+    }
+
+    /* ── Section headings ── */
+    .section-heading {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Vote share panel ── */
+    .vote-share-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .party-chip {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.1rem 1.25rem;
+      border-top: 4px solid currentColor;
+    }
+    .party-chip .party-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .party-chip .party-mean {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+    .party-chip .party-ci {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* ── Seat projection panel ── */
+    .seat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    @media (max-width: 640px) { .seat-grid { grid-template-columns: 1fr; } }
+
+    .seat-model-card {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+    }
+    .seat-model-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+    .seat-bar-row {
+      margin-bottom: 0.85rem;
+    }
+    .seat-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .seat-bar-range {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .seat-bar-track {
+      background: var(--mid);
+      border-radius: 4px;
+      height: 10px;
+      position: relative;
+      overflow: visible;
+    }
+    .seat-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .seat-bar-majority {
+      position: absolute;
+      top: -5px;
+      height: 20px;
+      width: 2px;
+      background: #334155;
+    }
+    .majority-label {
+      position: absolute;
+      top: -20px;
+      font-size: 0.65rem;
+      color: var(--muted);
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+    .seat-bar-ci {
+      position: absolute;
+      height: 100%;
+      background: rgba(0,0,0,0.1);
+      border-radius: 4px;
+    }
+    .no-seats { color: var(--muted); font-size: 0.9rem; font-style: italic; }
+
+    /* ── Historical chart ── */
+    .chart-section { margin-bottom: 3rem; }
+    .chart-tabs {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .chart-tab {
+      background: var(--mid);
+      border: none;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.3rem 0.85rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .chart-tab.active {
+      background: var(--blue);
+      color: var(--white);
+    }
+    .chart-wrapper {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+    }
+    .chart-canvas-wrap { position: relative; height: 320px; }
+
+    /* ── Vote share trend PNG ── */
+    .plot-frame {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+    .plot-frame img { width: 100%; display: block; }
+
+    /* ── Marginals table ── */
+    .marginals-section { margin-bottom: 3rem; }
+    .marginals-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .marginals-table th {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0.7rem 1rem;
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+    .marginals-table td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--mid);
+      color: var(--text);
+    }
+    .marginals-table tr:last-child td { border-bottom: none; }
+    .marginals-table tr:hover td { background: var(--light); }
+    .party-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 0.35rem;
+    }
+    .no-marginals { color: var(--muted); font-style: italic; font-size: 0.9rem; }
+
+    /* ── Methodology cards ── */
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .method-card {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+    }
+    .method-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 50%;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .method-card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+    .method-card p { font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+    /* ── Disclaimer ── */
+    .disclaimer {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      font-size: 0.82rem;
+      color: #78350f;
+      margin-top: 2rem;
+    }
+
+    /* ── Loading / error states ── */
+    .loading-msg, .error-msg {
+      text-align: center;
+      padding: 3rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .error-msg { color: #dc2626; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Sam Husbands</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="documents.html">Research</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="polling-header">
+    <div class="container">
+      <h1>UK Polling Tracker</h1>
+      <p>Weekly poll aggregation, MRP seat projections and ML forecasts — updated automatically.</p>
+    </div>
+  </div>
+
+  <!-- MAIN BODY -->
+  <div class="polling-body">
+    <div class="container">
+
+      <!-- Meta bar -->
+      <div class="meta-bar">
+        <div class="updated" id="metaUpdated">
+          <span class="live-dot"></span>Loading…
+        </div>
+        <div class="meta-pills" id="metaPills"></div>
+      </div>
+
+      <!-- ── National Vote Share ─────────────────────────────────────── -->
+      <div class="section-heading">National Vote Share</div>
+      <div class="vote-share-grid" id="voteShareGrid">
+        <div class="loading-msg">Loading vote share data…</div>
+      </div>
+
+      <!-- ── Vote Share Trend Chart (PNG from pipeline) ─────────────── -->
+      <div class="section-heading">Vote Share Trend</div>
+      <div class="plot-frame" id="trendPlotFrame">
+        <img src="data/vote_share_trend.png" alt="Vote share trend chart"
+             onerror="this.parentElement.style.display='none'" />
+      </div>
+
+      <!-- ── Historical Chart (Chart.js) ───────────────────────────── -->
+      <div class="chart-section">
+        <div class="section-heading">Historical Tracker</div>
+        <div class="chart-tabs">
+          <button class="chart-tab active" data-mode="votes">Vote Shares</button>
+          <button class="chart-tab" data-mode="seats">Seat Projections</button>
+        </div>
+        <div class="chart-wrapper">
+          <div class="chart-canvas-wrap">
+            <canvas id="historyChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Seat Projections ──────────────────────────────────────── -->
+      <div class="section-heading">Seat Projections</div>
+      <div class="seat-grid" id="seatGrid">
+        <div class="loading-msg">Loading seat projections…</div>
+      </div>
+
+      <!-- ── Top Marginals Table ──────────────────────────────────── -->
+      <div class="marginals-section">
+        <div class="section-heading">Top 20 Marginal Seats</div>
+        <div id="marginalsContainer">
+          <div class="loading-msg">Loading marginals…</div>
+        </div>
+      </div>
+
+      <!-- ── Methodology ──────────────────────────────────────────── -->
+      <div class="section-heading">How It Works</div>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-num">1</div>
+          <h3>Poll Scraper</h3>
+          <p>Scrapes all post-2024 Westminster polls from Wikipedia. Strips footnotes, normalises party names, deduplicates on pollster × date × sample size.</p>
+        </div>
+        <div class="method-card">
+          <div class="method-num">2</div>
+          <h3>Kalman Aggregator</h3>
+          <p>A random-walk Kalman filter smooths the raw polls into a latent support time series. Pollster house effects are estimated by EM iteration and removed before aggregation.</p>
+        </div>
+        <div class="method-card">
+          <div class="method-num">3</div>
+          <h3>MRP Model</h3>
+          <p>Mixed-effects logistic regression on BES 2024 microdata. Demographics and geography predict individual vote intent; poststratified against census cells per constituency.</p>
+        </div>
+        <div class="method-card">
+          <div class="method-num">4</div>
+          <h3>ML Swing Model</h3>
+          <p>XGBoost trained on 2017 and 2019 constituency swings (tested on 2024). Predicts how each seat diverges from the national swing based on local demographics.</p>
+        </div>
+        <div class="method-card">
+          <div class="method-num">5</div>
+          <h3>Monte Carlo Seat Projections</h3>
+          <p>10,000 draws from the Kalman posterior (multivariate normal, preserving cross-party correlations). FPTP applied per constituency each draw — seat distributions show genuine uncertainty.</p>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:1.5rem;">
+        <a href="polling-paper.html" class="btn btn-outline">Read the full methodology →</a>
+      </div>
+
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> These projections are a personal research project and are not
+        intended as political advice. Polling averages and seat models carry substantial uncertainty,
+        especially between elections. Scotland and Wales are modelled with regional party adjustments;
+        Pinnacle Sports odds are used as a proxy for exchange pricing in the betting model.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/SamHusbands21" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="documents.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+    <p>&copy; <span id="year"></span> Sam Husbands</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+    // ── Party config ──────────────────────────────────────────────────────
+    const PARTY_CONFIG = {
+      lab:    { label: 'Labour',   color: '#E4003B' },
+      con:    { label: 'Con',      color: '#0087DC' },
+      reform: { label: 'Reform',   color: '#12B6CF' },
+      ld:     { label: 'Lib Dems', color: '#FAA61A' },
+      green:  { label: 'Greens',   color: '#02A95B' },
+      snp:    { label: 'SNP',      color: '#F8CE02' },
+      pc:     { label: 'Plaid',    color: '#3F8428' },
+      others: { label: 'Others',   color: '#9CA3AF' },
+    };
+
+    const TOTAL_SEATS = 650;
+    const MAJORITY_LINE = 326;
+
+    // ── Helpers ───────────────────────────────────────────────────────────
+    function fmtUpdated(iso) {
+      if (!iso) return 'Not yet updated';
+      const d = new Date(iso);
+      return 'Updated ' + d.toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+      });
+    }
+
+    function pct(v, dp = 1) {
+      return (v * 100).toFixed(dp) + '%';
+    }
+
+    // ── Vote share panel ──────────────────────────────────────────────────
+    function buildVoteSharePanel(shares) {
+      const grid = document.getElementById('voteShareGrid');
+      const ordered = Object.entries(shares).sort((a, b) => b[1].mean - a[1].mean);
+      if (!ordered.length) {
+        grid.innerHTML = '<div class="loading-msg">No vote share data available yet.</div>';
+        return;
+      }
+      grid.innerHTML = ordered.map(([party, data]) => {
+        const cfg = PARTY_CONFIG[party] || { label: party.toUpperCase(), color: '#888' };
+        return `
+          <div class="party-chip" style="color: ${cfg.color}; border-top-color: ${cfg.color};">
+            <div class="party-name">${cfg.label}</div>
+            <div class="party-mean">${pct(data.mean, 0)}</div>
+            <div class="party-ci">${pct(data.lo90, 1)} – ${pct(data.hi90, 1)}</div>
+          </div>`;
+      }).join('');
+    }
+
+    // ── Seat projection panel ─────────────────────────────────────────────
+    function buildSeatBar(party, data, totalSeats) {
+      const cfg = PARTY_CONFIG[party] || { label: party.toUpperCase(), color: '#888' };
+      const mean = data.mean;
+      const lo = data.lo90;
+      const hi = data.hi90;
+      const meanPct = (mean / totalSeats * 100).toFixed(1);
+      const loPct = (lo / totalSeats * 100).toFixed(1);
+      const hiPct = (hi / totalSeats * 100).toFixed(1);
+      const majPct = (MAJORITY_LINE / totalSeats * 100).toFixed(1);
+
+      return `
+        <div class="seat-bar-row">
+          <div class="seat-bar-label">
+            <span>
+              <span class="party-dot" style="background:${cfg.color}"></span>
+              ${cfg.label}
+            </span>
+            <span>${Math.round(mean)} <span class="seat-bar-range">[${lo}–${hi}]</span></span>
+          </div>
+          <div class="seat-bar-track">
+            <div class="seat-bar-fill" style="width:${meanPct}%; background:${cfg.color};"></div>
+            <div class="seat-bar-ci" style="left:${loPct}%; width:${hiPct - loPct}%;"></div>
+            <div class="seat-bar-majority" style="left:${majPct}%;">
+              <span class="majority-label">326</span>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function buildSeatPanel(projections) {
+      const grid = document.getElementById('seatGrid');
+      const models = Object.entries(projections);
+
+      if (!models.length) {
+        grid.innerHTML = `
+          <div class="seat-model-card" style="grid-column:1/-1;">
+            <p class="no-seats">Seat projections will appear here once MRP and ML models are fitted (requires BES data and 2024 results file).</p>
+          </div>`;
+        return;
+      }
+
+      const modelLabels = { mrp: 'MRP Model', ml: 'ML Swing Model' };
+      grid.innerHTML = models.map(([modelName, modelData]) => {
+        const label = modelLabels[modelName] || modelName.toUpperCase();
+        const ordered = Object.entries(modelData).sort((a, b) => b[1].mean - a[1].mean);
+        const bars = ordered.map(([p, d]) => buildSeatBar(p, d, TOTAL_SEATS)).join('');
+        return `
+          <div class="seat-model-card">
+            <div class="seat-model-title">${label}</div>
+            ${bars}
+          </div>`;
+      }).join('');
+    }
+
+    // ── Marginals table ───────────────────────────────────────────────────
+    function buildMarginalsTable(marginals) {
+      const container = document.getElementById('marginalsContainer');
+      if (!marginals || !marginals.length) {
+        container.innerHTML = '<p class="no-marginals">Marginals table will appear once seat projections are available.</p>';
+        return;
+      }
+      const rows = marginals.map((m, i) => {
+        const incCfg = PARTY_CONFIG[m.incumbent] || { color: '#888', label: m.incumbent };
+        const chalCfg = PARTY_CONFIG[m.challenger] || { color: '#888', label: m.challenger };
+        return `
+          <tr>
+            <td style="font-weight:600; color:var(--navy)">${i + 1}. ${m.constituency}</td>
+            <td>
+              <span class="party-dot" style="background:${incCfg.color}"></span>${incCfg.label}
+            </td>
+            <td>
+              <span class="party-dot" style="background:${chalCfg.color}"></span>${chalCfg.label}
+            </td>
+            <td>${(m.margin * 100).toFixed(1)}pp</td>
+            <td>${(m.swing_needed * 100).toFixed(1)}pp</td>
+          </tr>`;
+      }).join('');
+
+      container.innerHTML = `
+        <table class="marginals-table">
+          <thead>
+            <tr>
+              <th>Constituency</th>
+              <th>Incumbent</th>
+              <th>Challenger</th>
+              <th>Margin</th>
+              <th>Swing Needed</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    }
+
+    // ── Historical Chart.js chart ─────────────────────────────────────────
+    let histChart = null;
+    let currentMode = 'votes';
+    let chartData = { voteHistory: [], seatHistory: [] };
+
+    function buildVoteHistoryDatasets(history) {
+      const parties = ['lab', 'con', 'reform', 'ld', 'green', 'snp'];
+      return parties
+        .filter(p => history.some(h => h[p] != null))
+        .map(p => {
+          const cfg = PARTY_CONFIG[p];
+          return {
+            label: cfg.label,
+            data: history.map(h => h[p] != null ? +(h[p] * 100).toFixed(1) : null),
+            borderColor: cfg.color,
+            backgroundColor: cfg.color + '22',
+            borderWidth: 2,
+            pointRadius: 1,
+            fill: false,
+            tension: 0.3,
+            spanGaps: true,
+          };
+        });
+    }
+
+    function buildSeatHistoryDatasets(seatHistory) {
+      if (!seatHistory || !seatHistory.length) return [];
+      const parties = ['lab', 'con', 'reform', 'ld'];
+      const datasets = [];
+      for (const model of ['mrp', 'ml']) {
+        for (const p of parties) {
+          const cfg = PARTY_CONFIG[p];
+          const hasSome = seatHistory.some(h => h[model] && h[model][p] != null);
+          if (!hasSome) continue;
+          datasets.push({
+            label: `${cfg.label} (${model.toUpperCase()})`,
+            data: seatHistory.map(h => h[model] && h[model][p] != null ? Math.round(h[model][p]) : null),
+            borderColor: cfg.color,
+            backgroundColor: cfg.color + '22',
+            borderWidth: model === 'mrp' ? 2 : 1.5,
+            borderDash: model === 'ml' ? [5, 3] : [],
+            pointRadius: 2,
+            fill: false,
+            tension: 0.3,
+            spanGaps: true,
+          });
+        }
+      }
+      return datasets;
+    }
+
+    function renderChart(mode) {
+      const canvas = document.getElementById('historyChart');
+      if (histChart) { histChart.destroy(); histChart = null; }
+
+      let labels, datasets, yLabel, yMin;
+
+      if (mode === 'votes') {
+        labels = chartData.voteHistory.map(h => h.date);
+        datasets = buildVoteHistoryDatasets(chartData.voteHistory);
+        yLabel = 'Vote share (%)';
+        yMin = 0;
+      } else {
+        labels = chartData.seatHistory.map(h => h.week);
+        datasets = buildSeatHistoryDatasets(chartData.seatHistory);
+        yLabel = 'Seats';
+        yMin = 0;
+      }
+
+      if (!datasets.length) {
+        canvas.parentElement.innerHTML = '<p class="loading-msg">No historical data yet — check back after the first weekly run.</p>';
+        return;
+      }
+
+      histChart = new Chart(canvas, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: '#334155', font: { size: 11 }, boxWidth: 16 }
+            },
+            tooltip: { mode: 'index', intersect: false },
+          },
+          scales: {
+            x: {
+              ticks: { color: '#64748b', maxTicksLimit: 10, font: { size: 10 } },
+              grid: { color: '#e2e8f0' },
+            },
+            y: {
+              min: yMin,
+              ticks: { color: '#64748b', font: { size: 10 } },
+              grid: { color: '#e2e8f0' },
+              title: { display: true, text: yLabel, color: '#64748b', font: { size: 11 } },
+            },
+          },
+          interaction: { mode: 'index', intersect: false },
+        },
+      });
+    }
+
+    // Tab switching
+    document.querySelectorAll('.chart-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentMode = tab.dataset.mode;
+        renderChart(currentMode);
+      });
+    });
+
+    // ── Main data load ────────────────────────────────────────────────────
+    async function loadData() {
+      try {
+        const resp = await fetch('data/polling_predictions.json');
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+
+        // Meta bar
+        document.getElementById('metaUpdated').innerHTML =
+          `<span class="live-dot"></span>${fmtUpdated(data.updated_at)}`;
+        document.getElementById('metaPills').innerHTML = [
+          data.polls_used ? `${data.polls_used} polls ingested` : null,
+          data.last_poll_date ? `Last poll: ${data.last_poll_date}` : null,
+        ].filter(Boolean).map(t => `<span class="meta-pill">${t}</span>`).join('');
+
+        // Vote share
+        buildVoteSharePanel(data.national_shares || {});
+
+        // Seat projections
+        buildSeatPanel(data.seat_projections || {});
+
+        // Marginals
+        buildMarginalsTable(data.marginals || []);
+
+        // Historical chart data
+        chartData.voteHistory = (data.vote_share_history || []);
+        chartData.seatHistory = (data.seat_history || []);
+        renderChart(currentMode);
+
+      } catch (err) {
+        console.error('Failed to load polling data:', err);
+        document.getElementById('metaUpdated').innerHTML =
+          '<span style="color:#dc2626">⚠ Could not load data — please try again later.</span>';
+        document.getElementById('voteShareGrid').innerHTML =
+          '<div class="error-msg">Data unavailable.</div>';
+        document.getElementById('seatGrid').innerHTML =
+          '<div class="error-msg">Data unavailable.</div>';
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>

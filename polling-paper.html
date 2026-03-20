@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UK Polling Tracker – Project Paper – Sam Husbands</title>
+  <meta name="description" content="Methodology behind the UK political polling aggregator, MRP seat model and XGBoost swing benchmark." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Paper header ── */
+    .paper-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      padding: 4rem 0 3rem;
+      color: var(--white);
+    }
+    .paper-header h1 { color: var(--white); margin-bottom: 0.5rem; }
+    .paper-header p  { color: #94a3b8; font-size: 1.05rem; }
+    .paper-meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+    .paper-tag {
+      background: rgba(255,255,255,0.12);
+      color: #e2e8f0;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+    }
+
+    /* ── Body layout ── */
+    .paper-body { padding: 4rem 0; }
+    .paper-section { margin-bottom: 3.5rem; }
+    .paper-section-heading {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--mid);
+    }
+    .paper-section > p,
+    .paper-section > .info-note {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    /* ── At-a-glance tiles ── */
+    .glance-tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .glance-tile {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.25rem 1.25rem 1rem;
+      text-align: center;
+    }
+    .glance-tile .tile-value {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.1;
+    }
+    .glance-tile .tile-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.35rem;
+    }
+    .glance-tile.pending .tile-value { color: var(--muted); font-size: 1.2rem; }
+
+    /* ── Method steps ── */
+    .method-steps { display: flex; flex-direction: column; gap: 1.1rem; }
+    .method-step {
+      display: flex;
+      gap: 1.1rem;
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.25rem 1.5rem;
+    }
+    .method-step-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      min-width: 36px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 50%;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .method-step-body h4 { font-size: 1rem; margin-bottom: 0.35rem; }
+    .method-step-body p { font-size: 0.88rem; color: var(--muted); margin: 0; }
+
+    /* ── Comparison table ── */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .comparison-table th {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0.7rem 1.1rem;
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+    .comparison-table td {
+      padding: 0.7rem 1.1rem;
+      border-bottom: 1px solid var(--mid);
+      color: var(--text);
+    }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .comparison-table tr:hover td { background: var(--light); }
+    .comparison-table .best { font-weight: 700; color: #16a34a; }
+
+    /* ── Info note ── */
+    .info-note {
+      background: #eff6ff;
+      border-left: 3px solid var(--blue);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.84rem;
+      color: var(--text);
+      margin: 1rem 0;
+    }
+    .info-note.warn {
+      background: #fffbeb;
+      border-left-color: #f59e0b;
+      color: #78350f;
+    }
+
+    /* ── Plot frames ── */
+    .plot-frame {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+    .plot-frame img { width: 100%; display: block; }
+    .plot-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      background: var(--light);
+      color: var(--muted);
+      font-size: 0.88rem;
+      gap: 0.5rem;
+    }
+    .ph-icon { font-size: 2rem; }
+    .plot-caption {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* ── Limitations ── */
+    .limitations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .limitation-card {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.25rem 1.5rem;
+    }
+    .limitation-card .limit-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+    .limitation-card h4 { font-size: 0.95rem; margin-bottom: 0.35rem; }
+    .limitation-card p  { font-size: 0.84rem; color: var(--muted); margin: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Sam Husbands</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="documents.html" class="active">Research</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="paper-header">
+    <div class="container">
+      <h1>UK Political Polling Tracker</h1>
+      <p>Kalman-filter poll aggregator · MRP seat model · XGBoost swing benchmark · Monte Carlo projections</p>
+      <div class="paper-meta-tags">
+        <span class="paper-tag">650 constituencies</span>
+        <span class="paper-tag">England, Scotland &amp; Wales</span>
+        <span class="paper-tag">Weekly updates</span>
+        <span class="paper-tag">BES 2024 microdata</span>
+        <span class="paper-tag">ONS Census 2021</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAPER BODY -->
+  <div class="paper-body">
+    <div class="container">
+
+      <!-- AT A GLANCE -->
+      <section class="paper-section">
+        <div class="paper-section-heading">At a glance</div>
+        <div class="glance-tiles" id="glanceTiles">
+          <div class="glance-tile" id="tilePollsIngested">
+            <div class="tile-value" id="pollsVal">—</div>
+            <div class="tile-label">Polls ingested</div>
+          </div>
+          <div class="glance-tile" id="tileLastPoll">
+            <div class="tile-value" id="lastPollVal" style="font-size:1rem;">—</div>
+            <div class="tile-label">Last poll date</div>
+          </div>
+          <div class="glance-tile">
+            <div class="tile-value">650</div>
+            <div class="tile-label">Constituencies modelled</div>
+          </div>
+          <div class="glance-tile pending">
+            <div class="tile-value" id="mrpAccVal">Pending</div>
+            <div class="tile-label">MRP 2019 holdout accuracy</div>
+          </div>
+          <div class="glance-tile pending">
+            <div class="tile-value" id="mlAccVal">Pending</div>
+            <div class="tile-label">ML 2024 holdout RMSE</div>
+          </div>
+          <div class="glance-tile">
+            <div class="tile-value">10k</div>
+            <div class="tile-label">Monte Carlo draws</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DATA SOURCES -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Data Sources</div>
+        <p style="font-size:0.95rem; color:var(--text); margin-bottom:1.25rem; max-width:720px;">
+          The model draws on four primary data sources. All are publicly available except the BES microdata,
+          which requires a short registration form. No manual data entry is used — the pipeline downloads
+          and processes everything automatically.
+        </p>
+        <div class="method-steps">
+          <div class="method-step">
+            <div class="method-step-num">1</div>
+            <div class="method-step-body">
+              <h4>Wikipedia Opinion Polling Table</h4>
+              <p>All post-2024 Westminster polls scraped from the Wikipedia "Opinion polling for the next United Kingdom general election" page.
+              Footnote markers stripped by regex, multi-format fieldwork dates parsed, rows deduplicated on (pollster, fieldwork end, sample size).
+              Scottish subsample columns preserved where published.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">2</div>
+            <div class="method-step-body">
+              <h4>British Election Study (BES) 2024 Microdata</h4>
+              <p>Post-election panel wave (Wave 25+). ~30,000 respondents with vote intention, recalled 2024 vote, Brexit vote, age, sex, education,
+              ethnicity and Westminster constituency code. Freely available after registration at
+              <a href="https://www.britishelectionstudy.com" target="_blank" rel="noopener">britishelectionstudy.com</a>.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">3</div>
+            <div class="method-step-body">
+              <h4>ONS 2021 Census (via Nomis API)</h4>
+              <p>Constituency-level marginal distributions for age (TS007), sex (TS008), highest qualification (TS067) and ethnicity (TS021).
+              Downloaded programmatically from the Nomis web API using the 2024 Westminster parliamentary boundary geography type.
+              Iterative Proportional Fitting (IPF) synthesises the joint demographic distribution needed for MRP poststratification.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">4</div>
+            <div class="method-step-body">
+              <h4>HoC Library 2024 Constituency Results</h4>
+              <p>Party vote shares for all 650 constituencies at the 2017, 2019 and 2024 general elections. Also includes % Leave 2016,
+              % degree-educated, median income and urban/rural classification — the geographic predictors for the MRP cross-level interactions
+              and the XGBoost constituency features.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- POLL AGGREGATOR -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Poll Aggregator — Kalman Filter with House Effects</div>
+        <p style="font-size:0.95rem; color:var(--text); margin-bottom:1.25rem; max-width:720px;">
+          Raw polls are noisy: different pollsters systematically lean towards different parties (house effects),
+          sample sizes vary, and the underlying true opinion moves gradually. A Kalman filter is the natural
+          solution — it maintains a running latent state (true support) and updates it as each new observation arrives.
+        </p>
+        <div class="method-steps">
+          <div class="method-step">
+            <div class="method-step-num">1</div>
+            <div class="method-step-body">
+              <h4>State space formulation</h4>
+              <p>For each party independently: latent support <em>x_t</em> follows a random walk
+              (<em>x_t = x_{t-1} + w_t</em>, <em>w_t ~ N(0, σ²_process)</em>).
+              Each poll is an observation: <em>y = x_t + house_effect[pollster] + ε</em>,
+              <em>ε ~ N(0, σ²_obs / n)</em> scaled by effective sample count.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">2</div>
+            <div class="method-step-body">
+              <h4>EM estimation of house effects</h4>
+              <p>House effects are unknown parameters, not latent states, so vanilla Kalman filtering can't estimate them
+              directly. An Expectation-Maximisation loop alternates between (E) running the Rauch-Tung-Striebel smoother
+              with current house-effect estimates and (M) re-estimating house effects as the mean residual between each
+              pollster's polls and the smoothed state. Iterated to convergence (&lt;0.0001pp change).</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">3</div>
+            <div class="method-step-body">
+              <h4>Multi-party normalisation</h4>
+              <p>Each party is filtered independently (preserves tractability), then after each EM iteration party shares
+              are renormalised to sum to 100%. The covariance across parties is estimated from cross-poll residuals and
+              used in the Monte Carlo seat projector to preserve anti-correlations (if Lab goes up, Con tends to go down).</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">4</div>
+            <div class="method-step-body">
+              <h4>Incremental updates</h4>
+              <p>The full Kalman smoother state is serialised to <code>data/aggregator_state.pkl</code> after each run.
+              Weekly updates load the existing state and extend the filter forward from the most recent poll date,
+              avoiding a full refit from 2024 each time. A full refit is triggered monthly or on demand.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="plot-frame" style="margin-top: 1.5rem; max-width: 900px;">
+          <img src="data/vote_share_trend.png" alt="Vote share trend"
+               onerror="this.parentElement.innerHTML='<div class=\'plot-placeholder\'><div class=\'ph-icon\'>📈</div><p>Vote share trend chart will appear here once the pipeline has run.</p></div>'" />
+        </div>
+        <p class="plot-caption">Smoothed national vote-share estimates with 90% confidence intervals. Ribbons reflect the Kalman filter's posterior variance at each date.</p>
+      </section>
+
+      <!-- MRP MODEL -->
+      <section class="paper-section">
+        <div class="paper-section-heading">MRP Seat Model</div>
+        <p style="font-size:0.95rem; color:var(--text); margin-bottom:1.25rem; max-width:720px;">
+          Multilevel Regression and Poststratification (MRP) is the gold-standard method for small-area estimation
+          from survey data. It was developed by Gelman and Little (1997) and has been used by YouGov and others to
+          produce constituency-level forecasts from national polls. The method has two stages.
+        </p>
+        <div class="method-steps">
+          <div class="method-step">
+            <div class="method-step-num">1</div>
+            <div class="method-step-body">
+              <h4>Multilevel regression on BES microdata</h4>
+              <p>One binary logistic mixed-effects model per party. Fixed effects: age group (5 bands), sex,
+              education (degree / no degree), ethnicity (White British / other), recalled 2024 vote,
+              Brexit vote 2016, % Leave, % graduate, median income (constituency-level cross-level interactions).
+              Random effects: region intercept and constituency intercept, capturing geographic clustering after
+              demographics are controlled. Fitted with <code>statsmodels</code>.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">2</div>
+            <div class="method-step-body">
+              <h4>Scotland &amp; Wales treatment</h4>
+              <p>SNP models are restricted to Scottish BES respondents and calibrated to Scottish constituency seats (S-prefix codes).
+              Plaid Cymru models are restricted to Welsh respondents and Welsh seats (W-prefix codes).
+              All non-SNP models include an <em>is_scotland</em> binary fixed effect; all non-PC models include <em>is_wales</em>,
+              capturing the different party systems without treating them as outliers.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">3</div>
+            <div class="method-step-body">
+              <h4>Poststratification</h4>
+              <p>For each constituency, the IPF joint distribution (40 demographic cells per seat) is used to weight
+              individual-level predictions: <em>P̂(vote | constituency) = Σ_cells n_cell × P(vote | demographics, constituency) / N_constituency</em>.
+              This produces a constituency-level vote-share estimate that correctly accounts for the local demographic mix.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">4</div>
+            <div class="method-step-body">
+              <h4>Calibration to national polls</h4>
+              <p>Constituency shares are rescaled so their electorate-weighted national aggregate matches the Kalman
+              filter's current estimate. This propagates the poll aggregator's uncertainty into the constituency level
+              and ensures the model stays tethered to the most recent polling evidence. Scotland and Wales are
+              calibrated separately where regional subsample estimates are available.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ML MODEL -->
+      <section class="paper-section">
+        <div class="paper-section-heading">XGBoost Swing Benchmark</div>
+        <p style="font-size:0.95rem; color:var(--text); margin-bottom:1.25rem; max-width:720px;">
+          As a benchmark and robustness check, an XGBoost model is trained to predict constituency-level swing
+          (change in vote share from the prior election). This requires no individual-level survey data —
+          only constituency demographic aggregates and past results. It is trained purely on historical
+          data and evaluated on the 2024 election as a held-out test.
+        </p>
+        <div class="method-steps">
+          <div class="method-step">
+            <div class="method-step-num">1</div>
+            <div class="method-step-body">
+              <h4>Training &amp; test split</h4>
+              <p>Trained on constituency swings at the 2019 election (change from 2017); tested on the 2024 election
+              (change from 2019). This is the only valid temporal split that avoids data leakage. With ~650 seats per
+              election, the training set has approximately 1,300 constituency-election observations.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">2</div>
+            <div class="method-step-body">
+              <h4>Features</h4>
+              <p>National swing from the poll aggregator (the key predictor — the model learns how each seat diverges
+              from the national trend); prior election shares; % Leave 2016; % degree-educated; % non-white; median income;
+              urban/rural classification; 2024 majority (seat vulnerability); region (label-encoded);
+              historical swing volatility.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">3</div>
+            <div class="method-step-body">
+              <h4>Prediction</h4>
+              <p>The trained model predicts the swing each seat experiences relative to the national swing from
+              the current poll aggregator. Predicted swings are added to the 2024 baseline shares. Heavy regularisation
+              (max_depth=4, λ=2.0) prevents overfitting to the small training set.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-note" style="margin-top: 1.5rem;">
+          The comparison table below will populate once both models have been evaluated on the 2024 test set.
+          MRP accuracy is assessed by comparing predicted vs actual 2024 constituency vote shares (before calibration);
+          XGBoost is assessed by constituency-level swing RMSE on the same held-out election.
+        </div>
+
+        <div style="margin-top: 1.25rem; overflow-x: auto;">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Method</th>
+                <th>Data required</th>
+                <th>2024 holdout RMSE</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>MRP</strong></td>
+                <td>Multilevel logistic + poststratification</td>
+                <td>BES microdata + Census</td>
+                <td id="mrpRmse">Pending</td>
+                <td>Gold-standard; captures individual demographics</td>
+              </tr>
+              <tr>
+                <td><strong>XGBoost</strong></td>
+                <td>Constituency-level swing regression</td>
+                <td>Aggregate results only</td>
+                <td id="mlRmse">Pending</td>
+                <td>Benchmark; no survey data needed</td>
+              </tr>
+              <tr>
+                <td>UNS (baseline)</td>
+                <td>Uniform national swing applied to all seats</td>
+                <td>National polls only</td>
+                <td>—</td>
+                <td>Naive baseline for comparison</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SEAT PROJECTIONS -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Monte Carlo Seat Projections</div>
+        <p style="font-size:0.95rem; color:var(--text); margin-bottom:1.25rem; max-width:720px;">
+          The Kalman filter's current estimate is a point estimate with uncertainty. To translate that uncertainty
+          into seat-count distributions, a Monte Carlo simulation is used.
+        </p>
+        <div class="method-steps">
+          <div class="method-step">
+            <div class="method-step-num">1</div>
+            <div class="method-step-body">
+              <h4>Correlated national draws</h4>
+              <p>10,000 national vote-share vectors are drawn from a multivariate normal distribution parameterised
+              by the Kalman filter's current means and cross-party covariance matrix. The covariance captures
+              the anti-correlation between parties — a draw giving Labour a higher share tends to give Conservatives
+              a lower share. Each draw is renormalised to sum to 100%.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">2</div>
+            <div class="method-step-body">
+              <h4>Constituency scaling</h4>
+              <p>For each Monte Carlo draw, constituency-level MRP and ML shares are rescaled so their
+              electorate-weighted national aggregate matches the drawn national shares. This propagates
+              national uncertainty into the constituency level without re-running the full model for each draw.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">3</div>
+            <div class="method-step-body">
+              <h4>FPTP and seat counting</h4>
+              <p>Each constituency is assigned to the party with the highest predicted share (first-past-the-post).
+              Seat totals are accumulated across all 650 constituencies. The resulting distribution of seat counts
+              (one per draw) gives the mean, 10th percentile and 90th percentile reported on the tracker.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="plot-frame" style="margin-top: 1.5rem; max-width: 900px;">
+          <img src="data/seat_distribution.png" alt="Seat distribution"
+               onerror="this.parentElement.innerHTML='<div class=\'plot-placeholder\'><div class=\'ph-icon\'>🏛️</div><p>Seat distribution chart will appear here once seat models are fitted.</p></div>'" />
+        </div>
+        <p class="plot-caption">Distribution of projected seat counts across 10,000 Monte Carlo draws. Solid bars show MRP; hatched bars show the XGBoost benchmark. The vertical line marks the 326-seat majority threshold.</p>
+
+        <div class="plot-frame" style="margin-top: 1.25rem; max-width: 900px;">
+          <img src="data/model_comparison.png" alt="Model comparison"
+               onerror="this.parentElement.innerHTML='<div class=\'plot-placeholder\'><div class=\'ph-icon\'>📊</div><p>Model comparison chart will appear once both models are fitted.</p></div>'" />
+        </div>
+        <p class="plot-caption">MRP vs XGBoost mean seat projections with 10th–90th percentile bars. Labour, Conservative, Reform and Lib Dems shown.</p>
+      </section>
+
+      <!-- LIMITATIONS & NEXT STEPS -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Limitations &amp; Next Steps</div>
+        <div class="limitations-grid">
+          <div class="limitation-card">
+            <div class="limit-icon">⚠️</div>
+            <h4>Wikipedia scraping fragility</h4>
+            <p>The scraper relies on the Wikipedia polling table's HTML structure, which can change without notice.
+            The pipeline includes robust fallback parsing but may require updates after Wikipedia reformats the page.</p>
+          </div>
+          <div class="limitation-card">
+            <div class="limit-icon">📉</div>
+            <h4>XGBoost training data size</h4>
+            <p>Only two historical elections (2017 and 2019) provide training data for the swing model — approximately
+            1,300 constituency-election rows. Heavy regularisation mitigates overfitting but the benchmark remains
+            limited by the small training set. Adding 2015 data would help.</p>
+          </div>
+          <div class="limitation-card">
+            <div class="limit-icon">🗺️</div>
+            <h4>Northern Ireland excluded</h4>
+            <p>Northern Ireland uses a completely different party system (Sinn Féin, DUP, Alliance, SDLP, UUP).
+            The 18 Northern Irish constituencies are excluded from the current model; seats are modelled for
+            England, Scotland and Wales only (632 seats total).</p>
+          </div>
+          <div class="limitation-card">
+            <div class="limit-icon">🔗</div>
+            <h4>Independent party models</h4>
+            <p>Each party's MRP regression is fitted independently, so constituency vote shares do not automatically
+            sum to 1. Post-hoc row normalisation is applied before seat projection but this does not fully
+            respect the multinomial constraint. A joint Dirichlet-based model would be more principled.</p>
+          </div>
+          <div class="limitation-card">
+            <div class="limit-icon">📅</div>
+            <h4>Static demographic data</h4>
+            <p>The 2021 Census is the most recent available. Constituency demographics shift gradually between
+            censuses; areas with significant demographic change (e.g. university towns) may be mis-calibrated
+            by 2026. The next census will be in 2031.</p>
+          </div>
+          <div class="limitation-card">
+            <div class="limit-icon">🔮</div>
+            <h4>Next steps</h4>
+            <p>Adding a full Bayesian MRP implementation (PyMC), incorporating tactical voting signals,
+            and extending the ML training set with 2015 data would improve accuracy. Longer-term:
+            seat-level betting market integration for model calibration.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- LINK TO LIVE MODEL -->
+      <div style="text-align:center; padding: 2rem 0;">
+        <a href="polling.html" class="btn btn-primary">View live tracker →</a>
+        &nbsp;&nbsp;
+        <a href="projects.html" class="btn btn-outline">All projects</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <ul class="footer-links">
+      <li><a href="https://github.com/SamHusbands21" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="documents.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+    </ul>
+    <p>&copy; <span id="year"></span> Sam Husbands</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+    // Populate at-a-glance tiles from live JSON if available
+    fetch('data/polling_predictions.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data) return;
+        const pollsEl = document.getElementById('pollsVal');
+        const lastEl  = document.getElementById('lastPollVal');
+        if (pollsEl && data.polls_used) pollsEl.textContent = data.polls_used;
+        if (lastEl  && data.last_poll_date) lastEl.textContent = data.last_poll_date;
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
