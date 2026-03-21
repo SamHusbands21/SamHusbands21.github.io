@@ -1,1382 +1,73 @@
 {
-  "updated_at": "2026-03-20T10:01:28.307361+00:00",
+  "updated_at": "2026-03-21T10:01:06.772135+00:00",
   "matches": [
     {
-      "player1": "Stefano Travaglia",
-      "player2": "Alex Molcan",
-      "tournament": "Travaglia v Molcan",
+      "player1": "Martha Matoula",
+      "player2": "Lucia Cortez Llorca",
+      "tournament": "Martha Matoula v Lucia Cortez Llorca",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-20T10:40:00+00:00",
+      "date": "2026-03-21T10:30:00+00:00",
       "model_probs": {
-        "p1": 0.3438,
-        "p2": 0.6562
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
-        "p1": 1.74,
-        "p2": 2.32
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.5225,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Lukas Neumayer",
-      "player2": "Arthur Gea",
-      "tournament": "Neumayer v Ar Gea",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T10:40:00+00:00",
-      "model_probs": {
-        "p1": 0.6698,
-        "p2": 0.3302
-      },
-      "betfair_odds": {
-        "p1": 2.88,
-        "p2": 1.52
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.929,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Anna Siskova",
-      "player2": "Jessika Ponchet",
-      "tournament": "Anna Siskova v Jessika Ponchet",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T11:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.64,
-        "p2": 2.34
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.2052,
-          "kelly_fraction": 0.1531
-        }
-      ]
-    },
-    {
-      "player1": "Lucia Cortez Llorca",
-      "player2": "Lisa Zaar",
-      "tournament": "Lucia Cortez Llorca v Lisa Zaar",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T11:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 2.68,
-        "p2": 1.47
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.2997,
-          "kelly_fraction": 0.1784
-        }
-      ]
-    },
-    {
-      "player1": "Jesper De Jong",
-      "player2": "Pablo Llamas Ruiz",
-      "tournament": "J De Jong v Llamas Ruiz",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T11:10:00+00:00",
-      "model_probs": {
-        "p1": 0.4842,
-        "p2": 0.5158
-      },
-      "betfair_odds": {
-        "p1": 2.08,
-        "p2": 1.88
+        "p1": 1.71,
+        "p2": 2.04
       },
       "value_bets": []
     },
     {
-      "player1": "Greet Minnen",
-      "player2": "Hanne Vandewinkel",
-      "tournament": "Greet Minnen v Hanne Vandewinkel",
+      "player1": "Pablo Carreno Busta",
+      "player2": "Kimmer Coppejans",
+      "tournament": "Carreno Busta v Coppejans",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-20T11:30:00+00:00",
+      "date": "2026-03-21T11:10:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.7253,
+        "p2": 0.2747
       },
       "betfair_odds": {
-        "p1": 2.74,
-        "p2": 1.47
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.3288,
-          "kelly_fraction": 0.189
-        }
-      ]
-    },
-    {
-      "player1": "Escobar/Serdarusic",
-      "player2": "Michalski/Simundza",
-      "tournament": "Escobar/Serdarusic v Michalski/Simundza",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T11:50:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.13,
-        "p2": 2.28
+        "p1": 1.36,
+        "p2": 3.7
       },
       "value_bets": []
     },
     {
-      "player1": "Ajdukovic/Kalender",
-      "player2": "Agostini/Forejtek",
-      "tournament": "Ajdukovic/Kalender v Agostini/Forejtek",
+      "player1": "Arthur Gea",
+      "player2": "Kyrian Jacquet",
+      "tournament": "Ar Gea v Jacquet",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-20T11:50:00+00:00",
+      "date": "2026-03-21T12:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.75,
-        "p2": 2.24
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Andrea Pellegrino",
-      "player2": "Pablo Carreno Busta",
-      "tournament": "Pellegrino v Carreno Busta",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T12:20:00+00:00",
-      "model_probs": {
-        "p1": 0.2396,
-        "p2": 0.7604
-      },
-      "betfair_odds": {
-        "p1": 2.6,
-        "p2": 1.6
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.2166,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Jeline Vandromme",
-      "player2": "Tatiana Prozorova",
-      "tournament": "Jeline Vandromme v Tatiana Prozorova",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T12:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 2.04,
-        "p2": 1.91
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Elena Pridankina",
-      "player2": "Martha Matoula",
-      "tournament": "Elena Pridankina v Martha Matoula",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T12:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.13,
-        "p2": 5.3
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 2.7297,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Merino/Negritu",
-      "player2": "Drzewiecki/Matuszewski",
-      "tournament": "Merino/Negritu v Drzewiecki/Matuszewski",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T13:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.78,
-        "p2": 1.64
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Linda Noskova",
-      "player2": "Sorana Cirstea ",
-      "tournament": "L Noskova v S Cirstea",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T14:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.74,
-        "p2": 2.32
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Valentin Royer",
-      "player2": "Thiago Agustin Tirante",
-      "tournament": "Royer v Tirante",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T14:00:00+00:00",
-      "model_probs": {
-        "p1": 0.2525,
-        "p2": 0.7475
-      },
-      "betfair_odds": {
-        "p1": 1.89,
-        "p2": 2.1
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.5697,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Caijsa Wilda Hennemann",
-      "player2": "Maria Garcia Cid",
-      "tournament": "Caijsa Wilda Hennemann v Maria Garcia Cid",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T14:00:00+00:00",
-      "model_probs": {
-        "p1": 0.3571,
-        "p2": 0.6429
-      },
-      "betfair_odds": {
-        "p1": 1.58,
-        "p2": 2.28
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.4658,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Diana Shnaider",
-      "player2": "Tereza Valentova",
-      "tournament": "Di Shnaider v T Valentova",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T14:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.96,
-        "p2": 2.02
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Terence Atmane",
-      "player2": "Daniel Altmaier",
-      "tournament": "Atmane v Altmaier",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T14:00:00+00:00",
-      "model_probs": {
-        "p1": 0.4987,
-        "p2": 0.5013
-      },
-      "betfair_odds": {
-        "p1": 1.46,
-        "p2": 3.05
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.5291,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Anna Blinkova",
-      "player2": "Victoria Mboko",
-      "tournament": "Blinkova v Vi Mboko",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T14:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 11.5,
-        "p2": 1.09
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 5.577,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Zeynep Sonmez",
-      "player2": "Belinda Bencic",
-      "tournament": "Zeyn Sonmez v Bencic",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T14:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 4.5,
-        "p2": 1.27
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 2.1823,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Anna Kalinskaya",
-      "player2": "Anastasia Zakharova",
-      "tournament": "A Kalinskaya v Zakharova",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T14:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.47,
-        "p2": 3.05
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.5709,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Hassan/Ofner",
-      "player2": "Liutarevich/Pujol Navar",
-      "tournament": "Hassan/Ofner v Liutarevich/Pujol Navar",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T14:10:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.69,
-        "p2": 1.68
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Aleksandar Kovacevic",
-      "player2": "Rei Sakamoto",
-      "tournament": "Al Kovacevic v Re Sakamoto",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T15:00:00+00:00",
-      "model_probs": {
-        "p1": 0.6544,
-        "p2": 0.3456
-      },
-      "betfair_odds": {
-        "p1": 1.63,
-        "p2": 2.54
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Amanda Anisimova",
-      "player2": "Ajla Tomljanovic",
-      "tournament": "A Anisimova v A Tomljanovic",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T15:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.17,
-        "p2": 6.4
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 3.2963,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Christopher O'Connell",
-      "player2": "Marton Fucsovics",
-      "tournament": "O'Connell v Fucsovics",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T15:10:00+00:00",
-      "model_probs": {
-        "p1": 0.1682,
-        "p2": 0.8318
-      },
-      "betfair_odds": {
-        "p1": 2.74,
-        "p2": 1.56
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.2976,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Gabriel Diallo",
-      "player2": "Yibing Wu",
-      "tournament": "G Diallo v Y Wu",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T15:10:00+00:00",
-      "model_probs": {
-        "p1": 0.4395,
-        "p2": 0.5605
-      },
-      "betfair_odds": {
-        "p1": 2.06,
-        "p2": 1.92
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Katarina Zavatska",
-      "player2": "Neus Torner Sensano",
-      "tournament": "Katarina Zavatska v Neus Torner Sensano",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T15:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.41,
-        "p2": 1.71
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Maria Sakkari",
-      "player2": "Alycia Parks",
-      "tournament": "M Sakkari v Aly Parks",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T15:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.33,
-        "p2": 3.85
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.9829,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Karolina Muchova",
-      "player2": "Camila Osorio",
-      "tournament": "Muchova v Ca Osorio",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T15:30:00+00:00",
-      "model_probs": {
-        "p1": 0.3081,
-        "p2": 0.6919
-      },
-      "betfair_odds": {
-        "p1": 1.32,
-        "p2": 4.0
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 2.7677,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Yuliia Starodubtseva",
-      "player2": "Cristina Bucsa",
-      "tournament": "Yu Starodubtseva v Bucsa",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T15:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 2.66,
-        "p2": 1.59
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.29,
-          "kelly_fraction": 0.1747
-        }
-      ]
-    },
-    {
-      "player1": "Elvina Kalieva",
-      "player2": "Elise Mertens",
-      "tournament": "Kalieva v Mertens",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T15:30:00+00:00",
-      "model_probs": {
-        "p1": 0.295,
-        "p2": 0.705
-      },
-      "betfair_odds": {
-        "p1": 5.1,
-        "p2": 1.22
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.5047,
-          "kelly_fraction": 0.1231
-        }
-      ]
-    },
-    {
-      "player1": "Katie Boulter",
-      "player2": "Clara Tauson",
-      "tournament": "Boulter v C Tauson",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T15:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 2.86,
-        "p2": 1.53
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.387,
-          "kelly_fraction": 0.2081
-        }
-      ]
-    },
-    {
-      "player1": "Casper Ruud",
-      "player2": "Ethan Quinn",
-      "tournament": "Ruud v Et Quinn",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T16:00:00+00:00",
-      "model_probs": {
-        "p1": 0.7095,
-        "p2": 0.2905
-      },
-      "betfair_odds": {
-        "p1": 1.56,
-        "p2": 2.74
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Kimmer Coppejans",
-      "player2": "Gilles Arnaud Bailly",
-      "tournament": "Coppejans v Gi Bailly",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T16:00:00+00:00",
-      "model_probs": {
-        "p1": 0.5232,
-        "p2": 0.4768
-      },
-      "betfair_odds": {
-        "p1": 1.6,
-        "p2": 2.48
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Tommy Paul",
-      "player2": "Adrian Mannarino",
-      "tournament": "Paul v Mannarino",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T16:10:00+00:00",
-      "model_probs": {
-        "p1": 0.6934,
-        "p2": 0.3066
-      },
-      "betfair_odds": {
-        "p1": 1.25,
-        "p2": 4.8
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.4718,
-          "kelly_fraction": 0.1242
-        }
-      ]
-    },
-    {
-      "player1": "Arthur Cazaux",
-      "player2": "Marcelo Tomas Barrios V",
-      "tournament": "Cazaux v Barrios Vera",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T16:20:00+00:00",
-      "model_probs": {
-        "p1": 0.7504,
-        "p2": 0.2496
-      },
-      "betfair_odds": {
-        "p1": 1.56,
-        "p2": 2.76
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Arthur Fils",
-      "player2": "Darwin Blanch",
-      "tournament": "Fils v Dar Blanch",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T16:20:00+00:00",
-      "model_probs": {
-        "p1": 0.929,
-        "p2": 0.071
-      },
-      "betfair_odds": {
-        "p1": 1.17,
-        "p2": 6.2
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Adam Walton",
-      "player2": "Sebastian Baez",
-      "tournament": "Walton v Se Baez",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T16:20:00+00:00",
-      "model_probs": {
-        "p1": 0.3526,
-        "p2": 0.6474
+        "p1": 0.3265,
+        "p2": 0.6735
       },
       "betfair_odds": {
         "p1": 2.28,
-        "p2": 1.76
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Matteo Arnaldi",
-      "player2": "Alexander Shevchenko",
-      "tournament": "Arnaldi v Al Shevchenko",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T16:20:00+00:00",
-      "model_probs": {
-        "p1": 0.4482,
-        "p2": 0.5518
-      },
-      "betfair_odds": {
-        "p1": 2.12,
-        "p2": 1.86
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Jack Draper",
-      "player2": "Reilly Opelka",
-      "tournament": "Ja Draper v Opelka",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T16:30:00+00:00",
-      "model_probs": {
-        "p1": 0.7761,
-        "p2": 0.2239
-      },
-      "betfair_odds": {
-        "p1": 1.27,
-        "p2": 4.4
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Hailey Baptiste",
-      "player2": "Liudmila Samsonova",
-      "tournament": "H Baptiste v L Samsonova",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T17:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.98,
-        "p2": 1.96
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Elisabetta Cocciaretto",
-      "player2": "Coco Gauff",
-      "tournament": "El Cocciaretto v C Gauff",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T17:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 5.1,
-        "p2": 1.22
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 2.4733,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Alexander Bublik",
-      "player2": "Matteo Berrettini",
-      "tournament": "Bublik v Berrettini",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T17:20:00+00:00",
-      "model_probs": {
-        "p1": 0.5619,
-        "p2": 0.4381
-      },
-      "betfair_odds": {
-        "p1": 1.69,
-        "p2": 2.28
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Moise Kouame",
-      "player2": "Jiri Lehecka",
-      "tournament": "Mo Kouame v Lehecka",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T17:30:00+00:00",
-      "model_probs": {
-        "p1": 0.1423,
-        "p2": 0.8577
-      },
-      "betfair_odds": {
-        "p1": 5.9,
-        "p2": 1.19
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Jelena Ostapenko",
-      "player2": "Dayana Yastremska",
-      "tournament": "Ostapenko v D Yastremska",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T17:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.66,
-        "p2": 2.38
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.2258,
-          "kelly_fraction": 0.1636
-        }
-      ]
-    },
-    {
-      "player1": "Raphael Collignon",
-      "player2": "Flavio Cobolli",
-      "tournament": "Collignon v Cobolli",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T17:30:00+00:00",
-      "model_probs": {
-        "p1": 0.254,
-        "p2": 0.746
-      },
-      "betfair_odds": {
-        "p1": 1.94,
-        "p2": 2.02
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.5069,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Taylor Townsend",
-      "player2": "Jasmine Paolini",
-      "tournament": "Taylo Townsend v J Paolini",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T17:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 2.36,
-        "p2": 1.71
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Botic Van de Zandschulp",
-      "player2": "Taylor Fritz",
-      "tournament": "Bot Van de Zandschulp v Fritz",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T17:40:00+00:00",
-      "model_probs": {
-        "p1": 0.2136,
-        "p2": 0.7864
-      },
-      "betfair_odds": {
-        "p1": 4.3,
-        "p2": 1.27
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Roberto Bautista Agut",
-      "player2": "Karen Khachanov",
-      "tournament": "Bautista Agut v Khachanov",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T17:40:00+00:00",
-      "model_probs": {
-        "p1": 0.4916,
-        "p2": 0.5084
-      },
-      "betfair_odds": {
-        "p1": 3.95,
-        "p2": 1.32
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.942,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Alafia Ayeni",
-      "player2": "Andres Martin",
-      "tournament": "O Ayeni v Andres Martin",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T18:30:00+00:00",
-      "model_probs": {
-        "p1": 0.3321,
-        "p2": 0.6679
-      },
-      "betfair_odds": {
-        "p1": 2.4,
-        "p2": 1.63
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Aryna Sabalenka",
-      "player2": "Ann Li",
-      "tournament": "A Sabalenka v A Li",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T18:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.04,
-        "p2": 18.0
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 9.2708,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Ekaterina Alexandrova",
-      "player2": "Lilli Tagger",
-      "tournament": "Alexandrova v Li Tagger",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T18:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.5,
-        "p2": 2.84
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.4627,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Catherine Mcnally",
-      "player2": "Xinyu Wang",
-      "tournament": "C Mcnally v Xin Wang",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T18:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.99,
-        "p2": 1.89
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Reyes-Varela/Zeballos",
-      "player2": "Andrade/Gomez",
-      "tournament": "Reyes-Varela/Zeballos v Andrade/Gomez",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T18:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.02,
-        "p2": 1.02
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Qinwen Zheng",
-      "player2": "Sloane Stephens",
-      "tournament": "Q Zheng v Stephens",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T18:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.16,
-        "p2": 1.47
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Mariano Navone",
-      "player2": "Valentin Vacherot",
-      "tournament": "Navone v Vacherot",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T18:40:00+00:00",
-      "model_probs": {
-        "p1": 0.2124,
-        "p2": 0.7876
-      },
-      "betfair_odds": {
-        "p1": 2.8,
-        "p2": 1.52
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Zizou Bergs",
-      "player2": "Tomas Martin Etcheverry",
-      "tournament": "Ziz Bergs v To Etcheverry",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T18:40:00+00:00",
-      "model_probs": {
-        "p1": 0.4668,
-        "p2": 0.5332
-      },
-      "betfair_odds": {
-        "p1": 1.92,
-        "p2": 2.02
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Stefanos Tsitsipas",
-      "player2": "Alex De Minaur",
-      "tournament": "Tsitsipas v Alex de Minaur",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T18:50:00+00:00",
-      "model_probs": {
-        "p1": 0.2155,
-        "p2": 0.7845
-      },
-      "betfair_odds": {
-        "p1": 3.15,
-        "p2": 1.45
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Camilo Ugo Carabelli",
-      "player2": "Sebastian Korda",
-      "tournament": "Cam Ugo Carabelli v Se Korda",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T18:50:00+00:00",
-      "model_probs": {
-        "p1": 0.1524,
-        "p2": 0.8476
-      },
-      "betfair_odds": {
-        "p1": 6.8,
-        "p2": 1.13
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Elina Svitolina",
-      "player2": "Emerson Jones",
-      "tournament": "Svitolina v Eme Jones",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T19:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.16,
-        "p2": 6.4
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 3.2963,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Elena-Gabriela Ruse",
-      "player2": "Madison Keys",
-      "tournament": "E Ruse v Keys",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T19:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 3.65,
-        "p2": 1.33
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.7701,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Facundo Mena",
-      "player2": "Taro Daniel",
-      "tournament": "Mena v Daniel",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T19:40:00+00:00",
-      "model_probs": {
-        "p1": 0.4786,
-        "p2": 0.5214
-      },
-      "betfair_odds": {
-        "p1": 2.18,
         "p2": 1.75
       },
       "value_bets": []
     },
     {
-      "player1": "Gianluca Cadenasso",
-      "player2": "Pedro Boscardin Dias",
-      "tournament": "Gi Cadenasso v Boscardin Dias",
+      "player1": "Escobar/Serdarusic",
+      "player2": "Agostini/Forejtek",
+      "tournament": "Escobar/Serdarusic v Agostini/Forejtek",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-20T20:00:00+00:00",
+      "date": "2026-03-21T13:10:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
-        "p1": 1.03,
-        "p2": 1.48
+        "p1": 1.07,
+        "p2": 2.0
       },
       "value_bets": []
-    },
-    {
-      "player1": "Peyton Stearns",
-      "player2": "Jaqueline Cristian",
-      "tournament": "Pe Stearns v J Cristian",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T20:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.8,
-        "p2": 2.18
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Kamilla Rakhimova",
-      "player2": "Marta Kostyuk",
-      "tournament": "Rakhimova v M Kostyuk",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T20:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 4.4,
-        "p2": 1.26
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 2.1338,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Lautaro Midon",
-      "player2": "Jaime Faria",
-      "tournament": "L Midon v Ja Faria",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T20:00:00+00:00",
-      "model_probs": {
-        "p1": 0.3198,
-        "p2": 0.6802
-      },
-      "betfair_odds": {
-        "p1": 1.03,
-        "p2": 1.03
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Michael Mmoh",
-      "player2": "Rodrigo Pacheco Mendez",
-      "tournament": "Mmoh v Ro Pacheco Mendez",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T20:30:00+00:00",
-      "model_probs": {
-        "p1": 0.7091,
-        "p2": 0.2909
-      },
-      "betfair_odds": {
-        "p1": 1.84,
-        "p2": 2.02
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.3048,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Iva Jovic",
-      "player2": "Paula Badosa",
-      "tournament": "I Jovi\u0107 v P Badosa",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T20:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.68,
-        "p2": 2.42
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.2464,
-          "kelly_fraction": 0.1735
-        }
-      ]
-    },
-    {
-      "player1": "Talia Gibson",
-      "player2": "Naomi Osaka",
-      "tournament": "Ta Gibson v N Osaka",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T21:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 2.8,
-        "p2": 1.53
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.3579,
-          "kelly_fraction": 0.1988
-        }
-      ]
-    },
-    {
-      "player1": "Alex Barrena",
-      "player2": "Juan Pablo Varillas",
-      "tournament": "Al Barrena v Jua Varillas",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T21:10:00+00:00",
-      "model_probs": {
-        "p1": 0.2782,
-        "p2": 0.7218
-      },
-      "betfair_odds": {
-        "p1": 2.02,
-        "p2": 1.85
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.3354,
-          "kelly_fraction": 0.25
-        }
-      ]
     },
     {
       "player1": "Leylah Fernandez",
@@ -1384,82 +75,19 @@
       "tournament": "L Fernandez v Oks Selekhmeteva",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-20T22:00:00+00:00",
+      "date": "2026-03-21T15:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
-        "p1": 1.49,
-        "p2": 2.74
+        "p1": 1.56,
+        "p2": 2.76
       },
       "value_bets": [
         {
           "outcome": "p2",
-          "ev": 1.4112,
-          "kelly_fraction": 0.2363
-        }
-      ]
-    },
-    {
-      "player1": "Franco Roncadelli",
-      "player2": "Joao Lucas Reis Da Silv",
-      "tournament": "Roncadelli v Jo Reis Da Silva",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T22:00:00+00:00",
-      "model_probs": {
-        "p1": 0.6575,
-        "p2": 0.3425
-      },
-      "betfair_odds": {
-        "p1": 2.38,
-        "p2": 1.07
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 1.5648,
-          "kelly_fraction": 0.25
-        }
-      ]
-    },
-    {
-      "player1": "Marc-Andrea Huesler",
-      "player2": "Tyler Zink",
-      "tournament": "Huesler v Zink",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T22:00:00+00:00",
-      "model_probs": {
-        "p1": 0.6989,
-        "p2": 0.3011
-      },
-      "betfair_odds": {
-        "p1": 1.36,
-        "p2": 3.5
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Francesca Jones",
-      "player2": "Jessica Pegula",
-      "tournament": "F Jones v J Pegula",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T23:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 17.5,
-        "p2": 1.05
-      },
-      "value_bets": [
-        {
-          "outcome": "p1",
-          "ev": 8.4868,
+          "ev": 1.6057,
           "kelly_fraction": 0.25
         }
       ]
@@ -1470,141 +98,22 @@
       "tournament": "Vukic v Jodar",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-20T23:00:00+00:00",
+      "date": "2026-03-21T15:00:00+00:00",
       "model_probs": {
-        "p1": 0.7498,
-        "p2": 0.2502
+        "p1": 0.7678,
+        "p2": 0.2322
       },
       "betfair_odds": {
-        "p1": 4.0,
-        "p2": 1.3
+        "p1": 4.5,
+        "p2": 1.27
       },
       "value_bets": [
         {
           "outcome": "p1",
-          "ev": 2.9993,
+          "ev": 3.4549,
           "kelly_fraction": 0.25
         }
       ]
-    },
-    {
-      "player1": "Luciano Darderi",
-      "player2": "Martin Landaluce",
-      "tournament": "Darderi v Ma Landaluce",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T23:00:00+00:00",
-      "model_probs": {
-        "p1": 0.6624,
-        "p2": 0.3376
-      },
-      "betfair_odds": {
-        "p1": 1.79,
-        "p2": 2.2
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Carlos Alcaraz",
-      "player2": "Joao Fonseca",
-      "tournament": "Carlos Alcaraz v Jo Fonseca",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T23:00:00+00:00",
-      "model_probs": {
-        "p1": 0.9367,
-        "p2": 0.0633
-      },
-      "betfair_odds": {
-        "p1": 1.14,
-        "p2": 6.8
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Huertas Del/Huertas Del",
-      "player2": "Kestelboim/Zormann",
-      "tournament": "Huertas Del/Huertas Del v Kestelboim/Zormann",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T23:10:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.02,
-        "p2": 1.02
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Kiger/Stalder",
-      "player2": "Justo/Roncadelli",
-      "tournament": "Kiger/Stalder v Justo/Roncadelli",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T23:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.58,
-        "p2": 1.6
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Bollipalli/Kadhe",
-      "player2": "Mena/Pacheco Mendez",
-      "tournament": "Bollipalli/Kadhe v Mena/Pacheco Mendez",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-20T23:30:00+00:00",
-      "model_probs": {
-        "p1": 0.3532,
-        "p2": 0.6468
-      },
-      "betfair_odds": {
-        "p1": 1.02,
-        "p2": 1.02
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Elena Rybakina",
-      "player2": "Yulia Putintseva",
-      "tournament": "E Rybakina v Putintseva",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T00:30:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.09,
-        "p2": 1.35
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Martin Damm Jr",
-      "player2": "Alexander Zverev",
-      "tournament": "Damm Jr v A Zverev",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T15:00:00+00:00",
-      "model_probs": {
-        "p1": 0.0649,
-        "p2": 0.9351
-      },
-      "betfair_odds": {
-        "p1": 4.2,
-        "p2": 1.07
-      },
-      "value_bets": []
     },
     {
       "player1": "Kamil Majchrzak",
@@ -1614,105 +123,77 @@
       "round": "",
       "date": "2026-03-21T15:00:00+00:00",
       "model_probs": {
-        "p1": 0.2265,
-        "p2": 0.7735
+        "p1": 0.2812,
+        "p2": 0.7188
       },
       "betfair_odds": {
-        "p1": 1.04,
-        "p2": 1.27
+        "p1": 3.9,
+        "p2": 1.33
       },
       "value_bets": []
     },
     {
-      "player1": "Damir Dzumhur",
-      "player2": "Jannik Sinner",
-      "tournament": "Dzumhur v Sinner",
+      "player1": "Siegemund/Zvonareva",
+      "player2": "Kato/Yang",
+      "tournament": "Siegemund/Zvonareva v Kato/Yang",
       "surface": "Hard",
       "round": "",
       "date": "2026-03-21T15:00:00+00:00",
       "model_probs": {
-        "p1": 0.0305,
-        "p2": 0.9695
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
-        "p1": 34.0,
-        "p2": 1.02
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Brandon Nakashima",
-      "player2": "Marin Cilic",
-      "tournament": "Nakashima v Cilic",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T15:00:00+00:00",
-      "model_probs": {
-        "p1": 0.5272,
-        "p2": 0.4728
-      },
-      "betfair_odds": {
-        "p1": 1.47,
-        "p2": 2.2
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Andrey Rublev",
-      "player2": "Alejandro Tabilo",
-      "tournament": "Rublev v Tabilo",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T15:00:00+00:00",
-      "model_probs": {
-        "p1": 0.5945,
-        "p2": 0.4055
-      },
-      "betfair_odds": {
-        "p1": 1.13,
-        "p2": 1.16
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Corentin Moutet",
-      "player2": "Tomas Machac",
-      "tournament": "Moutet v Machac",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T15:00:00+00:00",
-      "model_probs": {
-        "p1": 0.388,
-        "p2": 0.612
-      },
-      "betfair_odds": {
-        "p1": 2.26,
-        "p2": 1.02
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Alex Michelsen",
-      "player2": "Cameron Norrie",
-      "tournament": "Al Michelsen v Norrie",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T15:00:00+00:00",
-      "model_probs": {
-        "p1": 0.4139,
-        "p2": 0.5861
-      },
-      "betfair_odds": {
-        "p1": 1.02,
-        "p2": 2.2
+        "p1": 1.16,
+        "p2": 4.2
       },
       "value_bets": [
         {
           "outcome": "p2",
-          "ev": 1.2895,
-          "kelly_fraction": 0.2413
+          "ev": 2.4434,
+          "kelly_fraction": 0.25
         }
       ]
+    },
+    {
+      "player1": "Iva Jovic",
+      "player2": "Paula Badosa",
+      "tournament": "I Jovi\u0107 v P Badosa",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.63,
+        "p2": 2.56
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.4893,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Zizou Bergs",
+      "player2": "Tomas Martin Etcheverry",
+      "tournament": "Ziz Bergs v To Etcheverry",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.5557,
+        "p2": 0.4443
+      },
+      "betfair_odds": {
+        "p1": 1.82,
+        "p2": 2.18
+      },
+      "value_bets": []
     },
     {
       "player1": "Alejandro Davidovich Fokina",
@@ -1722,14 +203,518 @@
       "round": "",
       "date": "2026-03-21T15:00:00+00:00",
       "model_probs": {
-        "p1": 0.6577,
-        "p2": 0.3423
+        "p1": 0.6782,
+        "p2": 0.3218
+      },
+      "betfair_odds": {
+        "p1": 1.43,
+        "p2": 3.25
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Danilina/Krunic",
+      "player2": "Jiang/Xu",
+      "tournament": "Danilina/Krunic v Jiang/Xu",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.27,
+        "p2": 3.35
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.9489,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Francesca Jones",
+      "player2": "Jessica Pegula",
+      "tournament": "F Jones v J Pegula",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T16:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 19.5,
+        "p2": 1.05
+      },
+      "value_bets": [
+        {
+          "outcome": "p1",
+          "ev": 8.1554,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Hassan/Ofner",
+      "player2": "Drzewiecki/Matuszewski",
+      "tournament": "Hassan/Ofner v Drzewiecki/Matuszewski",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T16:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.02,
+        "p2": 1.02
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Corentin Moutet",
+      "player2": "Tomas Machac",
+      "tournament": "Moutet v Machac",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T16:10:00+00:00",
+      "model_probs": {
+        "p1": 0.4287,
+        "p2": 0.5713
+      },
+      "betfair_odds": {
+        "p1": 2.52,
+        "p2": 1.64
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Terence Atmane",
+      "player2": "Arthur Rinderknech",
+      "tournament": "Atmane v Rinderknech",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T16:10:00+00:00",
+      "model_probs": {
+        "p1": 0.3626,
+        "p2": 0.6374
+      },
+      "betfair_odds": {
+        "p1": 2.38,
+        "p2": 1.7
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Felix Auger-Aliassime",
+      "player2": "Marton Fucsovics",
+      "tournament": "F Auger-Aliassime v Fucsovics",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T16:10:00+00:00",
+      "model_probs": {
+        "p1": 0.1714,
+        "p2": 0.8286
+      },
+      "betfair_odds": {
+        "p1": 1.4,
+        "p2": 3.35
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 2.7758,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Talia Gibson",
+      "player2": "Naomi Osaka",
+      "tournament": "Ta Gibson v N Osaka",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T16:30:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 2.96,
+        "p2": 1.5
+      },
+      "value_bets": [
+        {
+          "outcome": "p1",
+          "ev": 1.238,
+          "kelly_fraction": 0.1214
+        }
+      ]
+    },
+    {
+      "player1": "Errani/Paolini",
+      "player2": "Aoyama/Eikeri",
+      "tournament": "Errani/Paolini v Aoyama/Eikeri",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T16:30:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.16,
+        "p2": 4.3
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 2.5016,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Qinwen Zheng",
+      "player2": "Sloane Stephens",
+      "tournament": "Q Zheng v Stephens",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T16:30:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.15,
+        "p2": 7.2
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 4.1888,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Mladenovic/Ostapenko",
+      "player2": "Hozumi/Wu",
+      "tournament": "Mladenovic/Ostapenko v Hozumi/Wu",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T17:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.3,
+        "p2": 3.05
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.7744,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Damir Dzumhur",
+      "player2": "Jannik Sinner",
+      "tournament": "Dzumhur v Sinner",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T17:10:00+00:00",
+      "model_probs": {
+        "p1": 0.031,
+        "p2": 0.969
+      },
+      "betfair_odds": {
+        "p1": 40.0,
+        "p2": 1.02
+      },
+      "value_bets": [
+        {
+          "outcome": "p1",
+          "ev": 1.2387,
+          "kelly_fraction": 0.0061
+        }
+      ]
+    },
+    {
+      "player1": "Andrey Rublev",
+      "player2": "Alejandro Tabilo",
+      "tournament": "Rublev v Tabilo",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T17:20:00+00:00",
+      "model_probs": {
+        "p1": 0.6753,
+        "p2": 0.3247
+      },
+      "betfair_odds": {
+        "p1": 1.49,
+        "p2": 2.96
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Alex Michelsen",
+      "player2": "Cameron Norrie",
+      "tournament": "Al Michelsen v Norrie",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T17:20:00+00:00",
+      "model_probs": {
+        "p1": 0.4855,
+        "p2": 0.5145
+      },
+      "betfair_odds": {
+        "p1": 1.68,
+        "p2": 2.42
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.245,
+          "kelly_fraction": 0.1725
+        }
+      ]
+    },
+    {
+      "player1": "Brady/McNally",
+      "player2": "Jurak Schreiber/Olmos",
+      "tournament": "Brady/McNally v Jurak Schreiber/Olmos",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T17:30:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.47,
+        "p2": 2.46
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.4312,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Elena-Gabriela Ruse",
+      "player2": "Madison Keys",
+      "tournament": "E Ruse v Keys",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T17:30:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 3.1,
+        "p2": 1.46
+      },
+      "value_bets": [
+        {
+          "outcome": "p1",
+          "ev": 1.2965,
+          "kelly_fraction": 0.1412
+        }
+      ]
+    },
+    {
+      "player1": "Panova/Rakhimova",
+      "player2": "Siniakova/Townsend",
+      "tournament": "Panova/Rakhimova v Siniakova/Townsend",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T18:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 6.8,
+        "p2": 1.12
+      },
+      "value_bets": [
+        {
+          "outcome": "p1",
+          "ev": 2.8439,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Mirra Andreeva",
+      "player2": "Marie Bouzkova",
+      "tournament": "Mir Andreeva v M Bouzkova",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T18:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.2,
+        "p2": 5.8
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 3.3743,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Anastasia Zakharova",
+      "player2": "Victoria Mboko",
+      "tournament": "Zakharova v Vi Mboko",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T18:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 6.4,
+        "p2": 1.17
+      },
+      "value_bets": [
+        {
+          "outcome": "p1",
+          "ev": 2.6767,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Diana Shnaider",
+      "player2": "Belinda Bencic",
+      "tournament": "Di Shnaider v Bencic",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T18:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 3.05,
+        "p2": 1.47
+      },
+      "value_bets": [
+        {
+          "outcome": "p1",
+          "ev": 1.2756,
+          "kelly_fraction": 0.1344
+        }
+      ]
+    },
+    {
+      "player1": "Rei Sakamoto",
+      "player2": "Daniil Medvedev",
+      "tournament": "Re Sakamoto v Medvedev",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T18:20:00+00:00",
+      "model_probs": {
+        "p1": 0.0509,
+        "p2": 0.9491
+      },
+      "betfair_odds": {
+        "p1": 11.5,
+        "p2": 1.08
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Gabriel Diallo",
+      "player2": "Ugo Humbert",
+      "tournament": "G Diallo v Humbert",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T18:30:00+00:00",
+      "model_probs": {
+        "p1": 0.3893,
+        "p2": 0.6107
+      },
+      "betfair_odds": {
+        "p1": 2.14,
+        "p2": 1.85
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Francisco Cerundolo",
+      "player2": "Thiago Agustin Tirante",
+      "tournament": "Cerundolo v Tirante",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T18:30:00+00:00",
+      "model_probs": {
+        "p1": 0.7847,
+        "p2": 0.2153
       },
       "betfair_odds": {
         "p1": 1.29,
-        "p2": 3.0
+        "p2": 4.2
       },
       "value_bets": []
+    },
+    {
+      "player1": "Adam Walton",
+      "player2": "Jakub Mensik",
+      "tournament": "Walton v Mensik",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T18:30:00+00:00",
+      "model_probs": {
+        "p1": 0.185,
+        "p2": 0.815
+      },
+      "betfair_odds": {
+        "p1": 4.0,
+        "p2": 1.32
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Amanda Anisimova",
+      "player2": "Yuliia Starodubtseva",
+      "tournament": "A Anisimova v Yu Starodubtseva",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T19:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.14,
+        "p2": 7.4
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 4.3051,
+          "kelly_fraction": 0.25
+        }
+      ]
     },
     {
       "player1": "Neel/Sutjiadi",
@@ -1737,14 +722,697 @@
       "tournament": "Neel/Sutjiadi v Baptiste/Stearns",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-21T19:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 3.25,
+        "p2": 1.17
+      },
+      "value_bets": [
+        {
+          "outcome": "p1",
+          "ev": 1.3592,
+          "kelly_fraction": 0.1597
+        }
+      ]
+    },
+    {
+      "player1": "Karolina Muchova",
+      "player2": "Katie Boulter",
+      "tournament": "Muchova v Boulter",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T19:30:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.29,
+        "p2": 4.2
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 2.4434,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Sorana Cirstea ",
+      "player2": "Elise Mertens",
+      "tournament": "S Cirstea v Mertens",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T19:30:00+00:00",
+      "model_probs": {
+        "p1": 0.2672,
+        "p2": 0.7328
+      },
+      "betfair_odds": {
+        "p1": 2.14,
+        "p2": 1.86
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.3629,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Kiger/Stalder",
+      "player2": "Kestelboim/Zormann",
+      "tournament": "Kiger/Stalder v Kestelboim/Zormann",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T19:30:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.02,
+        "p2": 1.02
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Frances Tiafoe",
+      "player2": "Arthur Cazaux",
+      "tournament": "Tiafoe v Cazaux",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T19:40:00+00:00",
+      "model_probs": {
+        "p1": 0.734,
+        "p2": 0.266
+      },
+      "betfair_odds": {
+        "p1": 1.53,
+        "p2": 2.84
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Brandon Nakashima",
+      "player2": "Marin Cilic",
+      "tournament": "Nakashima v Cilic",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T19:40:00+00:00",
+      "model_probs": {
+        "p1": 0.6054,
+        "p2": 0.3946
+      },
+      "betfair_odds": {
+        "p1": 1.64,
+        "p2": 2.54
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Bollipalli/Kadhe",
+      "player2": "Andrade/Gomez",
+      "tournament": "Bollipalli/Kadhe v Andrade/Gomez",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T20:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.02,
+        "p2": 1.02
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Alexandra Eala",
+      "player2": "Magda Linette",
+      "tournament": "Al Eala v Mag Linette",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T20:30:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.74,
+        "p2": 2.32
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.3497,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Gianluca Cadenasso",
+      "player2": "Lautaro Midon",
+      "tournament": "Gi Cadenasso v L Midon",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T21:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.6,
+        "p2": 2.5
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.4544,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Taro Daniel",
+      "player2": "Andres Martin",
+      "tournament": "Daniel v Andres Martin",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T22:00:00+00:00",
+      "model_probs": {
+        "p1": 0.5909,
+        "p2": 0.4091
+      },
+      "betfair_odds": {
+        "p1": 1.65,
+        "p2": 2.42
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Franco Roncadelli",
+      "player2": "Juan Pablo Varillas",
+      "tournament": "Roncadelli v Jua Varillas",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T22:10:00+00:00",
+      "model_probs": {
+        "p1": 0.3088,
+        "p2": 0.6912
+      },
+      "betfair_odds": {
+        "p1": 2.74,
+        "p2": 1.5
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Alycia Parks",
+      "player2": "Coco Gauff",
+      "tournament": "Aly Parks v C Gauff",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T23:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 8.8,
+        "p2": 1.11
+      },
+      "value_bets": [
+        {
+          "outcome": "p1",
+          "ev": 3.6804,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Ben Shelton",
+      "player2": "Alexander Shevchenko",
+      "tournament": "Be Shelton v Al Shevchenko",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T23:00:00+00:00",
+      "model_probs": {
+        "p1": 0.8384,
+        "p2": 0.1616
+      },
+      "betfair_odds": {
+        "p1": 1.14,
+        "p2": 7.6
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.2282,
+          "kelly_fraction": 0.0346
+        }
+      ]
+    },
+    {
+      "player1": "Michael Mmoh",
+      "player2": "Tyler Zink",
+      "tournament": "Mmoh v Zink",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-21T23:10:00+00:00",
+      "model_probs": {
+        "p1": 0.7759,
+        "p2": 0.2241
+      },
+      "betfair_odds": {
+        "p1": 1.29,
+        "p2": 4.1
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Martin Damm Jr",
+      "player2": "Alexander Zverev",
+      "tournament": "Damm Jr v A Zverev",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T00:30:00+00:00",
+      "model_probs": {
+        "p1": 0.0595,
+        "p2": 0.9405
+      },
+      "betfair_odds": {
+        "p1": 8.8,
+        "p2": 1.11
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Luz/Matos",
+      "player2": "Gonzalez/Molteni",
+      "tournament": "Luz/Matos v Gonzalez/Molteni",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.43,
+        "p2": 2.0
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Andreozzi/Guinard",
+      "player2": "Krajicek/Mektic",
+      "tournament": "Andreozzi/Guinard v Krajicek/Mektic",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.2,
+        "p2": 1.43
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Bolelli/Vavassori",
+      "player2": "Arneodo/Ram",
+      "tournament": "Bolelli/Vavassori v Arneodo/Ram",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.06,
+        "p2": 1.43
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Arends/Smith",
+      "player2": "Bhambri/Venus",
+      "tournament": "Arends/Smith v Bhambri/Venus",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.2,
+        "p2": 1.9
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Nouza/Rikl",
+      "player2": "Cash/Glasspool",
+      "tournament": "Nouza/Rikl v Cash/Glasspool",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 2.46,
+        "p2": 1.02
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Ethan Quinn",
+      "player2": "Jiri Lehecka",
+      "tournament": "Et Quinn v Lehecka",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.2614,
+        "p2": 0.7386
+      },
+      "betfair_odds": {
+        "p1": 2.0,
+        "p2": 1.7
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.2556,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Reilly Opelka",
+      "player2": "Taylor Fritz",
+      "tournament": "Opelka v Fritz",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.2641,
+        "p2": 0.7359
+      },
+      "betfair_odds": {
+        "p1": 3.2,
+        "p2": 1.2
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Melo/Zverev",
+      "player2": "King/Peers",
+      "tournament": "Melo/Zverev v King/Peers",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.35,
+        "p2": 1.35
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Damm Jr/Demoliner",
+      "player2": "Etcheverry/Tabilo",
+      "tournament": "Damm Jr/Demoliner v Etcheverry/Tabilo",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.35,
+        "p2": 1.35
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Carlos Alcaraz",
+      "player2": "Sebastian Korda",
+      "tournament": "Carlos Alcaraz v Se Korda",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.9191,
+        "p2": 0.0809
+      },
+      "betfair_odds": {
+        "p1": 1.11,
+        "p2": 3.0
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Cash/Tracy",
+      "player2": "Nys/Roger-Vasselin",
+      "tournament": "Cash/Tracy v Nys/Roger-Vasselin",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.4,
+        "p2": 1.2
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "De Minaur/Hijikata",
+      "player2": "Harrison/Skupski",
+      "tournament": "de Minaur/Hijikata v Harrison/Skupski",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
         "p1": 1.43,
         "p2": 1.07
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Tommy Paul",
+      "player2": "Raphael Collignon",
+      "tournament": "Paul v Collignon",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.8207,
+        "p2": 0.1793
+      },
+      "betfair_odds": {
+        "p1": 1.52,
+        "p2": 2.68
+      },
+      "value_bets": [
+        {
+          "outcome": "p1",
+          "ev": 1.2474,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Heliovaara/Patten",
+      "player2": "Goransson/Michelsen",
+      "tournament": "Heliovaara/Patten v Goransson/Michelsen",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.06,
+        "p2": 1.43
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Arthur Fils",
+      "player2": "Stefanos Tsitsipas",
+      "tournament": "Fils v Tsitsipas",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.7772,
+        "p2": 0.2228
+      },
+      "betfair_odds": {
+        "p1": 1.3,
+        "p2": 2.44
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Gonzalez/Pel",
+      "player2": "Darderi/Romboli",
+      "tournament": "Gonzalez/Pel v Darderi/Romboli",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.14,
+        "p2": 1.43
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Doumbia/Reboul",
+      "player2": "Frantzen/Haase",
+      "tournament": "Doumbia/Reboul v Frantzen/Haase",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.33,
+        "p2": 1.35
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Erler/Galloway",
+      "player2": "Arevalo/Pavic",
+      "tournament": "Erler/Galloway v Arevalo/Pavic",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.43,
+        "p2": 1.52
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Granollers/Zeballos",
+      "player2": "Cabral/Miedler",
+      "tournament": "Granollers/Zeballos v Cabral/Miedler",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.14,
+        "p2": 1.43
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Martin Landaluce",
+      "player2": "Karen Khachanov",
+      "tournament": "Ma Landaluce v Khachanov",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.2537,
+        "p2": 0.7463
+      },
+      "betfair_odds": {
+        "p1": 2.5,
+        "p2": 1.2
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Johnson/Zielinski",
+      "player2": "Arribage/Olivetti",
+      "tournament": "Johnson/Zielinski v Arribage/Olivetti",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.35,
+        "p2": 1.35
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Matteo Berrettini",
+      "player2": "Valentin Vacherot",
+      "tournament": "Berrettini v Vacherot",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.5155,
+        "p2": 0.4845
+      },
+      "betfair_odds": {
+        "p1": 1.57,
+        "p2": 2.26
+      },
+      "value_bets": []
+    },
+    {
+      "player1": "Krawietz/Oberleitner",
+      "player2": "Kittay/Seggerman",
+      "tournament": "Krawietz/Oberleitner v Kittay/Seggerman",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T15:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.2,
+        "p2": 1.43
       },
       "value_bets": []
     },
@@ -1754,10 +1422,10 @@
       "tournament": "Hunter/Pegula v Li/Linette",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
         "p1": 1.07,
@@ -1771,10 +1439,10 @@
       "tournament": "Parks/Stephens v Alexandrova/Stollar",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
         "p1": 1.51,
@@ -1783,19 +1451,19 @@
       "value_bets": []
     },
     {
-      "player1": "Panova/Rakhimova",
-      "player2": "Siniakova/Townsend",
-      "tournament": "Panova/Rakhimova v Siniakova/Townsend",
+      "player1": "Jelena Ostapenko",
+      "player2": "Jasmine Paolini",
+      "tournament": "Ostapenko v J Paolini",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
-        "p1": 1.43,
-        "p2": 1.06
+        "p1": 1.76,
+        "p2": 1.31
       },
       "value_bets": []
     },
@@ -1805,53 +1473,13 @@
       "tournament": "Mertens/Zhang v Chan/Tjen",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
         "p1": 1.08,
-        "p2": 1.43
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Brady/McNally",
-      "player2": "Jurak Schreiber/Olmos",
-      "tournament": "Brady/McNally v Jurak Schreiber/Olmos",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.2,
-        "p2": 2.72
-      },
-      "value_bets": [
-        {
-          "outcome": "p2",
-          "ev": 1.4009,
-          "kelly_fraction": 0.2331
-        }
-      ]
-    },
-    {
-      "player1": "Siegemund/Zvonareva",
-      "player2": "Kato/Yang",
-      "tournament": "Siegemund/Zvonareva v Kato/Yang",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.12,
         "p2": 1.43
       },
       "value_bets": []
@@ -1862,10 +1490,10 @@
       "tournament": "Bucsa/Melichar-Martinez v Kenin/Samsonova",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
         "p1": 1.2,
@@ -1879,31 +1507,14 @@
       "tournament": "Andreeva/Mboko v Perez/Schuurs",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
         "p1": 1.43,
         "p2": 1.2
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Mirra Andreeva",
-      "player2": "Marie Bouzkova",
-      "tournament": "Mir Andreeva v M Bouzkova",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.04,
-        "p2": 1.12
       },
       "value_bets": []
     },
@@ -1913,10 +1524,10 @@
       "tournament": "Fernandez/Williams v Muhammad/Routliffe",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
         "p1": 1.43,
@@ -1925,21 +1536,50 @@
       "value_bets": []
     },
     {
-      "player1": "Alexandra Eala",
-      "player2": "Magda Linette",
-      "tournament": "Al Eala v Mag Linette",
+      "player1": "Aryna Sabalenka",
+      "player2": "Catherine Mcnally",
+      "tournament": "A Sabalenka v C Mcnally",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
         "p1": 1.04,
-        "p2": 2.24
+        "p2": 11.0
       },
-      "value_bets": []
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 6.3995,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Ekaterina Alexandrova",
+      "player2": "Jaqueline Cristian",
+      "tournament": "Alexandrova v J Cristian",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T18:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.52,
+        "p2": 2.6
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 1.5126,
+          "kelly_fraction": 0.25
+        }
+      ]
     },
     {
       "player1": "Bouzkova/Valentova",
@@ -1947,31 +1587,14 @@
       "tournament": "Bouzkova/Valentova v Kichenok/Krawczyk",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
         "p1": 1.43,
         "p2": 1.2
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Errani/Paolini",
-      "player2": "Aoyama/Eikeri",
-      "tournament": "Errani/Paolini v Aoyama/Eikeri",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.07,
-        "p2": 1.43
       },
       "value_bets": []
     },
@@ -1981,27 +1604,10 @@
       "tournament": "Cirstea/Cristian v Mihalikova/Nicholls",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
-      },
-      "betfair_odds": {
-        "p1": 1.62,
-        "p2": 1.2
-      },
-      "value_bets": []
-    },
-    {
-      "player1": "Noskova/Shnaider",
-      "player2": "Dabrowski/Stefani",
-      "tournament": "Noskova/Shnaider v Dabrowski/Stefani",
-      "surface": "Hard",
-      "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
-      "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
         "p1": 1.43,
@@ -2010,36 +1616,65 @@
       "value_bets": []
     },
     {
-      "player1": "Mladenovic/Ostapenko",
-      "player2": "Hozumi/Wu",
-      "tournament": "Mladenovic/Ostapenko v Hozumi/Wu",
+      "player1": "Elena Rybakina",
+      "player2": "Marta Kostyuk",
+      "tournament": "E Rybakina v M Kostyuk",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
-        "p1": 1.07,
-        "p2": 1.43
+        "p1": 1.25,
+        "p2": 4.1
       },
-      "value_bets": []
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 2.3853,
+          "kelly_fraction": 0.25
+        }
+      ]
     },
     {
-      "player1": "Danilina/Krunic",
-      "player2": "Jiang/Xu",
-      "tournament": "Danilina/Krunic v Jiang/Xu",
+      "player1": "Elina Svitolina",
+      "player2": "Hailey Baptiste",
+      "tournament": "Svitolina v H Baptiste",
       "surface": "Hard",
       "round": "",
-      "date": "2026-03-21T18:00:00+00:00",
+      "date": "2026-03-22T18:00:00+00:00",
       "model_probs": {
-        "p1": 0.485,
-        "p2": 0.515
+        "p1": 0.4182,
+        "p2": 0.5818
       },
       "betfair_odds": {
-        "p1": 1.07,
-        "p2": 1.43
+        "p1": 1.27,
+        "p2": 3.75
+      },
+      "value_bets": [
+        {
+          "outcome": "p2",
+          "ev": 2.1816,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "player1": "Noskova/Shnaider",
+      "player2": "Dabrowski/Stefani",
+      "tournament": "Noskova/Shnaider v Dabrowski/Stefani",
+      "surface": "Hard",
+      "round": "",
+      "date": "2026-03-22T18:00:00+00:00",
+      "model_probs": {
+        "p1": 0.4182,
+        "p2": 0.5818
+      },
+      "betfair_odds": {
+        "p1": 1.43,
+        "p2": 1.2
       },
       "value_bets": []
     }
