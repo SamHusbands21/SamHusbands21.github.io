@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-26T09:06:33.989786+00:00",
+  "updated_at": "2026-03-27T09:07:38.168508+00:00",
   "fixtures": [
     {
       "home": "West Ham",
@@ -28,10 +28,16 @@
       },
       "betfair_odds": {
         "home": 1.44,
-        "draw": 5.2,
-        "away": 8.4
+        "draw": 5.0,
+        "away": 8.8
       },
-      "value_bets": []
+      "value_bets": [
+        {
+          "outcome": "away",
+          "ev": 1.2558,
+          "kelly_fraction": 0.0328
+        }
+      ]
     },
     {
       "home": "Burnley",
@@ -44,8 +50,8 @@
       },
       "betfair_odds": {
         "home": 4.6,
-        "draw": 3.9,
-        "away": 1.77
+        "draw": 4.0,
+        "away": 1.81
       },
       "value_bets": []
     },
@@ -61,7 +67,7 @@
       "betfair_odds": {
         "home": 2.3,
         "draw": 3.45,
-        "away": 3.35
+        "away": 3.3
       },
       "value_bets": []
     },
@@ -75,9 +81,9 @@
         "away": 0.1411
       },
       "betfair_odds": {
-        "home": 1.58,
-        "draw": 4.6,
-        "away": 5.7
+        "home": 1.57,
+        "draw": 4.7,
+        "away": 5.9
       },
       "value_bets": []
     },
@@ -91,9 +97,9 @@
         "away": 0.3258
       },
       "betfair_odds": {
-        "home": 2.76,
+        "home": 2.72,
         "draw": 3.5,
-        "away": 2.8
+        "away": 2.82
       },
       "value_bets": []
     },
@@ -107,7 +113,7 @@
         "away": 0.5542
       },
       "betfair_odds": {
-        "home": 2.78,
+        "home": 2.7,
         "draw": 3.5,
         "away": 2.7
       },
@@ -131,7 +137,7 @@
       "betfair_odds": {
         "home": 2.86,
         "draw": 3.6,
-        "away": 2.5
+        "away": 2.48
       },
       "value_bets": []
     },
@@ -161,7 +167,7 @@
         "away": 0.4688
       },
       "betfair_odds": {
-        "home": 1.61,
+        "home": 1.6,
         "draw": 4.5,
         "away": 6.0
       },
@@ -238,7 +244,7 @@
       },
       "betfair_odds": {
         "home": 2.2,
-        "draw": 3.65,
+        "draw": 3.55,
         "away": 3.2
       },
       "value_bets": [
@@ -281,15 +287,15 @@
         "away": 0.2471
       },
       "betfair_odds": {
-        "home": 1.54,
+        "home": 1.55,
         "draw": 4.3,
-        "away": 6.6
+        "away": 6.8
       },
       "value_bets": [
         {
           "outcome": "away",
-          "ev": 1.6309,
-          "kelly_fraction": 0.1127
+          "ev": 1.6803,
+          "kelly_fraction": 0.1173
         }
       ]
     },
@@ -305,7 +311,7 @@
       "betfair_odds": {
         "home": 1.61,
         "draw": 4.0,
-        "away": 5.9
+        "away": 5.2
       },
       "value_bets": []
     },
@@ -337,7 +343,7 @@
       "betfair_odds": {
         "home": 2.22,
         "draw": 3.35,
-        "away": 3.55
+        "away": 3.5
       },
       "value_bets": []
     }
