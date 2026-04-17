@@ -2,6 +2,11 @@
 tennis-predictor/
 uk-polling-model/
 
+# Secrets
+.env
+.env.*
+!.env.example
+
 # OS
 .DS_Store
 Thumbs.db
