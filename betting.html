@@ -277,8 +277,209 @@
     }
     .disclaimer strong { color: #78350f; }
 
+    /* ── Expandable detail ── */
+    .fixture-card.is-expandable { cursor: pointer; }
+    .fixture-card.is-expandable:focus-visible {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+    .fixture-card.expanded:hover { transform: none; }
+
+    .fixture-date-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .fixture-date-row .fixture-date { margin-bottom: 0; }
+
+    .fixture-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: var(--muted);
+      font-size: 0.7rem;
+      line-height: 1;
+      transition: transform var(--transition);
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .fixture-card.expanded .fixture-toggle { transform: rotate(180deg); }
+
+    .fixture-details {
+      display: none;
+      padding: 1.1rem 1.5rem 1.25rem;
+      border-top: 1px solid var(--mid);
+      background: #fafbfd;
+    }
+    .fixture-card.expanded .fixture-details { display: block; }
+
+    .details-section + .details-section { margin-top: 1.1rem; }
+    .details-block-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .team-form-block {
+      border: 1px solid var(--mid);
+      border-radius: 8px;
+      background: var(--white);
+      padding: 0.7rem 0.75rem;
+      min-width: 0;
+    }
+    .team-form-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--navy);
+      min-width: 0;
+    }
+    .team-form-heading .team-block { min-width: 0; }
+    .team-form-heading .team-name {
+      font-size: 0.82rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .team-form-heading .team-crest { width: 20px; height: 20px; }
+
+    .form-badges {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 0.55rem;
+      flex-wrap: wrap;
+    }
+    .form-badge {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .form-badge.w { background: #16a34a; }
+    .form-badge.d { background: #9ca3af; }
+    .form-badge.l { background: #dc2626; }
+    .form-badge.empty { background: #e5e7eb; color: var(--muted); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      row-gap: 0.2rem;
+      column-gap: 0.6rem;
+      font-size: 0.76rem;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text);
+      gap: 0.5rem;
+    }
+    .stat-row .stat-key { color: var(--muted); }
+    .stat-row .stat-val { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+    .context-pills {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .context-pill {
+      display: inline-flex;
+      gap: 0.35rem;
+      align-items: center;
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: 16px;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.76rem;
+      color: var(--text);
+    }
+    .context-pill .pill-key { color: var(--muted); font-size: 0.72rem; }
+
+    .shap-method-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.65rem;
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    .shap-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .shap-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(110px, 1.5fr) 3.2rem;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.76rem;
+      line-height: 1.2;
+    }
+    .shap-label {
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .shap-track {
+      position: relative;
+      height: 10px;
+    }
+    .shap-track::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: var(--mid);
+    }
+    .shap-bar {
+      position: absolute;
+      top: 1px;
+      bottom: 1px;
+      border-radius: 2px;
+    }
+    .shap-bar.pos { left: 50%; background: #16a34a; }
+    .shap-bar.neg { right: 50%; background: #dc2626; }
+    .shap-value {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      font-size: 0.74rem;
+      color: var(--text);
+    }
+    .shap-value.pos { color: #16a34a; }
+    .shap-value.neg { color: #dc2626; }
+
     @media (max-width: 640px) {
       .fixture-teams { flex-wrap: wrap; }
+      .form-grid { grid-template-columns: 1fr; }
+      .shap-row {
+        grid-template-columns: minmax(0, 1fr) minmax(80px, 1.2fr) 2.7rem;
+        font-size: 0.74rem;
+      }
     }
   </style>
 </head>
@@ -421,12 +622,130 @@
 
     function pct(p) { return (p * 100).toFixed(0) + '%'; }
 
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
     function teamBlock(name, crests) {
       const url = crests && crests[name];
       const img = url
         ? `<img class="team-crest" src="${url}" alt="" loading="lazy" onerror="this.style.display='none'">`
         : '';
-      return `<span class="team-block">${img}<span class="team-name">${name}</span></span>`;
+      return `<span class="team-block">${img}<span class="team-name">${escapeHtml(name)}</span></span>`;
+    }
+
+    // ── Build expandable detail section ───────────────────────
+
+    function formBadges(last5) {
+      const slots = (last5 || []).slice(0, 5);
+      while (slots.length < 5) slots.push(null);
+      return slots.map(code => {
+        const cls = code === 'W' ? 'w' : code === 'D' ? 'd' : code === 'L' ? 'l' : 'empty';
+        const label = code || '–';
+        return `<span class="form-badge ${cls}" title="${code || 'No data'}">${label}</span>`;
+      }).join('');
+    }
+
+    function teamFormBlock(form, name, crests) {
+      if (!form) return '';
+      const fmt2 = v => (v == null ? '—' : Number(v).toFixed(2));
+      const fmt0 = v => (v == null ? '—' : Math.round(Number(v)).toString());
+      return `
+        <div class="team-form-block">
+          <div class="team-form-heading">${teamBlock(name, crests)}</div>
+          <div class="form-badges" aria-label="Last 5 results (newest first)">
+            ${formBadges(form.last5)}
+          </div>
+          <div class="stats-grid">
+            <div class="stat-row"><span class="stat-key">Elo</span><span class="stat-val">${fmt0(form.elo)}</span></div>
+            <div class="stat-row"><span class="stat-key">xG-Elo</span><span class="stat-val">${fmt0(form.xg_elo)}</span></div>
+            <div class="stat-row"><span class="stat-key">PPG5</span><span class="stat-val">${fmt2(form.ppg_5)}</span></div>
+            <div class="stat-row"><span class="stat-key">PPG10</span><span class="stat-val">${fmt2(form.ppg_10)}</span></div>
+            <div class="stat-row"><span class="stat-key">xGF5</span><span class="stat-val">${fmt2(form.xgf_5)}</span></div>
+            <div class="stat-row"><span class="stat-key">xGA5</span><span class="stat-val">${fmt2(form.xga_5)}</span></div>
+          </div>
+        </div>`;
+    }
+
+    function contextSection(ctx) {
+      if (!ctx) return '';
+      const pills = [];
+      if (ctx.rest_days) {
+        pills.push(`<span class="context-pill"><span class="pill-key">Home rest</span>${ctx.rest_days.home}d</span>`);
+        pills.push(`<span class="context-pill"><span class="pill-key">Away rest</span>${ctx.rest_days.away}d</span>`);
+      }
+      if (typeof ctx.h2h_home_winrate === 'number') {
+        pills.push(`<span class="context-pill"><span class="pill-key">H2H home wr</span>${(ctx.h2h_home_winrate * 100).toFixed(0)}%</span>`);
+      }
+      if (!pills.length) return '';
+      return `
+        <div class="details-section">
+          <div class="details-block-title">Match context</div>
+          <div class="context-pills">${pills.join('')}</div>
+        </div>`;
+    }
+
+    function shapSection(explanation, home, away) {
+      if (!explanation || !Array.isArray(explanation.contributions) || !explanation.contributions.length) {
+        return '';
+      }
+      const contribs = explanation.contributions;
+      const maxAbs = Math.max(...contribs.map(c => Math.abs(c.shap)), 1e-6);
+
+      const predictedLabels = {
+        home: escapeHtml(home) + ' to win',
+        draw: 'a draw',
+        away: escapeHtml(away) + ' to win',
+      };
+      const predicted = predictedLabels[explanation.predicted_outcome] || outcomeLabel(explanation.predicted_outcome);
+
+      const rows = contribs.map(c => {
+        const side = c.shap >= 0 ? 'pos' : 'neg';
+        const widthPct = (Math.abs(c.shap) / maxAbs) * 50;
+        const titleText = `${c.human_name} = ${c.value}`;
+        const signed = (c.shap >= 0 ? '+' : '') + c.shap.toFixed(3);
+        return `
+          <div class="shap-row">
+            <div class="shap-label" title="${escapeHtml(titleText)}">${escapeHtml(c.human_name)}</div>
+            <div class="shap-track" aria-hidden="true">
+              <div class="shap-bar ${side}" style="width:${widthPct.toFixed(2)}%"></div>
+            </div>
+            <div class="shap-value ${side}">${signed}</div>
+          </div>`;
+      }).join('');
+
+      return `
+        <div class="details-section">
+          <div class="details-block-title">Why we picked ${predicted}</div>
+          <div class="shap-method-note">
+            Top feature contributions from the XGBoost component of the ensemble.
+            Green bars pushed toward the picked outcome, red pushed against.
+          </div>
+          <div class="shap-bars">${rows}</div>
+        </div>`;
+    }
+
+    function buildDetails(fixture, crests) {
+      if (!fixture.form && !fixture.match_context && !fixture.explanation) return '';
+      const homeForm = fixture.form && fixture.form.home;
+      const awayForm = fixture.form && fixture.form.away;
+      const formHtml = (homeForm || awayForm)
+        ? `<div class="details-section">
+             <div class="details-block-title">Team form</div>
+             <div class="form-grid">
+               ${teamFormBlock(homeForm, fixture.home, crests)}
+               ${teamFormBlock(awayForm, fixture.away, crests)}
+             </div>
+           </div>`
+        : '';
+      return `
+        <div class="fixture-details">
+          ${formHtml}
+          ${contextSection(fixture.match_context)}
+          ${shapSection(fixture.explanation, fixture.home, fixture.away)}
+        </div>`;
     }
 
     // ── Build a single fixture card ───────────────────────────
@@ -434,6 +753,8 @@
     function buildCard(fixture, crests) {
       const { home, away, date, model_probs, betfair_odds, value_bets } = fixture;
       const hasValue = value_bets && value_bets.length > 0;
+      const detailsHtml = buildDetails(fixture, crests);
+      const hasDetails = detailsHtml.length > 0;
 
       const pH = model_probs.home;
       const pD = model_probs.draw;
@@ -461,10 +782,17 @@
             </span>`).join(''))
         : '<span class="no-value">No value bets identified</span>';
 
+      const cardAttrs = hasDetails
+        ? ` role="button" tabindex="0" aria-expanded="false" aria-label="Toggle details for ${escapeHtml(home)} versus ${escapeHtml(away)}"`
+        : '';
+
       return `
-        <div class="fixture-card${hasValue ? ' has-value' : ''}">
+        <div class="fixture-card${hasValue ? ' has-value' : ''}${hasDetails ? ' is-expandable' : ''}"${cardAttrs}>
           <div class="fixture-top">
-            <div class="fixture-date">${formatDate(date)}</div>
+            <div class="fixture-date-row">
+              <div class="fixture-date">${formatDate(date)}</div>
+              ${hasDetails ? '<span class="fixture-toggle" aria-hidden="true">▾</span>' : ''}
+            </div>
             <div class="fixture-teams">
               ${teamBlock(home, crests)}
               <span class="fixture-vs">vs</span>
@@ -500,7 +828,32 @@
             <div class="vb-title">Value bets</div>
             <div class="vb-chip-list">${valueBetsHtml}</div>
           </div>
+
+          ${detailsHtml}
         </div>`;
+    }
+
+    // ── Expand/collapse behavior ──────────────────────────────
+
+    function toggleCard(card) {
+      const expanded = card.classList.toggle('expanded');
+      card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    }
+
+    function wireCardToggles(container) {
+      container.addEventListener('click', (e) => {
+        if (e.target.closest('a, button, input')) return;
+        const card = e.target.closest('.fixture-card.is-expandable');
+        if (!card) return;
+        toggleCard(card);
+      });
+      container.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const card = e.target.closest('.fixture-card.is-expandable');
+        if (!card || e.target !== card) return;
+        e.preventDefault();
+        toggleCard(card);
+      });
     }
 
     // ── Fetch and render ──────────────────────────────────────
@@ -536,6 +889,7 @@
         }
 
         container.innerHTML = `<div class="fixture-grid">${fixtures.map(f => buildCard(f, crests)).join('')}</div>`;
+        wireCardToggles(container);
 
       } catch (err) {
         updatedEl.textContent = 'Could not load data';
