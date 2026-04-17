@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-04-17T11:09:57.084032+00:00",
+  "updated_at": "2026-04-17T12:25:47.388787+00:00",
   "fixtures": [
     {
       "home": "Brentford",
@@ -14,7 +14,7 @@
       "betfair_odds": {
         "home": 2.16,
         "draw": 3.85,
-        "away": 3.5
+        "away": 3.45
       },
       "value_bets": [],
       "form": {
@@ -397,7 +397,7 @@
       },
       "betfair_odds": {
         "home": 2.78,
-        "draw": 3.9,
+        "draw": 3.95,
         "away": 2.54
       },
       "value_bets": [],
@@ -650,7 +650,7 @@
       "betfair_odds": {
         "home": 3.35,
         "draw": 3.45,
-        "away": 2.4
+        "away": 2.38
       },
       "value_bets": [],
       "form": {
@@ -906,9 +906,9 @@
         "away": 0.1708
       },
       "betfair_odds": {
-        "home": 1.73,
+        "home": 1.74,
         "draw": 4.0,
-        "away": 5.6
+        "away": 5.5
       },
       "value_bets": [],
       "form": {
@@ -1032,15 +1032,15 @@
         "away": 0.336
       },
       "betfair_odds": {
-        "home": 1.9,
-        "draw": 3.9,
-        "away": 4.5
+        "home": 1.89,
+        "draw": 3.85,
+        "away": 4.6
       },
       "value_bets": [
         {
           "outcome": "away",
-          "ev": 1.512,
-          "kelly_fraction": 0.1463
+          "ev": 1.5456,
+          "kelly_fraction": 0.1516
         }
       ],
       "form": {
@@ -1548,7 +1548,7 @@
         "away": 0.8014
       },
       "betfair_odds": {
-        "home": 13.0,
+        "home": 12.0,
         "draw": 6.8,
         "away": 1.26
       },
@@ -1674,7 +1674,7 @@
         "away": 0.4297
       },
       "betfair_odds": {
-        "home": 2.84,
+        "home": 2.82,
         "draw": 3.2,
         "away": 2.64
       },
@@ -2052,7 +2052,7 @@
         "away": 0.1698
       },
       "betfair_odds": {
-        "home": 1.55,
+        "home": 1.54,
         "draw": 4.6,
         "away": 6.2
       },
