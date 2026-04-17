@@ -1,4 +1,379 @@
 {
-  "updated_at": "2026-04-15T08:00:17.721900+00:00",
-  "fixtures": []
+  "updated_at": "2026-04-17T08:07:36.367223+00:00",
+  "fixtures": [
+    {
+      "home": "Brentford",
+      "away": "Fulham",
+      "date": "2026-04-18T11:30:00+00:00",
+      "model_probs": {
+        "home": 0.513,
+        "draw": 0.2592,
+        "away": 0.2278
+      },
+      "betfair_odds": {
+        "home": 2.16,
+        "draw": 3.85,
+        "away": 3.55
+      },
+      "value_bets": []
+    },
+    {
+      "home": "Newcastle",
+      "away": "Bournemouth",
+      "date": "2026-04-18T14:00:00+00:00",
+      "model_probs": {
+        "home": 0.4514,
+        "draw": 0.2788,
+        "away": 0.2697
+      },
+      "betfair_odds": {
+        "home": 2.08,
+        "draw": 4.0,
+        "away": 3.65
+      },
+      "value_bets": []
+    },
+    {
+      "home": "Leeds",
+      "away": "Wolves",
+      "date": "2026-04-18T14:00:00+00:00",
+      "model_probs": {
+        "home": 0.5739,
+        "draw": 0.2017,
+        "away": 0.2244
+      },
+      "betfair_odds": {
+        "home": 1.63,
+        "draw": 4.3,
+        "away": 6.2
+      },
+      "value_bets": [
+        {
+          "outcome": "away",
+          "ev": 1.3913,
+          "kelly_fraction": 0.0752
+        }
+      ]
+    },
+    {
+      "home": "Tottenham",
+      "away": "Brighton",
+      "date": "2026-04-18T16:30:00+00:00",
+      "model_probs": {
+        "home": 0.2372,
+        "draw": 0.2571,
+        "away": 0.5057
+      },
+      "betfair_odds": {
+        "home": 2.92,
+        "draw": 3.9,
+        "away": 2.44
+      },
+      "value_bets": []
+    },
+    {
+      "home": "Chelsea",
+      "away": "Man Utd",
+      "date": "2026-04-18T19:00:00+00:00",
+      "model_probs": {
+        "home": 0.6827,
+        "draw": 0.2247,
+        "away": 0.0925
+      },
+      "betfair_odds": {
+        "home": 2.3,
+        "draw": 3.85,
+        "away": 3.25
+      },
+      "value_bets": [
+        {
+          "outcome": "home",
+          "ev": 1.5702,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "home": "Everton",
+      "away": "Liverpool",
+      "date": "2026-04-19T13:00:00+00:00",
+      "model_probs": {
+        "home": 0.222,
+        "draw": 0.1582,
+        "away": 0.6198
+      },
+      "betfair_odds": {
+        "home": 3.3,
+        "draw": 3.45,
+        "away": 2.4
+      },
+      "value_bets": [
+        {
+          "outcome": "away",
+          "ev": 1.4875,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "home": "Nottm Forest",
+      "away": "Burnley",
+      "date": "2026-04-19T13:00:00+00:00",
+      "model_probs": {
+        "home": 0.5156,
+        "draw": 0.2373,
+        "away": 0.2471
+      },
+      "betfair_odds": {
+        "home": 1.54,
+        "draw": 4.5,
+        "away": 7.4
+      },
+      "value_bets": [
+        {
+          "outcome": "away",
+          "ev": 1.8285,
+          "kelly_fraction": 0.1295
+        }
+      ]
+    },
+    {
+      "home": "Aston Villa",
+      "away": "Sunderland",
+      "date": "2026-04-19T13:00:00+00:00",
+      "model_probs": {
+        "home": 0.5953,
+        "draw": 0.2079,
+        "away": 0.1968
+      },
+      "betfair_odds": {
+        "home": 1.73,
+        "draw": 4.0,
+        "away": 5.6
+      },
+      "value_bets": []
+    },
+    {
+      "home": "Man City",
+      "away": "Arsenal",
+      "date": "2026-04-19T15:30:00+00:00",
+      "model_probs": {
+        "home": 0.3162,
+        "draw": 0.3393,
+        "away": 0.3445
+      },
+      "betfair_odds": {
+        "home": 1.86,
+        "draw": 3.95,
+        "away": 4.6
+      },
+      "value_bets": [
+        {
+          "outcome": "away",
+          "ev": 1.5847,
+          "kelly_fraction": 0.1624
+        }
+      ]
+    },
+    {
+      "home": "Crystal Palace",
+      "away": "West Ham",
+      "date": "2026-04-20T19:00:00+00:00",
+      "model_probs": {
+        "home": 0.5187,
+        "draw": 0.2382,
+        "away": 0.2431
+      },
+      "betfair_odds": {
+        "home": 2.44,
+        "draw": 3.35,
+        "away": 3.3
+      },
+      "value_bets": [
+        {
+          "outcome": "home",
+          "ev": 1.2656,
+          "kelly_fraction": 0.1845
+        }
+      ]
+    },
+    {
+      "home": "Brighton",
+      "away": "Chelsea",
+      "date": "2026-04-21T19:00:00+00:00",
+      "model_probs": {
+        "home": 0.4335,
+        "draw": 0.2828,
+        "away": 0.2837
+      },
+      "betfair_odds": {
+        "home": 2.5,
+        "draw": 3.8,
+        "away": 2.68
+      },
+      "value_bets": []
+    },
+    {
+      "home": "Bournemouth",
+      "away": "Leeds",
+      "date": "2026-04-22T19:00:00+00:00",
+      "model_probs": {
+        "home": 0.61,
+        "draw": 0.2226,
+        "away": 0.1674
+      },
+      "betfair_odds": {
+        "home": 2.16,
+        "draw": 3.75,
+        "away": 3.5
+      },
+      "value_bets": [
+        {
+          "outcome": "home",
+          "ev": 1.3176,
+          "kelly_fraction": 0.25
+        }
+      ]
+    },
+    {
+      "home": "Burnley",
+      "away": "Man City",
+      "date": "2026-04-22T19:00:00+00:00",
+      "model_probs": {
+        "home": 0.0963,
+        "draw": 0.1335,
+        "away": 0.7702
+      },
+      "betfair_odds": {
+        "home": 12.5,
+        "draw": 7.0,
+        "away": 1.26
+      },
+      "value_bets": []
+    },
+    {
+      "home": "Sunderland",
+      "away": "Nottm Forest",
+      "date": "2026-04-24T19:00:00+00:00",
+      "model_probs": {
+        "home": 0.4156,
+        "draw": 0.2838,
+        "away": 0.3006
+      },
+      "betfair_odds": {
+        "home": 2.84,
+        "draw": 3.2,
+        "away": 2.64
+      },
+      "value_bets": []
+    },
+    {
+      "home": "Fulham",
+      "away": "Aston Villa",
+      "date": "2026-04-25T11:30:00+00:00",
+      "model_probs": {
+        "home": 0.2949,
+        "draw": 0.2453,
+        "away": 0.4598
+      },
+      "betfair_odds": {
+        "home": 2.72,
+        "draw": 3.55,
+        "away": 2.58
+      },
+      "value_bets": []
+    },
+    {
+      "home": "West Ham",
+      "away": "Everton",
+      "date": "2026-04-25T14:00:00+00:00",
+      "model_probs": {
+        "home": 0.2773,
+        "draw": 0.2378,
+        "away": 0.4849
+      },
+      "betfair_odds": {
+        "home": 2.8,
+        "draw": 3.45,
+        "away": 2.72
+      },
+      "value_bets": [
+        {
+          "outcome": "away",
+          "ev": 1.3189,
+          "kelly_fraction": 0.1854
+        }
+      ]
+    },
+    {
+      "home": "Liverpool",
+      "away": "Crystal Palace",
+      "date": "2026-04-25T14:00:00+00:00",
+      "model_probs": {
+        "home": 0.5917,
+        "draw": 0.2409,
+        "away": 0.1674
+      },
+      "betfair_odds": {
+        "home": 1.54,
+        "draw": 4.6,
+        "away": 6.2
+      },
+      "value_bets": []
+    },
+    {
+      "home": "Wolves",
+      "away": "Tottenham",
+      "date": "2026-04-25T14:00:00+00:00",
+      "model_probs": {
+        "home": 0.2969,
+        "draw": 0.2912,
+        "away": 0.4119
+      },
+      "betfair_odds": {
+        "home": 3.75,
+        "draw": 3.65,
+        "away": 2.1
+      },
+      "value_bets": []
+    },
+    {
+      "home": "Arsenal",
+      "away": "Newcastle",
+      "date": "2026-04-25T16:30:00+00:00",
+      "model_probs": {
+        "home": 0.6675,
+        "draw": 0.1521,
+        "away": 0.1804
+      },
+      "betfair_odds": {
+        "home": 1.58,
+        "draw": 4.6,
+        "away": 5.8
+      },
+      "value_bets": []
+    },
+    {
+      "home": "Man Utd",
+      "away": "Brentford",
+      "date": "2026-04-27T19:00:00+00:00",
+      "model_probs": {
+        "home": 0.2425,
+        "draw": 0.2258,
+        "away": 0.5317
+      },
+      "betfair_odds": {
+        "home": 1.89,
+        "draw": 4.0,
+        "away": 4.1
+      },
+      "value_bets": [
+        {
+          "outcome": "away",
+          "ev": 2.18,
+          "kelly_fraction": 0.25
+        }
+      ]
+    }
+  ]
 }
