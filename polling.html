@@ -716,6 +716,22 @@
     toggle.addEventListener('click', () => links.classList.toggle('open'));
 
     // ── Party config ──────────────────────────────────────────────────────
+    // Force Chart.js to render at ≥2x pixel density so lines stay crisp on
+    // HiDPI displays. Default is window.devicePixelRatio, which is 1 on some
+    // external monitors → thick, blurry lines.
+    if (typeof Chart !== 'undefined') {
+      Chart.defaults.devicePixelRatio = Math.max(window.devicePixelRatio || 1, 2);
+    }
+
+    // Cache-busting fetch: GitHub Pages ships data/*.json with
+    // Cache-Control: max-age=600, so a page loaded just after the pipeline
+    // runs can easily read yesterday's JSON. Append a random query param and
+    // ask the browser to revalidate, so we always reflect the latest run.
+    function fetchJson(path, opts = {}) {
+      const sep = path.includes('?') ? '&' : '?';
+      return fetch(`${path}${sep}_=${Date.now()}`, { cache: 'no-cache', ...opts });
+    }
+
     const PARTY_CONFIG = {
       lab:    { label: 'Labour',   color: '#E4003B' },
       con:    { label: 'Con',      color: '#0087DC' },
@@ -1290,10 +1306,10 @@
       let geo, probsPayload, sharesPayload, metaPayload;
       try {
         [geo, probsPayload, sharesPayload, metaPayload] = await Promise.all([
-          fetch('data/uk_constituencies.geojson').then(r => r.ok ? r.json() : null),
-          fetch('data/seat_probabilities.json').then(r => r.ok ? r.json() : null),
-          fetch('data/seat_shares.json').then(r => r.ok ? r.json() : null),
-          fetch('data/constituency_meta.json').then(r => r.ok ? r.json() : null),
+          fetchJson('data/uk_constituencies.geojson').then(r => r.ok ? r.json() : null),
+          fetchJson('data/seat_probabilities.json').then(r => r.ok ? r.json() : null),
+          fetchJson('data/seat_shares.json').then(r => r.ok ? r.json() : null),
+          fetchJson('data/constituency_meta.json').then(r => r.ok ? r.json() : null),
         ]);
       } catch (err) {
         console.error('Map data fetch failed:', err);
@@ -1340,7 +1356,7 @@
     // ── Main data load ────────────────────────────────────────────────────
     async function loadData() {
       try {
-        const resp = await fetch('data/polling_predictions.json');
+        const resp = await fetchJson('data/polling_predictions.json');
         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
         const data = await resp.json();
 
