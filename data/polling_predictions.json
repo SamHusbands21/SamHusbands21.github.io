@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-17T13:48:25Z",
+  "updated_at": "2026-04-17T13:51:26Z",
   "polls_used": 123,
   "last_poll_date": "2026-04-14",
   "national_shares": {
@@ -61,42 +61,92 @@
     }
   },
   "seat_projections": {
-    "ml": {
+    "mrp": {
       "lab": {
-        "mean": 219.6,
-        "lo90": 64,
-        "hi90": 369,
-        "median": 222
+        "mean": 197.6,
+        "lo90": 93,
+        "hi90": 300,
+        "median": 195
       },
       "con": {
-        "mean": 144.9,
-        "lo90": 14,
+        "mean": 117.8,
+        "lo90": 8,
+        "hi90": 269,
+        "median": 95
+      },
+      "ld": {
+        "mean": 35.2,
+        "lo90": 3,
+        "hi90": 68,
+        "median": 30
+      },
+      "reform": {
+        "mean": 230.3,
+        "lo90": 48,
+        "hi90": 374,
+        "median": 251
+      },
+      "green": {
+        "mean": 16.1,
+        "lo90": 0,
+        "hi90": 58,
+        "median": 3
+      },
+      "snp": {
+        "mean": 31.7,
+        "lo90": 16,
+        "hi90": 41,
+        "median": 34
+      },
+      "pc": {
+        "mean": 21.3,
+        "lo90": 12,
+        "hi90": 29,
+        "median": 22
+      },
+      "others": {
+        "mean": 0.0,
+        "lo90": 0,
+        "hi90": 0,
+        "median": 0
+      }
+    },
+    "ml": {
+      "lab": {
+        "mean": 221.2,
+        "lo90": 67,
+        "hi90": 369,
+        "median": 225
+      },
+      "con": {
+        "mean": 144.4,
+        "lo90": 13,
         "hi90": 280,
         "median": 147
       },
       "ld": {
-        "mean": 70.3,
-        "lo90": 20,
+        "mean": 70.2,
+        "lo90": 22,
         "hi90": 102,
-        "median": 77
+        "median": 76
       },
       "reform": {
-        "mean": 166.9,
+        "mean": 166.2,
         "lo90": 21,
-        "hi90": 375,
-        "median": 134
+        "hi90": 370,
+        "median": 135
       },
       "green": {
-        "mean": 14.8,
+        "mean": 14.9,
         "lo90": 2,
         "hi90": 36,
         "median": 8
       },
       "snp": {
-        "mean": 29.1,
+        "mean": 28.7,
         "lo90": 8,
-        "hi90": 49,
-        "median": 29
+        "hi90": 48,
+        "median": 28
       },
       "pc": {
         "mean": 4.3,
@@ -282,224 +332,224 @@
   },
   "marginals": [
     {
-      "constituency": "West Dunbartonshire",
-      "constituency_code": "S14000106",
-      "incumbent": "snp",
-      "challenger": "lab",
-      "margin": 0.0001,
-      "swing_needed": 0.0,
-      "incumbent_share": 0.3524,
-      "challenger_share": 0.3523,
-      "p_win_leader": 0.496
-    },
-    {
-      "constituency": "Bournemouth West",
-      "constituency_code": "E14001116",
+      "constituency": "Newark",
+      "constituency_code": "E14001375",
       "incumbent": "con",
       "challenger": "reform",
+      "margin": 0.0001,
+      "swing_needed": 0.0001,
+      "incumbent_share": 0.3407,
+      "challenger_share": 0.3405,
+      "p_win_leader": 0.4983
+    },
+    {
+      "constituency": "Altrincham and Sale West",
+      "constituency_code": "E14001065",
+      "incumbent": "con",
+      "challenger": "lab",
       "margin": 0.0002,
       "swing_needed": 0.0001,
-      "incumbent_share": 0.2513,
-      "challenger_share": 0.251,
-      "p_win_leader": 0.3701
+      "incumbent_share": 0.2649,
+      "challenger_share": 0.2647,
+      "p_win_leader": 0.4152
     },
     {
-      "constituency": "Barnsley North",
-      "constituency_code": "E14001074",
-      "incumbent": "lab",
+      "constituency": "Chipping Barnet",
+      "constituency_code": "E14001169",
+      "incumbent": "con",
+      "challenger": "lab",
+      "margin": 0.0002,
+      "swing_needed": 0.0001,
+      "incumbent_share": 0.284,
+      "challenger_share": 0.2838,
+      "p_win_leader": 0.4733
+    },
+    {
+      "constituency": "Banbury",
+      "constituency_code": "E14001072",
+      "incumbent": "con",
       "challenger": "reform",
       "margin": 0.0003,
-      "swing_needed": 0.0001,
-      "incumbent_share": 0.3846,
-      "challenger_share": 0.3843,
-      "p_win_leader": 0.495
-    },
-    {
-      "constituency": "Newport West and Islwyn",
-      "constituency_code": "W07000105",
-      "incumbent": "reform",
-      "challenger": "lab",
-      "margin": 0.0004,
       "swing_needed": 0.0002,
-      "incumbent_share": 0.2958,
-      "challenger_share": 0.2954,
-      "p_win_leader": 0.5054
+      "incumbent_share": 0.2695,
+      "challenger_share": 0.2692,
+      "p_win_leader": 0.4131
     },
     {
-      "constituency": "Merthyr Tydfil and Aberdare",
-      "constituency_code": "W07000099",
-      "incumbent": "lab",
-      "challenger": "reform",
+      "constituency": "Didcot and Wantage",
+      "constituency_code": "E14001197",
+      "incumbent": "con",
+      "challenger": "ld",
+      "margin": 0.0003,
+      "swing_needed": 0.0002,
+      "incumbent_share": 0.2763,
+      "challenger_share": 0.2759,
+      "p_win_leader": 0.4165
+    },
+    {
+      "constituency": "Dumfriesshire, Clydesdale and Tweeddale",
+      "constituency_code": "S14000074",
+      "incumbent": "con",
+      "challenger": "snp",
       "margin": 0.0005,
       "swing_needed": 0.0003,
-      "incumbent_share": 0.3296,
-      "challenger_share": 0.329,
-      "p_win_leader": 0.4943
-    },
-    {
-      "constituency": "Stafford",
-      "constituency_code": "E14001513",
-      "incumbent": "con",
-      "challenger": "lab",
-      "margin": 0.0005,
-      "swing_needed": 0.0003,
-      "incumbent_share": 0.2728,
-      "challenger_share": 0.2723,
-      "p_win_leader": 0.3338
-    },
-    {
-      "constituency": "Alloa and Grangemouth",
-      "constituency_code": "S14000064",
-      "incumbent": "lab",
-      "challenger": "snp",
-      "margin": 0.0006,
-      "swing_needed": 0.0003,
-      "incumbent_share": 0.3145,
-      "challenger_share": 0.3139,
-      "p_win_leader": 0.5036
-    },
-    {
-      "constituency": "Stockton North",
-      "constituency_code": "E14001518",
-      "incumbent": "reform",
-      "challenger": "lab",
-      "margin": 0.0008,
-      "swing_needed": 0.0004,
-      "incumbent_share": 0.3248,
-      "challenger_share": 0.3241,
-      "p_win_leader": 0.4989
-    },
-    {
-      "constituency": "Bangor Aberconwy",
-      "constituency_code": "W07000083",
-      "incumbent": "reform",
-      "challenger": "pc",
-      "margin": 0.001,
-      "swing_needed": 0.0005,
-      "incumbent_share": 0.2334,
-      "challenger_share": 0.2325,
-      "p_win_leader": 0.3771
-    },
-    {
-      "constituency": "Edinburgh North and Leith",
-      "constituency_code": "S14000079",
-      "incumbent": "lab",
-      "challenger": "snp",
-      "margin": 0.001,
-      "swing_needed": 0.0005,
-      "incumbent_share": 0.2905,
-      "challenger_share": 0.2895,
-      "p_win_leader": 0.5014
-    },
-    {
-      "constituency": "Bognor Regis and Littlehampton",
-      "constituency_code": "E14001108",
-      "incumbent": "con",
-      "challenger": "reform",
-      "margin": 0.0013,
-      "swing_needed": 0.0007,
-      "incumbent_share": 0.2975,
-      "challenger_share": 0.2962,
-      "p_win_leader": 0.5073
-    },
-    {
-      "constituency": "Kettering",
-      "constituency_code": "E14001311",
-      "incumbent": "con",
-      "challenger": "reform",
-      "margin": 0.002,
-      "swing_needed": 0.001,
-      "incumbent_share": 0.2584,
-      "challenger_share": 0.2564,
-      "p_win_leader": 0.3709
-    },
-    {
-      "constituency": "Doncaster East and the Isle of Axholme",
-      "constituency_code": "E14001199",
-      "incumbent": "reform",
-      "challenger": "con",
-      "margin": 0.0021,
-      "swing_needed": 0.001,
-      "incumbent_share": 0.2974,
-      "challenger_share": 0.2954,
-      "p_win_leader": 0.427
-    },
-    {
-      "constituency": "Paisley and Renfrewshire North",
-      "constituency_code": "S14000101",
-      "incumbent": "lab",
-      "challenger": "snp",
-      "margin": 0.0021,
-      "swing_needed": 0.001,
-      "incumbent_share": 0.3327,
-      "challenger_share": 0.3306,
-      "p_win_leader": 0.5107
-    },
-    {
-      "constituency": "Clwyd East",
-      "constituency_code": "W07000094",
-      "incumbent": "con",
-      "challenger": "lab",
-      "margin": 0.0025,
-      "swing_needed": 0.0013,
-      "incumbent_share": 0.2609,
-      "challenger_share": 0.2584,
-      "p_win_leader": 0.364
-    },
-    {
-      "constituency": "Pontypridd",
-      "constituency_code": "W07000106",
-      "incumbent": "lab",
-      "challenger": "reform",
-      "margin": 0.0025,
-      "swing_needed": 0.0012,
-      "incumbent_share": 0.3049,
-      "challenger_share": 0.3024,
-      "p_win_leader": 0.5003
-    },
-    {
-      "constituency": "Hartlepool",
-      "constituency_code": "E14001272",
-      "incumbent": "lab",
-      "challenger": "reform",
-      "margin": 0.0029,
-      "swing_needed": 0.0015,
-      "incumbent_share": 0.3391,
-      "challenger_share": 0.3361,
+      "incumbent_share": 0.2682,
+      "challenger_share": 0.2677,
       "p_win_leader": 0.5021
     },
     {
-      "constituency": "Stourbridge",
-      "constituency_code": "E14001524",
+      "constituency": "Brecon, Radnor and Cwm Tawe",
+      "constituency_code": "W07000085",
+      "incumbent": "reform",
+      "challenger": "pc",
+      "margin": 0.0008,
+      "swing_needed": 0.0004,
+      "incumbent_share": 0.2547,
+      "challenger_share": 0.2539,
+      "p_win_leader": 0.4655
+    },
+    {
+      "constituency": "Bournemouth East",
+      "constituency_code": "E14001115",
+      "incumbent": "con",
+      "challenger": "lab",
+      "margin": 0.0011,
+      "swing_needed": 0.0005,
+      "incumbent_share": 0.2643,
+      "challenger_share": 0.2632,
+      "p_win_leader": 0.422
+    },
+    {
+      "constituency": "Nottingham North and Kimberley",
+      "constituency_code": "E14001411",
+      "incumbent": "reform",
+      "challenger": "lab",
+      "margin": 0.0014,
+      "swing_needed": 0.0007,
+      "incumbent_share": 0.2898,
+      "challenger_share": 0.2884,
+      "p_win_leader": 0.4966
+    },
+    {
+      "constituency": "North Cornwall",
+      "constituency_code": "E14001385",
+      "incumbent": "ld",
+      "challenger": "con",
+      "margin": 0.0015,
+      "swing_needed": 0.0007,
+      "incumbent_share": 0.2835,
+      "challenger_share": 0.2821,
+      "p_win_leader": 0.3752
+    },
+    {
+      "constituency": "Earley and Woodley",
+      "constituency_code": "E14001210",
+      "incumbent": "con",
+      "challenger": "lab",
+      "margin": 0.0016,
+      "swing_needed": 0.0008,
+      "incumbent_share": 0.2873,
+      "challenger_share": 0.2856,
+      "p_win_leader": 0.4787
+    },
+    {
+      "constituency": "South Shropshire",
+      "constituency_code": "E14001493",
       "incumbent": "reform",
       "challenger": "con",
-      "margin": 0.0029,
-      "swing_needed": 0.0015,
-      "incumbent_share": 0.2849,
-      "challenger_share": 0.282,
-      "p_win_leader": 0.4067
+      "margin": 0.0017,
+      "swing_needed": 0.0008,
+      "incumbent_share": 0.3325,
+      "challenger_share": 0.3308,
+      "p_win_leader": 0.5009
     },
     {
-      "constituency": "Gravesham",
-      "constituency_code": "E14001254",
+      "constituency": "Peterborough",
+      "constituency_code": "E14001425",
       "incumbent": "con",
       "challenger": "reform",
-      "margin": 0.003,
-      "swing_needed": 0.0015,
-      "incumbent_share": 0.2889,
-      "challenger_share": 0.2859,
-      "p_win_leader": 0.4154
+      "margin": 0.0023,
+      "swing_needed": 0.0011,
+      "incumbent_share": 0.2863,
+      "challenger_share": 0.284,
+      "p_win_leader": 0.4753
     },
     {
-      "constituency": "Leigh and Atherton",
-      "constituency_code": "E14001329",
+      "constituency": "Welwyn Hatfield",
+      "constituency_code": "E14001573",
+      "incumbent": "reform",
+      "challenger": "con",
+      "margin": 0.0023,
+      "swing_needed": 0.0011,
+      "incumbent_share": 0.2651,
+      "challenger_share": 0.2628,
+      "p_win_leader": 0.42
+    },
+    {
+      "constituency": "East Wiltshire",
+      "constituency_code": "E14001217",
+      "incumbent": "reform",
+      "challenger": "con",
+      "margin": 0.0028,
+      "swing_needed": 0.0014,
+      "incumbent_share": 0.3281,
+      "challenger_share": 0.3253,
+      "p_win_leader": 0.5098
+    },
+    {
+      "constituency": "Basingstoke",
+      "constituency_code": "E14001078",
+      "incumbent": "reform",
+      "challenger": "lab",
+      "margin": 0.0031,
+      "swing_needed": 0.0016,
+      "incumbent_share": 0.2634,
+      "challenger_share": 0.2603,
+      "p_win_leader": 0.4147
+    },
+    {
+      "constituency": "Frome and East Somerset",
+      "constituency_code": "E14001241",
+      "incumbent": "con",
+      "challenger": "ld",
+      "margin": 0.0032,
+      "swing_needed": 0.0016,
+      "incumbent_share": 0.2466,
+      "challenger_share": 0.2435,
+      "p_win_leader": 0.354
+    },
+    {
+      "constituency": "Shrewsbury",
+      "constituency_code": "E14001473",
       "incumbent": "lab",
       "challenger": "reform",
-      "margin": 0.003,
-      "swing_needed": 0.0015,
-      "incumbent_share": 0.3541,
-      "challenger_share": 0.351,
-      "p_win_leader": 0.5075
+      "margin": 0.0032,
+      "swing_needed": 0.0016,
+      "incumbent_share": 0.2786,
+      "challenger_share": 0.2753,
+      "p_win_leader": 0.465
+    },
+    {
+      "constituency": "Sevenoaks",
+      "constituency_code": "E14001465",
+      "incumbent": "con",
+      "challenger": "reform",
+      "margin": 0.0033,
+      "swing_needed": 0.0016,
+      "incumbent_share": 0.3488,
+      "challenger_share": 0.3456,
+      "p_win_leader": 0.5053
+    },
+    {
+      "constituency": "Truro and Falmouth",
+      "constituency_code": "E14001554",
+      "incumbent": "lab",
+      "challenger": "reform",
+      "margin": 0.0036,
+      "swing_needed": 0.0018,
+      "incumbent_share": 0.2631,
+      "challenger_share": 0.2595,
+      "p_win_leader": 0.4059
     }
   ],
   "vote_share_history": [
@@ -6227,18 +6277,27 @@
   "seat_history": [
     {
       "week": "2026-W16",
-      "mrp": {},
+      "mrp": {
+        "lab": 197.6,
+        "con": 117.8,
+        "ld": 35.2,
+        "reform": 230.3,
+        "green": 16.1,
+        "snp": 31.7,
+        "pc": 21.3,
+        "others": 0.0
+      },
       "ml": {
-        "lab": 219.6,
-        "con": 144.9,
-        "ld": 70.3,
-        "reform": 166.9,
-        "green": 14.8,
-        "snp": 29.1,
+        "lab": 221.2,
+        "con": 144.4,
+        "ld": 70.2,
+        "reform": 166.2,
+        "green": 14.9,
+        "snp": 28.7,
         "pc": 4.3,
         "others": 0.0
       },
-      "updated_at": "2026-04-17T13:48:25.947692+00:00"
+      "updated_at": "2026-04-17T13:51:26.724914+00:00"
     }
   ]
 }
