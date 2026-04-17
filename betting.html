@@ -37,6 +37,40 @@
       font-size: 0.85rem;
       color: var(--muted);
     }
+    .meta-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .export-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition), color var(--transition);
+      font-family: inherit;
+    }
+    .export-btn:hover:not(:disabled) {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: var(--white);
+    }
+    .export-btn:focus-visible {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+    .export-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
     .live-dot {
       display: inline-block;
       width: 8px; height: 8px;
@@ -518,7 +552,12 @@
           <span class="live-dot"></span>
           <span style="font-size:0.85rem;font-weight:600;color:var(--navy);">Live recommendations</span>
         </div>
-        <div class="updated" id="updatedAt">Loading…</div>
+        <div class="meta-right">
+          <button type="button" class="export-btn" id="exportXlsx" disabled title="Download a workbook with predictions, model features, and SHAP explanations">
+            <span aria-hidden="true">⬇</span> Download .xlsx
+          </button>
+          <div class="updated" id="updatedAt">Loading…</div>
+        </div>
       </div>
 
       <!-- Fixtures injected here by JS -->
@@ -590,6 +629,11 @@
     <p>&copy; <span id="year"></span> Sam Husbands</p>
   </footer>
 
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"
+    integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -856,11 +900,147 @@
       });
     }
 
+    // ── Excel export ──────────────────────────────────────────
+
+    // Keep the most recently rendered payload around so the export button can
+    // write the same data the page is showing.
+    let latestExport = { fixtures: [], updatedAt: null };
+
+    const PREDICTION_COLUMNS = [
+      { header: 'Date (UTC)',        get: f => new Date(f.date).toISOString() },
+      { header: 'Home',              get: f => f.home },
+      { header: 'Away',              get: f => f.away },
+      { header: 'P(Home)',           get: f => f.model_probs?.home ?? null },
+      { header: 'P(Draw)',           get: f => f.model_probs?.draw ?? null },
+      { header: 'P(Away)',           get: f => f.model_probs?.away ?? null },
+      { header: 'Predicted',         get: f => f.explanation?.predicted_outcome ?? predictedOutcome(f) },
+      { header: 'Odds Home',         get: f => f.betfair_odds?.home ?? null },
+      { header: 'Odds Draw',         get: f => f.betfair_odds?.draw ?? null },
+      { header: 'Odds Away',         get: f => f.betfair_odds?.away ?? null },
+      { header: 'Value bets',        get: f => (f.value_bets || [])
+                                                 .map(v => `${v.outcome} (EV ${v.ev}, Kelly ${(v.kelly_fraction * 100).toFixed(1)}%)`)
+                                                 .join('; ') || '—' },
+      { header: 'Home last 5',       get: f => (f.form?.home?.last5 || []).join('') },
+      { header: 'Away last 5',       get: f => (f.form?.away?.last5 || []).join('') },
+      { header: 'Rest days (H)',     get: f => f.match_context?.rest_days?.home ?? null },
+      { header: 'Rest days (A)',     get: f => f.match_context?.rest_days?.away ?? null },
+      { header: 'H2H home win rate', get: f => f.match_context?.h2h_home_winrate ?? null },
+    ];
+
+    const FORM_KEYS = ['elo', 'xg_elo', 'ppg_5', 'ppg_10', 'xgf_5', 'xga_5', 'gf_5', 'ga_5'];
+    const FORM_HEADERS = {
+      elo: 'Elo', xg_elo: 'xG-Elo', ppg_5: 'PPG5', ppg_10: 'PPG10',
+      xgf_5: 'xGF5', xga_5: 'xGA5', gf_5: 'GF5', ga_5: 'GA5',
+    };
+
+    function predictedOutcome(f) {
+      const p = f.model_probs || {};
+      const entries = [['home', p.home ?? -1], ['draw', p.draw ?? -1], ['away', p.away ?? -1]];
+      entries.sort((a, b) => b[1] - a[1]);
+      return entries[0][0];
+    }
+
+    function buildPredictionsSheet(fixtures) {
+      return fixtures.map(f => {
+        const row = {};
+        for (const col of PREDICTION_COLUMNS) row[col.header] = col.get(f);
+        return row;
+      });
+    }
+
+    function buildFeaturesSheet(fixtures) {
+      return fixtures.map(f => {
+        const row = {
+          'Date (UTC)': new Date(f.date).toISOString(),
+          'Home': f.home,
+          'Away': f.away,
+        };
+        const home = f.form?.home || {};
+        const away = f.form?.away || {};
+        for (const key of FORM_KEYS) row[`Home ${FORM_HEADERS[key]}`] = home[key] ?? null;
+        for (const key of FORM_KEYS) row[`Away ${FORM_HEADERS[key]}`] = away[key] ?? null;
+        row['Elo diff (H-A)']    = (home.elo    != null && away.elo    != null) ? (home.elo    - away.elo)    : null;
+        row['xG-Elo diff (H-A)'] = (home.xg_elo != null && away.xg_elo != null) ? (home.xg_elo - away.xg_elo) : null;
+        row['Home rest days']    = f.match_context?.rest_days?.home ?? null;
+        row['Away rest days']    = f.match_context?.rest_days?.away ?? null;
+        row['H2H home win rate'] = f.match_context?.h2h_home_winrate ?? null;
+        row['Home last 5']       = (home.last5 || []).join('');
+        row['Away last 5']       = (away.last5 || []).join('');
+        return row;
+      });
+    }
+
+    function buildExplanationSheet(fixtures) {
+      const rows = [];
+      for (const f of fixtures) {
+        const exp = f.explanation;
+        if (!exp || !Array.isArray(exp.contributions)) continue;
+        exp.contributions.forEach((c, i) => {
+          rows.push({
+            'Date (UTC)':     new Date(f.date).toISOString(),
+            'Home':           f.home,
+            'Away':           f.away,
+            'Predicted':      exp.predicted_outcome,
+            'Base value':     exp.base_value ?? null,
+            'Rank':           i + 1,
+            'Feature':        c.feature,
+            'Human name':     c.human_name,
+            'Feature value':  c.value ?? null,
+            'SHAP':           c.shap ?? null,
+          });
+        });
+      }
+      return rows;
+    }
+
+    function autoSizeColumns(sheet, rows) {
+      if (!rows.length) return;
+      const keys = Object.keys(rows[0]);
+      sheet['!cols'] = keys.map(k => {
+        const maxLen = Math.max(
+          k.length,
+          ...rows.map(r => (r[k] == null ? 0 : String(r[k]).length))
+        );
+        return { wch: Math.min(Math.max(maxLen + 2, 10), 42) };
+      });
+    }
+
+    function downloadXlsx() {
+      if (typeof XLSX === 'undefined') {
+        alert('Spreadsheet library failed to load. Please refresh and try again.');
+        return;
+      }
+      const fixtures = latestExport.fixtures || [];
+      if (!fixtures.length) return;
+
+      const predictions   = buildPredictionsSheet(fixtures);
+      const features      = buildFeaturesSheet(fixtures);
+      const explanations  = buildExplanationSheet(fixtures);
+
+      const wb = XLSX.utils.book_new();
+      const predSheet = XLSX.utils.json_to_sheet(predictions);
+      const featSheet = XLSX.utils.json_to_sheet(features);
+      const explSheet = XLSX.utils.json_to_sheet(explanations);
+      autoSizeColumns(predSheet, predictions);
+      autoSizeColumns(featSheet, features);
+      autoSizeColumns(explSheet, explanations);
+      XLSX.utils.book_append_sheet(wb, predSheet, 'Predictions');
+      XLSX.utils.book_append_sheet(wb, featSheet, 'Features');
+      XLSX.utils.book_append_sheet(wb, explSheet, 'Explanations');
+
+      const date = (latestExport.updatedAt ? new Date(latestExport.updatedAt) : new Date())
+        .toISOString().slice(0, 10);
+      XLSX.writeFile(wb, `pl-predictions-${date}.xlsx`);
+    }
+
+    document.getElementById('exportXlsx').addEventListener('click', downloadXlsx);
+
     // ── Fetch and render ──────────────────────────────────────
 
     async function loadRecommendations() {
       const container = document.getElementById('fixtureContainer');
       const updatedEl = document.getElementById('updatedAt');
+      const exportBtn = document.getElementById('exportXlsx');
 
       try {
         const [recResp, crestResp] = await Promise.all([
@@ -890,6 +1070,9 @@
 
         container.innerHTML = `<div class="fixture-grid">${fixtures.map(f => buildCard(f, crests)).join('')}</div>`;
         wireCardToggles(container);
+
+        latestExport = { fixtures, updatedAt: data.updated_at };
+        exportBtn.disabled = false;
 
       } catch (err) {
         updatedEl.textContent = 'Could not load data';
