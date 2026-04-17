@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-04-17T10:19:48.497474+00:00",
+  "updated_at": "2026-04-17T10:41:14.667413+00:00",
   "fixtures": [
     {
       "home": "Brentford",
@@ -138,7 +138,7 @@
         "away": 0.2697
       },
       "betfair_odds": {
-        "home": 2.1,
+        "home": 2.08,
         "draw": 4.0,
         "away": 3.6
       },
@@ -396,11 +396,17 @@
         "away": 0.5057
       },
       "betfair_odds": {
-        "home": 2.9,
+        "home": 2.82,
         "draw": 3.9,
-        "away": 2.46
+        "away": 2.52
       },
-      "value_bets": [],
+      "value_bets": [
+        {
+          "outcome": "away",
+          "ev": 1.2744,
+          "kelly_fraction": 0.1805
+        }
+      ],
       "form": {
         "home": {
           "elo": 1479.4,
@@ -782,13 +788,13 @@
       "betfair_odds": {
         "home": 1.54,
         "draw": 4.5,
-        "away": 7.4
+        "away": 7.6
       },
       "value_bets": [
         {
           "outcome": "away",
-          "ev": 1.8285,
-          "kelly_fraction": 0.1295
+          "ev": 1.878,
+          "kelly_fraction": 0.133
         }
       ],
       "form": {
@@ -2058,7 +2064,7 @@
         "away": 0.1674
       },
       "betfair_odds": {
-        "home": 1.54,
+        "home": 1.55,
         "draw": 4.6,
         "away": 6.2
       },
