@@ -43,6 +43,45 @@
       gap: 1rem;
       flex-wrap: wrap;
     }
+    .meta-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .meta-kpis {
+      display: inline-flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .kpi-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: var(--light);
+      border: 1px solid var(--mid);
+      color: var(--text);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .kpi-pill .k { color: var(--muted); font-weight: 800; }
+    .toggle-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: var(--white);
+      border: 1px solid var(--mid);
+      color: var(--text);
+      font-size: 0.78rem;
+      font-weight: 800;
+      user-select: none;
+    }
+    .toggle-pill input { accent-color: var(--blue); }
     .export-btn {
       display: inline-flex;
       align-items: center;
@@ -90,6 +129,32 @@
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1.5rem;
       margin-bottom: 3rem;
+    }
+    .section-header {
+      position: sticky;
+      top: 64px; /* nav height */
+      z-index: 50;
+      background: rgba(248, 250, 252, 0.92);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--mid);
+      border-radius: 12px;
+      padding: 0.65rem 0.9rem;
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .section-header .title {
+      color: var(--navy);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      font-size: 0.95rem;
+    }
+    .section-header .sub {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.8rem;
     }
 
     .fixture-card {
@@ -254,6 +319,50 @@
       font-size: 0.82rem;
       color: var(--muted);
     }
+    .vb-rationale {
+      margin-top: 0.75rem;
+      padding: 0.8rem 0.95rem;
+      background: #f8fafc;
+      border: 1px solid var(--mid);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.85rem;
+      line-height: 1.55;
+    }
+    .vb-rationale strong { color: var(--navy); }
+    .vb-rationale .muted { color: var(--muted); }
+    .vb-reco-line {
+      margin-top: 0.65rem;
+      font-size: 0.82rem;
+      color: var(--text);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.6rem;
+      align-items: center;
+    }
+    .vb-reco-line .reco-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--mid);
+      background: var(--white);
+      font-weight: 900;
+      font-size: 0.76rem;
+      color: var(--navy);
+      font-variant-numeric: tabular-nums;
+    }
+    .vb-reco-line .reco-pill.good {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+      color: #166534;
+    }
+    .vb-reco-line .reco-pill.warn {
+      border-color: #fed7aa;
+      background: #fff7ed;
+      color: #9a3412;
+    }
 
     /* ── Empty / loading states ── */
     .state-box {
@@ -326,6 +435,29 @@
       margin-bottom: 0.5rem;
     }
     .fixture-date-row .fixture-date { margin-bottom: 0; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.18rem 0.55rem;
+      font-size: 0.7rem;
+      font-weight: 900;
+      border-radius: 999px;
+      border: 1px solid var(--mid);
+      background: #f1f5f9;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .badge.warn {
+      border-color: #fde68a;
+      background: #fffbeb;
+      color: #92400e;
+    }
+    .badge.good {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+      color: #166534;
+    }
 
     .fixture-toggle {
       display: inline-flex;
@@ -548,9 +680,20 @@
     <div class="container">
 
       <div class="meta-bar">
-        <div>
-          <span class="live-dot"></span>
-          <span style="font-size:0.85rem;font-weight:600;color:var(--navy);">Live recommendations</span>
+        <div class="meta-left">
+          <div>
+            <span class="live-dot"></span>
+            <span style="font-size:0.85rem;font-weight:600;color:var(--navy);">Live recommendations</span>
+          </div>
+          <div class="meta-kpis" id="metaKpis" aria-label="Summary">
+            <span class="kpi-pill"><span class="k">Fixtures</span>—</span>
+            <span class="kpi-pill"><span class="k">Value</span>—</span>
+            <span class="kpi-pill"><span class="k">Odds</span>—</span>
+          </div>
+          <label class="toggle-pill" title="Show only fixtures with value bets">
+            <input type="checkbox" id="showValueOnly" />
+            Value bets only
+          </label>
         </div>
         <div class="meta-right">
           <button type="button" class="export-btn" id="exportXlsx" disabled title="Download a workbook with predictions, model features, and SHAP explanations">
@@ -670,6 +813,95 @@
       return String(s).replace(/[&<>"']/g, c => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
       }[c]));
+    }
+
+    function titleCase(s) {
+      const v = String(s || '');
+      return v ? v.charAt(0).toUpperCase() + v.slice(1) : v;
+    }
+
+    function topShapReasons(explanation, limit = 2) {
+      if (!explanation || !Array.isArray(explanation.contributions)) return [];
+      // Prefer features that push TOWARD the predicted outcome (positive SHAP).
+      const positives = explanation.contributions
+        .filter(c => typeof c?.shap === 'number' && c.shap > 0)
+        .sort((a, b) => Math.abs(b.shap) - Math.abs(a.shap));
+      const picks = positives.slice(0, limit);
+      return picks.map(c => escapeHtml(c.human_name || c.feature || 'model signal'));
+    }
+
+    function topShapCounter(explanation) {
+      if (!explanation || !Array.isArray(explanation.contributions)) return null;
+      const negatives = explanation.contributions
+        .filter(c => typeof c?.shap === 'number' && c.shap < 0)
+        .sort((a, b) => Math.abs(b.shap) - Math.abs(a.shap));
+      const c = negatives[0];
+      if (!c) return null;
+      return escapeHtml(c.human_name || c.feature || 'counter-signal');
+    }
+
+    function impliedProbFromOdds(o) {
+      const x = Number(o);
+      if (!isFinite(x) || x <= 1.0) return null;
+      return 1 / x;
+    }
+
+    function confidenceTag(vb, p) {
+      const ev = Number(vb?.ev);
+      if (!isFinite(ev)) return { label: 'Low info', cls: 'warn' };
+      if (ev >= 1.55) return { label: 'High edge', cls: 'good' };
+      if (ev >= 1.35 && typeof p === 'number' && p >= 0.35) return { label: 'High edge', cls: 'good' };
+      if (ev >= 1.25) return { label: 'Medium edge', cls: '' };
+      return { label: 'Low edge', cls: 'warn' };
+    }
+
+    function betRationale(fixture, vb) {
+      const outcome = vb?.outcome;
+      const p = fixture?.model_probs?.[outcome];
+      const o = fixture?.betfair_odds?.[outcome];
+      const ev = vb?.ev;
+      const kelly = vb?.kelly_fraction;
+
+      const outcomeTeam =
+        outcome === 'home' ? fixture.home :
+        outcome === 'away' ? fixture.away :
+        titleCase(outcome);
+
+      const implied = impliedProbFromOdds(o);
+      const impliedText = (implied == null) ? '—' : pct(implied);
+
+      const oddsNote = (o == null || implied == null)
+        ? `<span class="muted">Odds unavailable (fixtures-only fallback), so EV/edge can’t be computed.</span>`
+        : `At odds <strong>${Number(o).toFixed(2)}</strong> (implied <strong>${impliedText}</strong>), EV is <strong>${typeof ev === 'number' ? ev.toFixed(3) : '—'}</strong>.`;
+
+      const reasons = topShapReasons(fixture.explanation, 2);
+      const counter = topShapCounter(fixture.explanation);
+      const reasonsText = reasons.length
+        ? ` Key drivers: <strong>${reasons.join('</strong> and <strong>')}</strong>.`
+        : '';
+      const counterText = counter ? ` <span class="muted">Counter-signal:</span> <strong>${counter}</strong>.` : '';
+
+      const pText = (typeof p === 'number') ? pct(p) : '—';
+      const evText = (typeof ev === 'number') ? ev.toFixed(3) : '—';
+      const kText = (typeof kelly === 'number') ? (kelly * 100).toFixed(1) + '%' : '—';
+      const conf = confidenceTag(vb, p);
+
+      return `
+        <div class="vb-rationale">
+          <div class="vb-reco-line">
+            <span class="reco-pill ${conf.cls}">${conf.label}</span>
+            <span class="reco-pill">Recommended: ${escapeHtml(outcomeTeam)} (${escapeHtml(outcomeLabel(outcome))})</span>
+            <span class="reco-pill">Model ${pText} vs implied ${impliedText}</span>
+            ${(o != null && isFinite(Number(o))) ? `<span class="reco-pill">Odds ${Number(o).toFixed(2)}</span>` : `<span class="reco-pill warn">Odds unavailable</span>`}
+            ${(typeof ev === 'number') ? `<span class="reco-pill good">EV ${evText}</span>` : `<span class="reco-pill warn">EV —</span>`}
+            ${(typeof kelly === 'number') ? `<span class="reco-pill">Kelly ${kText}</span>` : `<span class="reco-pill warn">Kelly —</span>`}
+          </div>
+          <div style="margin-top:0.55rem;">
+            <strong>Why:</strong> The model rates <strong>${escapeHtml(outcomeTeam)}</strong> at <strong>${pText}</strong>.
+            ${oddsNote}
+            ${reasonsText}${counterText}
+          </div>
+        </div>`;
     }
 
     function teamBlock(name, crests) {
@@ -799,6 +1031,7 @@
       const hasValue = value_bets && value_bets.length > 0;
       const detailsHtml = buildDetails(fixture, crests);
       const hasDetails = detailsHtml.length > 0;
+      const oddsAvailable = !!(betfair_odds && Object.values(betfair_odds).some(v => typeof v === 'number' && isFinite(v) && v > 1));
 
       const pH = model_probs.home;
       const pD = model_probs.draw;
@@ -821,9 +1054,11 @@
         ? (value_bets.map(vb => `
             <span class="vb-chip">
               ${outcomeLabel(vb.outcome)}
-              <span>EV ${vb.ev.toFixed(3)}</span>
-              <span class="kelly">· Kelly ${(vb.kelly_fraction * 100).toFixed(1)}%</span>
-            </span>`).join(''))
+              <span>EV ${typeof vb.ev === 'number' ? vb.ev.toFixed(3) : '—'}</span>
+              <span class="kelly">· Kelly ${typeof vb.kelly_fraction === 'number' ? (vb.kelly_fraction * 100).toFixed(1) + '%' : '—'}</span>
+            </span>
+          `).join('')
+          + value_bets.map(vb => betRationale(fixture, vb)).join(''))
         : '<span class="no-value">No value bets identified</span>';
 
       const cardAttrs = hasDetails
@@ -835,6 +1070,7 @@
           <div class="fixture-top">
             <div class="fixture-date-row">
               <div class="fixture-date">${formatDate(date)}</div>
+              ${!oddsAvailable ? '<span class="badge warn" title="Fixtures-only fallback used. Odds are unavailable, so value bets may be missing.">Odds unavailable</span>' : (hasValue ? '<span class="badge good" title="At least one value bet flagged for this fixture.">Value bet</span>' : '')}
               ${hasDetails ? '<span class="fixture-toggle" aria-hidden="true">▾</span>' : ''}
             </div>
             <div class="fixture-teams">
@@ -880,6 +1116,19 @@
     // ── Expand/collapse behavior ──────────────────────────────
 
     function toggleCard(card) {
+      const willExpand = !card.classList.contains('expanded');
+      if (willExpand) {
+        // Keep UI tidy: only one expanded at a time within the same grid.
+        const grid = card.parentElement;
+        if (grid) {
+          grid.querySelectorAll('.fixture-card.expanded').forEach(other => {
+            if (other !== card) {
+              other.classList.remove('expanded');
+              other.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+      }
       const expanded = card.classList.toggle('expanded');
       card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
     }
@@ -1041,6 +1290,8 @@
       const container = document.getElementById('fixtureContainer');
       const updatedEl = document.getElementById('updatedAt');
       const exportBtn = document.getElementById('exportXlsx');
+      const metaKpis  = document.getElementById('metaKpis');
+      const valueOnly = document.getElementById('showValueOnly');
 
       try {
         const [recResp, crestResp] = await Promise.all([
@@ -1054,11 +1305,24 @@
 
         updatedEl.textContent = formatUpdated(data.updated_at);
 
-        const fixtures = (data.fixtures || []).filter(f => {
+        const upcoming = (data.fixtures || []).filter(f => {
           return new Date(f.date) > new Date();
         });
 
-        if (!fixtures.length) {
+        const countValue = upcoming.filter(f => (f.value_bets || []).length > 0).length;
+        const anyOdds = upcoming.some(f => f.betfair_odds && Object.values(f.betfair_odds).some(v => typeof v === 'number' && isFinite(v) && v > 1));
+        const allOdds = upcoming.length > 0 && upcoming.every(f => f.betfair_odds && Object.values(f.betfair_odds).some(v => typeof v === 'number' && isFinite(v) && v > 1));
+        const oddsLabel = allOdds ? 'Betfair' : (anyOdds ? 'Partial' : 'None');
+
+        if (metaKpis) {
+          metaKpis.innerHTML = `
+            <span class="kpi-pill"><span class="k">Fixtures</span>${upcoming.length}</span>
+            <span class="kpi-pill"><span class="k">Value</span>${countValue}</span>
+            <span class="kpi-pill"><span class="k">Odds</span>${oddsLabel}</span>
+          `;
+        }
+
+        if (!upcoming.length) {
           container.innerHTML = `
             <div class="state-box">
               <div class="icon">📅</div>
@@ -1068,10 +1332,78 @@
           return;
         }
 
-        container.innerHTML = `<div class="fixture-grid">${fixtures.map(f => buildCard(f, crests)).join('')}</div>`;
-        wireCardToggles(container);
+        function render(fixturesToRender) {
+          const withValue = fixturesToRender
+            .filter(f => (f.value_bets || []).length > 0)
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
+          const withoutValue = fixturesToRender
+            .filter(f => (f.value_bets || []).length === 0)
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        latestExport = { fixtures, updatedAt: data.updated_at };
+          const oddsOnlyNote = (!anyOdds)
+            ? `<div class="state-box" style="padding:1.5rem 1rem 2.25rem;">
+                 <div class="icon">🛈</div>
+                 <h3>Odds unavailable right now</h3>
+                 <p>Fixtures are shown, but Betfair odds weren’t available at the last run, so value bets may be missing.</p>
+               </div>`
+            : '';
+
+          const noValueNote = (countValue === 0 && anyOdds && (!valueOnly || !valueOnly.checked))
+            ? `<div class="state-box" style="padding:1.5rem 1rem 2.25rem;">
+                 <div class="icon">✅</div>
+                 <h3>No value bets today</h3>
+                 <p>There are upcoming fixtures, but none pass the EV threshold (Home/Away only). Check back after the next daily run.</p>
+               </div>`
+            : '';
+
+          const valueHeader = withValue.length
+            ? `<div class="section-header">
+                 <div class="title">Value bets</div>
+                 <div class="sub">${withValue.length} fixture${withValue.length === 1 ? '' : 's'}</div>
+               </div>`
+            : '';
+          const allHeader = withoutValue.length
+            ? `<div class="section-header" style="margin-top:1.25rem;">
+                 <div class="title" style="color:var(--muted);">Other fixtures</div>
+                 <div class="sub">${withoutValue.length} fixture${withoutValue.length === 1 ? '' : 's'}</div>
+               </div>`
+            : '';
+
+          container.innerHTML = `
+            ${oddsOnlyNote}
+            ${noValueNote}
+            ${valueHeader}
+            ${withValue.length ? `<div class="fixture-grid">${withValue.map(f => buildCard(f, crests)).join('')}</div>` : ''}
+            ${allHeader}
+            ${withoutValue.length ? `<div class="fixture-grid">${withoutValue.map(f => buildCard(f, crests)).join('')}</div>` : ''}
+          `;
+          wireCardToggles(container);
+        }
+
+        function applyFilters() {
+          const only = !!(valueOnly && valueOnly.checked);
+          if (only) {
+            const v = upcoming.filter(f => (f.value_bets || []).length > 0);
+            if (!v.length) {
+              container.innerHTML = `
+                <div class="state-box">
+                  <div class="icon">🔎</div>
+                  <h3>No value bets found</h3>
+                  <p>Try turning off “Value bets only”, or check back after the next daily run.</p>
+                </div>`;
+              return;
+            }
+            render(v);
+          } else {
+            render(upcoming);
+          }
+        }
+
+        applyFilters();
+        if (valueOnly) valueOnly.addEventListener('change', applyFilters);
+
+        // Keep export in chronological order for spreadsheet usefulness
+        latestExport = { fixtures: upcoming.slice().sort((a, b) => new Date(a.date) - new Date(b.date)), updatedAt: data.updated_at };
         exportBtn.disabled = false;
 
       } catch (err) {
