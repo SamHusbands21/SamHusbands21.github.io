@@ -216,17 +216,6 @@
     }
     .chart-canvas-wrap { position: relative; height: 320px; }
 
-    /* ── Vote share trend PNG ── */
-    .plot-frame {
-      background: var(--white);
-      border: 1px solid var(--mid);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      margin-bottom: 3rem;
-    }
-    .plot-frame img { width: 100%; display: block; }
-
     /* ── Marginals table ── */
     .marginals-section { margin-bottom: 3rem; }
     .marginals-table {
@@ -255,6 +244,22 @@
     }
     .marginals-table tr:last-child td { border-bottom: none; }
     .marginals-table tr:hover td { background: var(--light); }
+    .marginals-table tr.marginals-flip td { background: #fff7ed; }
+    .marginals-table tr.marginals-flip:hover td { background: #ffedd5; }
+    .flip-badge {
+      display: inline-block;
+      margin-left: 0.4rem;
+      padding: 1px 6px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #9a3412;
+      background: #ffedd5;
+      border: 1px solid #fed7aa;
+      border-radius: 3px;
+      vertical-align: middle;
+    }
     .party-dot {
       display: inline-block;
       width: 8px; height: 8px;
@@ -374,7 +379,7 @@
       margin-bottom: 3rem;
     }
     #seatMap {
-      height: 640px;
+      height: 720px;
       border-radius: calc(var(--radius) - 4px);
       background: #e2e8f0;
       overflow: hidden;
@@ -590,53 +595,6 @@
         <div class="meta-pills" id="metaPills"></div>
       </div>
 
-      <!-- ── National Vote Share ─────────────────────────────────────── -->
-      <div class="section-heading">National Vote Share</div>
-      <div class="vote-share-grid" id="voteShareGrid">
-        <div class="loading-msg">Loading vote share data…</div>
-      </div>
-
-      <!-- ── Vote Share Trend Chart (PNG from pipeline) ─────────────── -->
-      <div class="section-heading">Vote Share Trend</div>
-      <div class="plot-frame" id="trendPlotFrame">
-        <img src="data/vote_share_trend.png" alt="Vote share trend chart"
-             onerror="this.parentElement.style.display='none'" />
-      </div>
-
-      <!-- ── Historical Chart (Chart.js) ───────────────────────────── -->
-      <div class="chart-section">
-        <div class="section-heading">Historical Tracker</div>
-        <div class="chart-tabs">
-          <button class="chart-tab active" data-mode="votes">Vote Shares</button>
-          <button class="chart-tab" data-mode="seats">Seat Projections</button>
-        </div>
-        <div class="chart-wrapper">
-          <div class="chart-canvas-wrap">
-            <canvas id="historyChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Seat Projections ──────────────────────────────────────── -->
-      <div class="section-heading">Seat Projections</div>
-      <div class="seat-grid" id="seatGrid">
-        <div class="loading-msg">Loading seat projections…</div>
-      </div>
-
-      <!-- ── Seat Charts (static PNGs from pipeline) ───────────────── -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:2.5rem;">
-        <div class="plot-frame">
-          <div style="font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Model Comparison</div>
-          <img src="data/model_comparison.png" alt="MRP vs ML model seat comparison"
-               onerror="this.parentElement.style.display='none'" />
-        </div>
-        <div class="plot-frame">
-          <div style="font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem;">Seat Distribution (Monte Carlo)</div>
-          <img src="data/seat_distribution.png" alt="Monte Carlo seat distribution"
-               onerror="this.parentElement.style.display='none'" />
-        </div>
-      </div>
-
       <!-- ── Interactive Seat Map ─────────────────────────────────── -->
       <div class="section-heading">Interactive Seat Map</div>
       <p class="map-intro">
@@ -658,11 +616,29 @@
         </aside>
       </div>
 
-      <!-- ── Top Marginals Table ──────────────────────────────────── -->
-      <div class="marginals-section">
-        <div class="section-heading">Top 20 Marginal Seats</div>
-        <div id="marginalsContainer">
-          <div class="loading-msg">Loading marginals…</div>
+      <!-- ── National Vote Share ─────────────────────────────────────── -->
+      <div class="section-heading">National Vote Share</div>
+      <div class="vote-share-grid" id="voteShareGrid">
+        <div class="loading-msg">Loading vote share data…</div>
+      </div>
+
+      <!-- ── Seat Projections ──────────────────────────────────────── -->
+      <div class="section-heading">Seat Projections</div>
+      <div class="seat-grid" id="seatGrid">
+        <div class="loading-msg">Loading seat projections…</div>
+      </div>
+
+      <!-- ── Historical Chart (Chart.js) ───────────────────────────── -->
+      <div class="chart-section">
+        <div class="section-heading">Historical Tracker</div>
+        <div class="chart-tabs">
+          <button class="chart-tab active" data-mode="votes">Vote Shares</button>
+          <button class="chart-tab" data-mode="seats">Seat Projections</button>
+        </div>
+        <div class="chart-wrapper">
+          <div class="chart-canvas-wrap">
+            <canvas id="historyChart"></canvas>
+          </div>
         </div>
       </div>
 
@@ -698,6 +674,14 @@
 
       <div style="text-align:center; margin-top:1.5rem;">
         <a href="polling-paper.html" class="btn btn-outline">Read the full methodology →</a>
+      </div>
+
+      <!-- ── Top Marginals Table ──────────────────────────────────── -->
+      <div class="marginals-section">
+        <div class="section-heading">Top 20 Marginal Seats</div>
+        <div id="marginalsContainer">
+          <div class="loading-msg">Loading marginals…</div>
+        </div>
       </div>
 
       <div class="disclaimer">
@@ -835,6 +819,12 @@
     }
 
     // ── Marginals table ───────────────────────────────────────────────────
+    function partyCell(party) {
+      if (!party) return '<span class="muted">—</span>';
+      const cfg = PARTY_CONFIG[party] || { color: '#888', label: party.toUpperCase() };
+      return `<span class="party-dot" style="background:${cfg.color}"></span>${cfg.label}`;
+    }
+
     function buildMarginalsTable(marginals) {
       const container = document.getElementById('marginalsContainer');
       if (!marginals || !marginals.length) {
@@ -842,19 +832,24 @@
         return;
       }
       const rows = marginals.map((m, i) => {
-        const incCfg = PARTY_CONFIG[m.incumbent] || { color: '#888', label: m.incumbent };
-        const chalCfg = PARTY_CONFIG[m.challenger] || { color: '#888', label: m.challenger };
+        // Prefer the new field names (leader / runner_up / incumbent_2024).
+        // Fall back to the legacy aliases so the table still renders if a
+        // slightly older polling_predictions.json is deployed.
+        const leader = m.leader || m.incumbent;
+        const runnerUp = m.runner_up || m.challenger;
+        const incumbent2024 = m.incumbent_2024 || null;
+        const isFlip = incumbent2024 && leader && incumbent2024 !== leader;
         return `
-          <tr>
+          <tr${isFlip ? ' class="marginals-flip"' : ''}>
             <td style="font-weight:600; color:var(--navy)">${i + 1}. ${m.constituency}</td>
+            <td>${partyCell(incumbent2024)}</td>
             <td>
-              <span class="party-dot" style="background:${incCfg.color}"></span>${incCfg.label}
+              ${partyCell(leader)}
+              ${isFlip ? '<span class="flip-badge" title="Forecast leader differs from 2024 incumbent">flip</span>' : ''}
             </td>
-            <td>
-              <span class="party-dot" style="background:${chalCfg.color}"></span>${chalCfg.label}
-            </td>
-            <td>${(m.margin * 100).toFixed(1)}pp</td>
-            <td>${(m.swing_needed * 100).toFixed(1)}pp</td>
+            <td>${partyCell(runnerUp)}</td>
+            <td>${(m.margin * 100).toFixed(2)}pp</td>
+            <td>${(m.swing_needed * 100).toFixed(2)}pp</td>
           </tr>`;
       }).join('');
 
@@ -863,8 +858,9 @@
           <thead>
             <tr>
               <th>Constituency</th>
-              <th>Incumbent</th>
-              <th>Challenger</th>
+              <th>2024 Winner</th>
+              <th>Forecast Leader</th>
+              <th>Runner-up</th>
               <th>Margin</th>
               <th>Swing Needed</th>
             </tr>
