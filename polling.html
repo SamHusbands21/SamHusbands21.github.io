@@ -297,6 +297,60 @@
     .method-card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
     .method-card p { font-size: 0.85rem; color: var(--muted); margin: 0; }
 
+    /* ── Pollster reputation table ── */
+    .rep-section {
+      background: var(--white);
+      border: 1px solid var(--mid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .rep-section h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .rep-section p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0 0 1rem;
+      max-width: 60ch;
+    }
+    .rep-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .rep-table th, .rep-table td {
+      text-align: left;
+      padding: 0.45rem 0.6rem;
+      border-bottom: 1px solid var(--mid);
+    }
+    .rep-table th {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .rep-table td.rep-pollster { font-weight: 600; color: var(--navy); }
+    .rep-tier-pill {
+      display: inline-block;
+      padding: 0.1rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      min-width: 3.2rem;
+      text-align: center;
+    }
+    .rep-tier-1 { background: #dcfce7; color: #166534; }
+    .rep-tier-2 { background: #dbeafe; color: #1e40af; }
+    .rep-tier-3 { background: #fee2e2; color: #991b1b; }
+    .rep-tier-0 { background: var(--mid); color: var(--muted); }
+    .rep-weight { font-variant-numeric: tabular-nums; color: var(--ink); }
+    .rep-footnote {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+    }
+
     /* ── Disclaimer ── */
     .disclaimer {
       background: #fffbeb;
@@ -672,6 +726,24 @@
         </div>
       </div>
 
+      <!-- ── Pollster reputation weighting ─────────────────────────── -->
+      <div class="rep-section" id="pollsterRepSection" hidden>
+        <h3>Pollster reputation weighting</h3>
+        <p>
+          Not every pollster is equally reliable. The aggregator applies a hand-curated reputation weight
+          in two places: each poll observation is multiplied by its pollster's weight before entering the
+          Kalman filter, and house-effect anchoring uses the same weights to define the market centre.
+          Tier 1 pollsters are BPC-accredited firms with a long, transparent track record; Tier 2 are
+          established-but-shorter-history shops; Tier 3 covers non-BPC, opaque, or very new pollsters.
+        </p>
+        <div id="pollsterRepTable"></div>
+        <p class="rep-footnote">
+          Tier weights: Tier 1 = 1.00, Tier 2 = 0.60, Tier 3 = 0.30. Membership is verified against the
+          <a href="https://www.britishpollingcouncil.org/" target="_blank" rel="noopener">British Polling Council</a>
+          member list and reflects each pollster's published methodology and track record.
+        </p>
+      </div>
+
       <div style="text-align:center; margin-top:1.5rem;">
         <a href="polling-paper.html" class="btn btn-outline">Read the full methodology →</a>
       </div>
@@ -839,6 +911,60 @@
       if (!party) return '<span class="muted">—</span>';
       const cfg = PARTY_CONFIG[party] || { color: '#888', label: party.toUpperCase() };
       return `<span class="party-dot" style="background:${cfg.color}"></span>${cfg.label}`;
+    }
+
+    function buildPollsterReputationTable(reputation, tierWeights) {
+      const section = document.getElementById('pollsterRepSection');
+      const container = document.getElementById('pollsterRepTable');
+      if (!section || !container) return;
+      const entries = Object.entries(reputation || {});
+      if (!entries.length) {
+        section.hidden = true;
+        return;
+      }
+      section.hidden = false;
+
+      // Sort: Tier 1 first, then 2, then 3, then unclassified (0), alphabetical within tier.
+      const tierRank = (t) => (t && t > 0) ? t : 99;
+      entries.sort((a, b) => {
+        const ra = tierRank(a[1].tier);
+        const rb = tierRank(b[1].tier);
+        if (ra !== rb) return ra - rb;
+        return a[0].localeCompare(b[0]);
+      });
+
+      const fallbackWeight = (tier) => {
+        if (tier === 1) return 1.00;
+        if (tier === 2) return 0.60;
+        if (tier === 3) return 0.30;
+        return 1.00;
+      };
+
+      const rows = entries.map(([pollster, info]) => {
+        const tier = info.tier || 0;
+        const tierLabel = tier > 0 ? `Tier ${tier}` : 'Unclassified';
+        const weight = (typeof info.weight === 'number')
+          ? info.weight
+          : fallbackWeight(tier);
+        return `
+          <tr>
+            <td class="rep-pollster">${pollster}</td>
+            <td><span class="rep-tier-pill rep-tier-${tier}">${tierLabel}</span></td>
+            <td class="rep-weight">${weight.toFixed(2)}</td>
+          </tr>`;
+      }).join('');
+
+      container.innerHTML = `
+        <table class="rep-table">
+          <thead>
+            <tr>
+              <th>Pollster</th>
+              <th>Tier</th>
+              <th>Weight</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
     }
 
     function buildMarginalsTable(marginals) {
@@ -1381,6 +1507,12 @@
         chartData.voteHistory = (data.vote_share_history || []);
         chartData.seatHistory = (data.seat_history || []);
         renderChart(currentMode);
+
+        // Pollster reputation table
+        buildPollsterReputationTable(
+          data.pollster_reputation || {},
+          data.pollster_reputation_tiers || {},
+        );
 
       } catch (err) {
         console.error('Failed to load polling data:', err);
