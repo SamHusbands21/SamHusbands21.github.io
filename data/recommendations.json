@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-08-02T08:00:41.812909+00:00",
+  "updated_at": "2026-08-03T08:00:44.718854+00:00",
   "fixtures": [
     {
       "home": "Arsenal",
@@ -138,7 +138,7 @@
         "away": 0.7058
       },
       "betfair_odds": {
-        "home": 7.8,
+        "home": 8.0,
         "draw": 4.6,
         "away": 1.48
       },
@@ -654,15 +654,15 @@
         "away": 0.2067
       },
       "betfair_odds": {
-        "home": 2.52,
+        "home": 2.56,
         "draw": 3.75,
         "away": 2.84
       },
       "value_bets": [
         {
           "outcome": "home",
-          "ev": 1.3076,
-          "kelly_fraction": 0.2024
+          "ev": 1.3284,
+          "kelly_fraction": 0.2105
         }
       ],
       "form": {
@@ -788,7 +788,7 @@
       "betfair_odds": {
         "home": 1.47,
         "draw": 5.2,
-        "away": 6.6
+        "away": 6.4
       },
       "value_bets": [],
       "form": {
@@ -913,7 +913,7 @@
       },
       "betfair_odds": {
         "home": 2.38,
-        "draw": 3.8,
+        "draw": 3.75,
         "away": 3.0
       },
       "value_bets": [
@@ -1044,9 +1044,9 @@
         "away": 0.4907
       },
       "betfair_odds": {
-        "home": 3.55,
+        "home": 3.5,
         "draw": 4.0,
-        "away": 2.08
+        "away": 2.1
       },
       "value_bets": [],
       "form": {
@@ -1170,9 +1170,9 @@
         "away": 0.4575
       },
       "betfair_odds": {
-        "home": 3.3,
+        "home": 3.4,
         "draw": 3.9,
-        "away": 2.14
+        "away": 2.18
       },
       "value_bets": [],
       "form": {
