@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-08-14T08:01:40.885583+00:00",
+  "updated_at": "2026-08-15T08:00:45.655264+00:00",
   "fixtures": [
     {
       "home": "Arsenal",
@@ -12,15 +12,15 @@
         "away": 0.1119
       },
       "betfair_odds": {
-        "home": 1.19,
-        "draw": 8.6,
-        "away": 19.0
+        "home": 1.2,
+        "draw": 8.4,
+        "away": 17.5
       },
       "value_bets": [
         {
           "outcome": "away",
-          "ev": 2.1261,
-          "kelly_fraction": 0.0626
+          "ev": 1.9583,
+          "kelly_fraction": 0.0581
         }
       ],
       "form": {
@@ -138,9 +138,9 @@
         "away": 0.7058
       },
       "betfair_odds": {
-        "home": 9.0,
-        "draw": 4.8,
-        "away": 1.42
+        "home": 8.6,
+        "draw": 4.9,
+        "away": 1.43
       },
       "value_bets": [],
       "form": {
@@ -264,8 +264,8 @@
         "away": 0.3997
       },
       "betfair_odds": {
-        "home": 2.3,
-        "draw": 3.45,
+        "home": 2.32,
+        "draw": 3.5,
         "away": 3.35
       },
       "value_bets": [
@@ -396,7 +396,7 @@
         "away": 0.3818
       },
       "betfair_odds": {
-        "home": 2.22,
+        "home": 2.26,
         "draw": 3.5,
         "away": 3.55
       },
@@ -528,7 +528,7 @@
         "away": 0.4023
       },
       "betfair_odds": {
-        "home": 2.88,
+        "home": 2.82,
         "draw": 3.35,
         "away": 2.78
       },
@@ -654,15 +654,15 @@
         "away": 0.2067
       },
       "betfair_odds": {
-        "home": 2.6,
+        "home": 2.56,
         "draw": 3.75,
-        "away": 2.84
+        "away": 2.86
       },
       "value_bets": [
         {
           "outcome": "home",
-          "ev": 1.3491,
-          "kelly_fraction": 0.2182
+          "ev": 1.3284,
+          "kelly_fraction": 0.2105
         }
       ],
       "form": {
@@ -912,17 +912,11 @@
         "away": 0.2146
       },
       "betfair_odds": {
-        "home": 2.32,
-        "draw": 3.85,
-        "away": 3.15
+        "home": 2.28,
+        "draw": 3.8,
+        "away": 3.2
       },
-      "value_bets": [
-        {
-          "outcome": "home",
-          "ev": 1.2554,
-          "kelly_fraction": 0.1934
-        }
-      ],
+      "value_bets": [],
       "form": {
         "home": {
           "elo": 1616.2,
@@ -1044,9 +1038,9 @@
         "away": 0.4907
       },
       "betfair_odds": {
-        "home": 4.0,
+        "home": 4.1,
         "draw": 4.0,
-        "away": 1.96
+        "away": 1.95
       },
       "value_bets": [],
       "form": {
