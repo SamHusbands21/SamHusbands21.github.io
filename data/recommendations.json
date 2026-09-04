@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-09-03T08:00:47.078955+00:00",
+  "updated_at": "2026-09-04T08:00:51.184509+00:00",
   "fixtures": [
     {
       "home": "Ipswich",
@@ -12,9 +12,9 @@
         "away": 0.7172
       },
       "betfair_odds": {
-        "home": 5.9,
-        "draw": 5.0,
-        "away": 1.57
+        "home": 6.6,
+        "draw": 5.2,
+        "away": 1.51
       },
       "value_bets": [],
       "form": {
@@ -138,9 +138,9 @@
         "away": 0.3327
       },
       "betfair_odds": {
-        "home": 2.26,
-        "draw": 3.85,
-        "away": 3.3
+        "home": 2.18,
+        "draw": 3.8,
+        "away": 3.5
       },
       "value_bets": [],
       "form": {
@@ -265,14 +265,14 @@
       },
       "betfair_odds": {
         "home": 1.19,
-        "draw": 9.0,
-        "away": 17.5
+        "draw": 8.8,
+        "away": 18.0
       },
       "value_bets": [
         {
           "outcome": "away",
-          "ev": 1.9022,
-          "kelly_fraction": 0.0547
+          "ev": 1.9566,
+          "kelly_fraction": 0.0563
         }
       ],
       "form": {
@@ -390,9 +390,9 @@
         "away": 0.3492
       },
       "betfair_odds": {
-        "home": 2.54,
-        "draw": 3.6,
-        "away": 2.98
+        "home": 2.52,
+        "draw": 3.55,
+        "away": 3.05
       },
       "value_bets": [],
       "form": {
@@ -516,15 +516,15 @@
         "away": 0.3885
       },
       "betfair_odds": {
-        "home": 2.4,
+        "home": 2.36,
         "draw": 3.5,
-        "away": 3.25
+        "away": 3.35
       },
       "value_bets": [
         {
           "outcome": "away",
-          "ev": 1.2626,
-          "kelly_fraction": 0.1167
+          "ev": 1.3015,
+          "kelly_fraction": 0.1283
         }
       ],
       "form": {
@@ -648,9 +648,9 @@
         "away": 0.2203
       },
       "betfair_odds": {
-        "home": 1.97,
-        "draw": 3.75,
-        "away": 4.3
+        "home": 2.06,
+        "draw": 3.65,
+        "away": 4.0
       },
       "value_bets": [],
       "form": {
@@ -774,9 +774,9 @@
         "away": 0.1587
       },
       "betfair_odds": {
-        "home": 1.65,
+        "home": 1.7,
         "draw": 4.1,
-        "away": 6.2
+        "away": 5.9
       },
       "value_bets": [],
       "form": {
@@ -900,9 +900,9 @@
         "away": 0.5762
       },
       "betfair_odds": {
-        "home": 4.2,
-        "draw": 3.9,
-        "away": 1.95
+        "home": 4.3,
+        "draw": 3.85,
+        "away": 1.94
       },
       "value_bets": [],
       "form": {
@@ -1152,9 +1152,9 @@
         "away": 0.1557
       },
       "betfair_odds": {
-        "home": 1.74,
+        "home": 1.75,
         "draw": 4.0,
-        "away": 5.4
+        "away": 5.3
       },
       "value_bets": [],
       "form": {
@@ -1280,7 +1280,7 @@
       "betfair_odds": {
         "home": 2.7,
         "draw": 3.8,
-        "away": 2.58
+        "away": 2.6
       },
       "value_bets": [
         {
@@ -1410,14 +1410,14 @@
         "away": 0.165
       },
       "betfair_odds": {
-        "home": 1.9,
+        "home": 1.98,
         "draw": 3.75,
         "away": 4.1
       },
       "value_bets": [
         {
           "outcome": "home",
-          "ev": 1.2586,
+          "ev": 1.3116,
           "kelly_fraction": 0.25
         }
       ],
@@ -1543,8 +1543,8 @@
       },
       "betfair_odds": {
         "home": 2.02,
-        "draw": 3.55,
-        "away": 3.9
+        "draw": 3.6,
+        "away": 3.85
       },
       "value_bets": [],
       "form": {
@@ -1668,7 +1668,7 @@
         "away": 0.0965
       },
       "betfair_odds": {
-        "home": 1.24,
+        "home": 1.25,
         "draw": 7.0,
         "away": 13.0
       },
@@ -1927,7 +1927,7 @@
       },
       "betfair_odds": {
         "home": 2.02,
-        "draw": 3.5,
+        "draw": 3.65,
         "away": 3.85
       },
       "value_bets": [
@@ -2058,9 +2058,9 @@
         "away": 0.7804
       },
       "betfair_odds": {
-        "home": 7.8,
+        "home": 7.6,
         "draw": 4.3,
-        "away": 1.5
+        "away": 1.49
       },
       "value_bets": [],
       "form": {
@@ -2184,7 +2184,7 @@
         "away": 0.6366
       },
       "betfair_odds": {
-        "home": 3.8,
+        "home": 3.75,
         "draw": 3.85,
         "away": 1.82
       },
@@ -2306,7 +2306,7 @@
       "betfair_odds": {
         "home": 3.1,
         "draw": 4.2,
-        "away": 2.12
+        "away": 2.14
       },
       "value_bets": [],
       "form": {
@@ -2430,9 +2430,9 @@
         "away": 0.4159
       },
       "betfair_odds": {
-        "home": 2.58,
-        "draw": 3.6,
-        "away": 2.76
+        "home": 2.56,
+        "draw": 3.55,
+        "away": 2.66
       },
       "value_bets": [],
       "form": {
