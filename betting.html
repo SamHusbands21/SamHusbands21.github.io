@@ -530,8 +530,10 @@
       gap: 4px;
       margin-bottom: 0.55rem;
       flex-wrap: wrap;
+      overflow: visible;
     }
     .form-badge {
+      position: relative;
       width: 20px;
       height: 20px;
       border-radius: 4px;
@@ -541,11 +543,36 @@
       font-size: 0.68rem;
       font-weight: 700;
       color: #fff;
+      cursor: default;
     }
     .form-badge.w { background: #16a34a; }
     .form-badge.d { background: #9ca3af; }
     .form-badge.l { background: #dc2626; }
     .form-badge.empty { background: #e5e7eb; color: var(--muted); }
+    .form-badge[data-tip]::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 6px);
+      transform: translateX(-50%);
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      white-space: nowrap;
+      padding: 0.28rem 0.45rem;
+      border-radius: 4px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 8;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    }
+    .form-badge[data-tip]:hover::after,
+    .form-badge[data-tip]:focus-visible::after {
+      opacity: 1;
+    }
 
     .stats-grid {
       display: grid;
@@ -914,13 +941,35 @@
 
     // ── Build expandable detail section ───────────────────────
 
-    function formBadges(last5) {
-      const slots = (last5 || []).slice(0, 5);
+    function formatMatchTip(match) {
+      if (!match) return 'No data';
+      if (typeof match === 'string') return match;
+      const d = match.date
+        ? new Date(match.date + 'T00:00:00').toLocaleDateString('en-GB', {
+            day: 'numeric', month: 'short'
+          })
+        : '';
+      const venue = match.venue === 'home' ? 'H' : match.venue === 'away' ? 'A' : '';
+      const score = (match.goals_for != null && match.goals_against != null)
+        ? `${match.goals_for}–${match.goals_against}`
+        : '';
+      const opp = match.opponent || '';
+      const mid = opp && venue ? `${opp} (${venue})` : opp;
+      return [d, mid, score].filter(Boolean).join(' · ') || (match.result || 'No data');
+    }
+
+    function formBadges(last5, recentMatches) {
+      const matches = (recentMatches && recentMatches.length)
+        ? recentMatches.slice(0, 5)
+        : (last5 || []).map(code => ({ result: code }));
+      const slots = matches.slice(0, 5);
       while (slots.length < 5) slots.push(null);
-      return slots.map(code => {
+      return slots.map(item => {
+        const code = item && (item.result || item);
         const cls = code === 'W' ? 'w' : code === 'D' ? 'd' : code === 'L' ? 'l' : 'empty';
-        const label = code || '–';
-        return `<span class="form-badge ${cls}" title="${code || 'No data'}">${label}</span>`;
+        const label = (typeof code === 'string' && code) ? code : '–';
+        const tip = formatMatchTip(item);
+        return `<span class="form-badge ${cls}" tabindex="0" title="${escapeHtml(tip)}" data-tip="${escapeHtml(tip)}">${label}</span>`;
       }).join('');
     }
 
@@ -932,7 +981,7 @@
         <div class="team-form-block">
           <div class="team-form-heading">${teamBlock(name, crests)}</div>
           <div class="form-badges" aria-label="Last 5 results (newest first)">
-            ${formBadges(form.last5)}
+            ${formBadges(form.last5, form.recent_matches)}
           </div>
           <div class="stats-grid">
             <div class="stat-row"><span class="stat-key">Elo</span><span class="stat-val">${fmt0(form.elo)}</span></div>
