@@ -331,7 +331,7 @@
             <div class="method-step-num">2</div>
             <div class="method-step-body">
               <h4>Feature engineering</h4>
-              <p>Elo deltas, rolling points-per-game (last 5 &amp; 10), rolling xG for/against, goals for/against, days of rest, and head-to-head win rate over the last 5 meetings. Plus a midweek-UEFA hangover (last European match on Tue–Thu, this PL match within four days), FPL injury counts, and a key-player-out flag. All features calculated strictly before match kick-off.</p>
+              <p>Elo deltas, rolling points-per-game (last 5 &amp; 10), rolling xG for/against last 5 and last 10, goals for/against, days of rest, and head-to-head win rate over the last 5 meetings. Plus a midweek-UEFA hangover (last European match on Tue–Thu, this PL match within four days), FPL injury counts, and a key-player-out flag. All features calculated strictly before match kick-off.</p>
             </div>
           </div>
           <div class="method-step">
@@ -346,7 +346,7 @@
             <div class="method-step-body">
               <h4>Poisson xG goal model</h4>
               <p>Independent Poisson scorelines from pre-match 10-game rolling xG attack and defence, versus a tune-window league mean and home-advantage multiplier.
-              Published 1X2 is <em>(1 − w) × tree + w × Poisson</em> with <em>w ≈ 0.5</em> from tune-window out-of-fold log-loss. Recommended cards also show the top scoreline plus BTTS / over 2.5 when those Poisson probabilities are at least 55% — analysis, not extra flags. A Dixon–Coles low-score correction is not used yet.</p>
+              Published 1X2 is <em>(1 − w) × tree + w × Poisson</em> with <em>w</em> and Dixon–Coles <em>ρ</em> chosen on tune-window out-of-fold log-loss / scoreline likelihood (currently <em>w ≈ 0.4</em>, <em>ρ ≈ −0.02</em>). Recommended cards also show the top scoreline plus BTTS / over 2.5 when those Poisson probabilities are at least 55% — analysis, not extra flags.</p>
             </div>
           </div>
           <div class="method-step">
@@ -528,7 +528,7 @@
             <div class="method-step-num" style="background:#f59e0b;">!</div>
             <div class="method-step-body">
               <h4>Draw modelling</h4>
-              <p>Published probabilities now mix in Poisson scorelines, which improved eval log-loss and AUC. Modal draw recall is still ~0% — a typical Poisson draw probability of ~25% rarely beats home or away as the single most likely outcome. A Dixon–Coles ρ on 0–0 / 1–0 / 0–1 / 1–1 is the next calibration tweak if low-score draws remain understated.</p>
+              <p>Published probabilities mix in Dixon–Coles Poisson scorelines. Eval log-loss improved a notch; modal draw recall is still ~0% — a typical draw probability of ~25% rarely beats home or away as the single most likely outcome.</p>
             </div>
           </div>
 
@@ -613,8 +613,8 @@
           <div class="method-step">
             <div class="method-step-num">F</div>
             <div class="method-step-body">
-              <h4>Dixon–Coles correction</h4>
-              <p>The Poisson model treats home and away goals as independent. A one-parameter Dixon–Coles adjustment on the 0–0, 1–0, 0–1, and 1–1 cells, fitted on the tune window, would tighten low-score draw calibration without changing the rest of the stack.</p>
+              <h4>Richer Poisson (beyond Dixon–Coles)</h4>
+              <p>Dixon–Coles ρ is now fitted on the tune window. A next step would be bivariate or team-specific attack/defence rather than rolling xG ratios versus a league mean.</p>
             </div>
           </div>
 
