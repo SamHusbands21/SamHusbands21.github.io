@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PL Betting Model – Project Paper – Sam Husbands</title>
-  <meta name="description" content="Project paper: Premier League match outcome model. Hyperparameters and EV threshold locked on 2014/15–2021/22 walk-forward validation. Metrics reported on later completed seasons." />
+  <meta name="description" content="Project paper: Premier League match outcome model. Hyperparameters locked on 2014/15–2021/22. Live flags are weekly least-bad Home/Away picks, scored going forward by CLV." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -289,7 +289,7 @@
   <div class="paper-header">
     <div class="container">
       <h1>PL Betting Model</h1>
-      <p>Project paper — hyperparameters and the EV threshold are locked on 2014/15–2021/22 walk-forward validation (gross p × odds, mean-fold ROI &gt; 0). Classification and betting metrics use later completed seasons. The live site uses the same hyperparameters refit on all completed seasons.</p>
+      <p>Project paper — hyperparameters and the Poisson mix are locked on 2014/15–2021/22 walk-forward validation. Classification metrics use later completed seasons. Live flags are the week’s two or three largest Home/Away disagreements, scored going forward by CLV rather than a locked +ROI threshold.</p>
       <div class="header-meta">
         <span>Premier League</span>
         <span id="headerEvalSeasons">Eval window: 2022/23–2025/26</span>
@@ -315,7 +315,7 @@
         <div class="paper-section-heading">Methodology</div>
         <p style="font-size:0.95rem; color:var(--text); margin-bottom:1.25rem; max-width:720px;">
           A multiclass classifier predicting Premier League match outcomes (Home win / Draw / Away win) for upcoming fixtures.
-          Hyperparameters, the Poisson mix weight, and the EV rule are chosen only on 2014/15–2021/22. Reported metrics below
+          Hyperparameters and the Poisson mix weight are chosen only on 2014/15–2021/22. Reported metrics below
           use that locked holdout model on later completed seasons. The live predictions page uses the same hyperparameters
           refit on every completed season (currently through 2025/26), blended with the same frozen Poisson weight.
         </p>
