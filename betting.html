@@ -201,12 +201,59 @@
       color: var(--muted);
       font-weight: 600;
     }
+    .xg-line {
+      margin-top: 0.55rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-variant-numeric: tabular-nums;
+    }
+    .xg-line .k { color: var(--muted); font-weight: 800; margin-right: 0.35rem; }
+    .scoreline-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .scoreline-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.22rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--mid);
+      background: var(--white);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-variant-numeric: tabular-nums;
+    }
+    .scoreline-chip .p { color: var(--muted); font-weight: 600; }
     .team-block {
       display: flex;
       align-items: center;
       gap: 0.45rem;
       min-width: 0;
     }
+    .team-flag {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.08rem 0.35rem;
+      border-radius: 999px;
+      border: 1px solid var(--mid);
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .team-flag.promo { color: #166534; background: #f0fdf4; border-color: #bbf7d0; }
+    .team-flag.euro { color: #1e3a8a; background: #eff6ff; border-color: #bfdbfe; }
+    .injury-list, .lineup-list {
+      margin: 0;
+      padding-left: 1.1rem;
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+    .injury-list li { margin: 0.15rem 0; }
     .team-crest {
       width: 26px;
       height: 26px;
@@ -716,6 +763,7 @@
             <span class="kpi-pill"><span class="k">Fixtures</span>—</span>
             <span class="kpi-pill"><span class="k">Value</span>—</span>
             <span class="kpi-pill"><span class="k">Odds</span>—</span>
+            <span class="kpi-pill"><span class="k">CLV</span>—</span>
           </div>
           <label class="toggle-pill" title="Show only fixtures with value bets">
             <input type="checkbox" id="showValueOnly" />
@@ -772,7 +820,7 @@
 
         <div class="method-card">
           <h4>Value bets</h4>
-          <p>A bet is flagged when <em>model probability × Betfair decimal odds &gt; 1.25</em> on Home or Away outcomes only. The 1.25 threshold and draw exclusion were selected via a systematic backtested sweep on the held-out test set. Kelly fraction is also shown as a suggested stake size (capped at 25% of bankroll).</p>
+          <p>A bet is flagged when <em>model probability × Betfair decimal odds</em> clears a threshold chosen on 2014/15–2021/22 walk-forward validation (not the eval seasons). The sweep keeps the cell with the best mean-fold flat ROI above zero; Home/Away usually wins ties. Thin far-horizon books are dropped. Kelly is shown as a conservative stake (capped at 25%, after Exchange commission on net winnings).</p>
         </div>
 
         <div class="method-card">
@@ -931,12 +979,15 @@
         </div>`;
     }
 
-    function teamBlock(name, crests) {
+    function teamBlock(name, crests, flags) {
       const url = crests && crests[name];
       const img = url
         ? `<img class="team-crest" src="${url}" alt="" loading="lazy" onerror="this.style.display='none'">`
         : '';
-      return `<span class="team-block">${img}<span class="team-name">${escapeHtml(name)}</span></span>`;
+      const marks = [];
+      if (flags && flags.promoted) marks.push('<span class="team-flag promo">Promoted</span>');
+      if (flags && flags.europe) marks.push('<span class="team-flag euro">Europe</span>');
+      return `<span class="team-block">${img}<span class="team-name">${escapeHtml(name)}</span>${marks.join('')}</span>`;
     }
 
     // ── Build expandable detail section ───────────────────────
@@ -1052,8 +1103,48 @@
         </div>`;
     }
 
+    function squadSection(squad, home, away) {
+      if (!squad || (!squad.home && !squad.away)) return '';
+      function side(label, block) {
+        if (!block) return '';
+        const inj = (block.injuries || []).map(i => {
+          const reason = i.reason ? ` — ${escapeHtml(i.reason)}` : '';
+          return `<li>${escapeHtml(i.name || '')}${reason}</li>`;
+        }).join('');
+        const xi = (block.lineup || []).map(n => `<li>${escapeHtml(n)}</li>`).join('');
+        const showXi = block.lineup_status && block.lineup_status !== 'unavailable' && xi;
+        return `
+          <div>
+            <div class="details-block-title" style="margin-bottom:0.35rem;">${escapeHtml(label)}</div>
+            ${inj ? `<p style="font-size:0.78rem;color:var(--muted);margin:0 0 0.25rem;">Injuries</p><ul class="injury-list">${inj}</ul>` : '<p style="font-size:0.78rem;color:var(--muted);">No injury names listed</p>'}
+            ${showXi ? `<p style="font-size:0.78rem;color:var(--muted);margin:0.65rem 0 0.25rem;">${block.lineup_status === 'confirmed' ? 'Confirmed XI' : 'Expected XI'}</p><ul class="lineup-list">${xi}</ul>` : ''}
+          </div>`;
+      }
+      return `
+        <div class="details-section">
+          <div class="details-block-title">Squad</div>
+          <div class="form-grid">
+            ${side(home, squad.home)}
+            ${side(away, squad.away)}
+          </div>
+        </div>`;
+    }
+
+    function poissonSection(xg) {
+      if (!xg || !Array.isArray(xg.scorelines) || !xg.scorelines.length) return '';
+      const chips = xg.scorelines.map(s => {
+        const pct = typeof s.p === 'number' ? Math.round(s.p * 100) + '%' : '—';
+        return `<span class="scoreline-chip">${s.home}–${s.away}<span class="p">${pct}</span></span>`;
+      }).join('');
+      return `
+        <div class="details-section">
+          <div class="details-block-title">Poisson xG scorelines</div>
+          <div class="scoreline-list">${chips}</div>
+        </div>`;
+    }
+
     function buildDetails(fixture, crests) {
-      if (!fixture.form && !fixture.match_context && !fixture.explanation) return '';
+      if (!fixture.form && !fixture.match_context && !fixture.explanation && !fixture.xg_poisson && !fixture.squad) return '';
       const homeForm = fixture.form && fixture.form.home;
       const awayForm = fixture.form && fixture.form.away;
       const formHtml = (homeForm || awayForm)
@@ -1069,6 +1160,8 @@
         <div class="fixture-details">
           ${formHtml}
           ${contextSection(fixture.match_context)}
+          ${poissonSection(fixture.xg_poisson)}
+          ${squadSection(fixture.squad, fixture.home, fixture.away)}
           ${shapSection(fixture.explanation, fixture.home, fixture.away)}
         </div>`;
     }
@@ -1123,10 +1216,19 @@
               ${hasDetails ? '<span class="fixture-toggle" aria-hidden="true">▾</span>' : ''}
             </div>
             <div class="fixture-teams">
-              ${teamBlock(home, crests)}
+              ${teamBlock(home, crests, {
+                promoted: fixture.match_context && fixture.match_context.promoted && fixture.match_context.promoted.home,
+                europe: fixture.match_context && fixture.match_context.euro_hangover && fixture.match_context.euro_hangover.home
+              })}
               <span class="fixture-vs">vs</span>
-              ${teamBlock(away, crests)}
+              ${teamBlock(away, crests, {
+                promoted: fixture.match_context && fixture.match_context.promoted && fixture.match_context.promoted.away,
+                europe: fixture.match_context && fixture.match_context.euro_hangover && fixture.match_context.euro_hangover.away
+              })}
             </div>
+            ${fixture.xg_poisson && fixture.xg_poisson.lambda_home != null && fixture.xg_poisson.lambda_away != null
+              ? `<div class="xg-line"><span class="k">xG</span>${Number(fixture.xg_poisson.lambda_home).toFixed(1)} – ${Number(fixture.xg_poisson.lambda_away).toFixed(1)}</div>`
+              : ''}
           </div>
 
           <div class="prob-row">
@@ -1211,6 +1313,8 @@
       { header: 'P(Home)',           get: f => f.model_probs?.home ?? null },
       { header: 'P(Draw)',           get: f => f.model_probs?.draw ?? null },
       { header: 'P(Away)',           get: f => f.model_probs?.away ?? null },
+      { header: 'xG home',           get: f => f.xg_poisson?.lambda_home ?? null },
+      { header: 'xG away',           get: f => f.xg_poisson?.lambda_away ?? null },
       { header: 'Predicted',         get: f => f.explanation?.predicted_outcome ?? predictedOutcome(f) },
       { header: 'Odds Home',         get: f => f.betfair_odds?.home ?? null },
       { header: 'Odds Draw',         get: f => f.betfair_odds?.draw ?? null },
@@ -1363,11 +1467,21 @@
         const allOdds = upcoming.length > 0 && upcoming.every(f => f.betfair_odds && Object.values(f.betfair_odds).some(v => typeof v === 'number' && isFinite(v) && v > 1));
         const oddsLabel = allOdds ? 'Betfair' : (anyOdds ? 'Partial' : 'None');
 
+        function formatClv(clv) {
+          const n = clv && clv.n_settled != null ? clv.n_settled : 0;
+          if (!n) return 'CLV ledger started · 0 settled';
+          const mean = clv.mean_clv_pct;
+          const sign = mean > 0 ? '+' : '';
+          const meanTxt = (mean == null) ? '—' : `${sign}${Number(mean).toFixed(1)}%`;
+          return `CLV ${n} settled · ${meanTxt}`;
+        }
+
         if (metaKpis) {
           metaKpis.innerHTML = `
             <span class="kpi-pill"><span class="k">Fixtures</span>${upcoming.length}</span>
             <span class="kpi-pill"><span class="k">Value</span>${countValue}</span>
             <span class="kpi-pill"><span class="k">Odds</span>${oddsLabel}</span>
+            <span class="kpi-pill"><span class="k">CLV</span>${formatClv(data.clv)}</span>
           `;
         }
 

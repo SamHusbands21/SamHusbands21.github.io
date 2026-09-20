@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PL Betting Model – Project Paper – Sam Husbands</title>
-  <meta name="description" content="Project paper: Premier League match outcome model. Methodology, performance metrics, calibration and gambling returns on the unseen test set." />
+  <meta name="description" content="Project paper: Premier League match outcome model. Hyperparameters and EV threshold locked on 2014/15–2021/22 walk-forward validation. Metrics reported on later completed seasons." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -289,11 +289,11 @@
   <div class="paper-header">
     <div class="container">
       <h1>PL Betting Model</h1>
-      <p>Project paper — methodology, classification performance, calibration, and gambling returns on the unseen test set.</p>
+      <p>Project paper — hyperparameters and the EV threshold are locked on 2014/15–2021/22 walk-forward validation (gross p × odds, mean-fold ROI &gt; 0). Classification and betting metrics use later completed seasons. The live site uses the same hyperparameters refit on all completed seasons.</p>
       <div class="header-meta">
-        <span>⚽ Premier League</span>
-        <span>📅 Test set: 2022/23–2024/25</span>
-        <span>🤖 XGBoost + Random Forest ensemble</span>
+        <span>Premier League</span>
+        <span id="headerEvalSeasons">Eval window: 2022/23–2025/26</span>
+        <span>XGBoost + Random Forest ensemble</span>
       </div>
     </div>
   </div>
@@ -315,7 +315,9 @@
         <div class="paper-section-heading">Methodology</div>
         <p style="font-size:0.95rem; color:var(--text); margin-bottom:1.25rem; max-width:720px;">
           A multiclass classifier predicting Premier League match outcomes (Home win / Draw / Away win) for upcoming fixtures.
-          Training data covers seasons 2014/15–2021/22; the model has never seen 2022/23 onward.
+          Hyperparameters, the Poisson mix weight, and the EV rule are chosen only on 2014/15–2021/22. Reported metrics below
+          use that locked holdout model on later completed seasons. The live predictions page uses the same hyperparameters
+          refit on every completed season (currently through 2025/26), blended with the same frozen Poisson weight.
         </p>
         <div class="method-steps">
           <div class="method-step">
@@ -335,15 +337,35 @@
           <div class="method-step">
             <div class="method-step-num">3</div>
             <div class="method-step-body">
-              <h4>Ensemble model</h4>
-              <p>An XGBoost classifier and an isotonic-calibrated Random Forest, trained independently with walk-forward time-series cross-validation. Final match probabilities are an equal-weight average of both calibrated outputs.</p>
+              <h4>Tree ensemble</h4>
+              <p>An XGBoost classifier and an isotonic-calibrated Random Forest. Walk-forward time-series cross-validation on 2014/15–2021/22 selects hyperparameters, which are then frozen. The tree probability is an equal-weight average of both calibrated outputs.</p>
             </div>
           </div>
           <div class="method-step">
             <div class="method-step-num">4</div>
             <div class="method-step-body">
+              <h4>Poisson xG goal model</h4>
+              <p>Independent Poisson scorelines from pre-match 10-game rolling xG attack and defence, versus a tune-window league mean and home-advantage multiplier.
+              Published 1X2 is <em>(1 − w) × tree + w × Poisson</em>, with <em>w</em> chosen to minimise tune-window out-of-fold log-loss. Cards also show expected goals and the top scorelines. A Dixon–Coles low-score correction is not used yet.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">5</div>
+            <div class="method-step-body">
               <h4>Value bet identification</h4>
-              <p>A bet is flagged when <em>model probability × Betfair decimal odds &gt; 1.25</em> on Home or Away outcomes only. Draws are excluded — the model's draw recall is near-zero (1.9%), and including them consistently destroys ROI. The 1.25 threshold was chosen via a systematic sweep on the held-out test set. Kelly fraction (capped at 25%) is shown as a suggested stake size.</p>
+              <p>Expected value for flags is gross: <em>model probability × Betfair decimal odds</em>.
+              The threshold and Home/Away vs all-outcomes filter are chosen on 2014/15–2021/22
+              walk-forward validation folds — the cell with the best mean-fold flat ROI above zero
+              and enough bets. The eval window is never used to pick that hyperparameter.
+              Kelly (capped at 25%) uses Exchange net odds as a conservative stake.
+              Far-horizon books whose implied overround is outside 1.00–1.20 are treated as unavailable.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">6</div>
+            <div class="method-step-body">
+              <h4>Context features</h4>
+              <p>The trees also see promoted-side flags, a UEFA hangover (last European club match within four days), days of rest from an all-competition calendar (PL + UEFA + FA Cup + EFL Cup), and a count of unavailable FPL first-teamers. Named injuries and expected XIs appear on the card from Fotmob when the unofficial API responds; they are not trained. Rest and form use a repaired PL table that fills football-data holes from Understat.</p>
             </div>
           </div>
         </div>
@@ -351,11 +373,11 @@
 
       <!-- CLASSIFICATION PERFORMANCE -->
       <section class="paper-section">
-        <div class="paper-section-heading">Classification performance — test set</div>
+        <div class="paper-section-heading">Classification performance — eval window</div>
         <div class="metrics-plot-row">
 
           <div>
-            <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1rem;">Per-outcome precision and recall on the held-out test seasons.</p>
+            <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1rem;">Per-outcome precision and recall on completed seasons after 2021/22, using the holdout model.</p>
             <table class="pr-table" id="prTable">
               <thead>
                 <tr>
@@ -398,11 +420,11 @@
 
       <!-- GAMBLING PERFORMANCE -->
       <section class="paper-section">
-        <div class="paper-section-heading">Gambling performance — unseen test set (2022/23–2024/25)</div>
-        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1.25rem; max-width:680px;">
-          Simulated staking using the deployed strategy: EV &gt; 1.25, Home &amp; Away outcomes only.
-          Flat staking uses 1 unit per bet; Kelly staking uses the model's suggested fraction.
-          Both strategies run against Betfair Exchange odds on the fully unseen test seasons.
+        <div class="paper-section-heading" id="gamblingHeading">Gambling performance — locked strategy on the eval window</div>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1.25rem; max-width:680px;" id="gamblingIntro">
+          Simulated staking using the EV rule frozen on tune-window walk-forward CV (gross EV).
+          Flat staking uses 1 unit per bet; a win pays odds − 1. Kelly uses Exchange net odds.
+          Both run against historical Betfair / Bet365 odds on seasons the holdout model did not train on.
         </p>
         <div class="gambling-tiles" id="gamblingTiles">
           <!-- Populated by JS -->
@@ -420,18 +442,19 @@
         </div>
         <div class="plot-caption">
           Cumulative flat P&amp;L per bet, ordered by match date. Each step represents one bet at 1 unit stake.
-          Strategy: EV &gt; 1.25, Home &amp; Away only. Pre-commission.
+          Strategy locked on the tune-window walk-forward sweep. Flat P&amp;L is gross (odds − 1).
         </div>
       </section>
 
       <!-- THRESHOLD SWEEP -->
       <section class="paper-section">
-        <div class="paper-section-heading">Strategy selection — EV threshold sweep</div>
+        <div class="paper-section-heading">Strategy selection — tune-window OOF sweep</div>
         <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1rem; max-width:700px;">
-          To choose the EV threshold and outcome filter, a systematic backtest was run across thresholds
-          1.05–1.50 on the held-out test set. The orange series excludes draw bets; the blue series
-          includes all three outcomes. Dropping draws and using EV &gt; 1.25 was the clearest combination
-          with positive ROI and a reasonable bet volume (~73 bets per season).
+          A 1.05–1.50 sweep of <strong>gross</strong> EV on out-of-fold predictions from
+          2014/15–2021/22. The live threshold is the cell with the best <strong>mean fold ROI</strong>
+          above zero (volume floor ~50 bets per tune-window season); Home/Away wins ties.
+          The plot shows the pooled OOF series: orange excludes draws, blue includes all three
+          outcomes. This is the selection evidence. It is not a test-set result.
         </p>
         <div class="plot-frame" id="sweepFrame" style="max-width:860px;">
           <img id="sweepImg"
@@ -482,8 +505,8 @@
           <div class="method-step" style="border-left:4px solid #f59e0b;">
             <div class="method-step-num" style="background:#f59e0b;">!</div>
             <div class="method-step-body">
-              <h4>Draw blindness</h4>
-              <p>The model's draw recall is 1.9% — it almost never predicts a draw as the most likely outcome. Draws are inherently hard to model from aggregate team statistics; a dedicated draw sub-model (e.g. using a Poisson goal-distribution framework) would be needed to unlock that ~25% of fixtures.</p>
+              <h4>Draw modelling</h4>
+              <p>Published probabilities now mix in Poisson scorelines, which improved eval log-loss and AUC. Modal draw recall is still ~0% — a typical Poisson draw probability of ~25% rarely beats home or away as the single most likely outcome. A Dixon–Coles ρ on 0–0 / 1–0 / 0–1 / 1–1 is the next calibration tweak if low-score draws remain understated.</p>
             </div>
           </div>
 
@@ -491,15 +514,15 @@
             <div class="method-step-num" style="background:#f59e0b;">!</div>
             <div class="method-step-body">
               <h4>Static odds snapshot</h4>
-              <p>Predictions use a single odds snapshot from the daily pipeline run (~08:00 UTC). The optimal bet-placement window — often closer to kick-off once lineups are confirmed — is not exploited. Closing-line value (CLV) analysis would quantify how much edge is left on the table.</p>
+              <p>Predictions use a single odds snapshot from the daily pipeline run (~08:00 UTC). The optimal bet-placement window — often closer to kick-off once lineups are confirmed — is not exploited. A going-forward CLV ledger now records odds taken vs football-data Betfair closing prices once those matches settle. Far-horizon MATCH_ODDS books are often empty except for 1.01–1.18 leftovers; those prices are dropped unless implied overround sits between 1.00 and 1.20.</p>
             </div>
           </div>
 
           <div class="method-step" style="border-left:4px solid #f59e0b;">
             <div class="method-step-num" style="background:#f59e0b;">!</div>
             <div class="method-step-body">
-              <h4>Commission not deducted</h4>
-              <p>Betfair charges ~5% commission on net winnings. The reported ROI is pre-commission and therefore slightly optimistic. Commission-aware Kelly sizing would also adjust stake fractions to reflect true expected value after fees.</p>
+              <h4>Exchange commission</h4>
+              <p>Betfair charges commission only on net winnings in a market, not on stake or losing bets. Football’s usual headline is 5%; My Betfair Rewards can make that 2% (Basic) or 8% (Rewards+). Selection uses gross EV. Applying a flat 5% haircut to every winning payout is what previously wiped every tune-window cell to negative ROI. Kelly still uses net odds as a conservative stake.</p>
             </div>
           </div>
 
@@ -507,15 +530,15 @@
             <div class="method-step-num" style="background:#f59e0b;">!</div>
             <div class="method-step-body">
               <h4>Sample size</h4>
-              <p>218 qualifying bets across three test seasons (~73/season) is a reasonable sample but confidence intervals on ROI remain wide. A single bad variance run can flip +2.8% to negative. More seasons of out-of-sample data will narrow this.</p>
+              <p id="sampleSizeNote">Qualifying bets across the eval window are a modest sample; confidence intervals on ROI remain wide. A single bad variance run can flip a small positive ROI to negative. The eval window now includes every completed season after 2021/22.</p>
             </div>
           </div>
 
           <div class="method-step" style="border-left:4px solid #f59e0b;">
             <div class="method-step-num" style="background:#f59e0b;">!</div>
             <div class="method-step-body">
-              <h4>No player-level data</h4>
-              <p>The model sees only team-level aggregates. A key striker missing through injury or a goalkeeper suspended materially shifts the true probability, but the current feature set has no way to capture this.</p>
+              <h4>Player-level data is still coarse</h4>
+              <p>The trees see an FPL first-teamer injury count, not who is missing. Named injuries and expected XIs show on the card when Fotmob answers. Confirmed sheets are rare at the 08:00 UTC run. FPL status history is sparse before 2019/20 (end-of-season archives from then; 2014/15–2018/19 stay 0).</p>
             </div>
           </div>
 
@@ -528,16 +551,16 @@
           <div class="method-step">
             <div class="method-step-num">A</div>
             <div class="method-step-body">
-              <h4>Confirmed lineups</h4>
-              <p>Pre-match lineup data becomes available ~1 hour before kick-off. Starting XI strength proxies — such as the sum of market values of starters, or a "key player present" flag — are among the strongest known signals for improving match outcome prediction.</p>
+              <h4>Confirmed lineups in the model</h4>
+              <p>Expected XIs now appear on the card when Fotmob has them. Turning a confirmed sheet into a trained strength proxy (starter market value, key-player flags) still needs a near-kick-off scrape and historical XIs.</p>
             </div>
           </div>
 
           <div class="method-step">
             <div class="method-step-num">B</div>
             <div class="method-step-body">
-              <h4>Injury &amp; suspension lists</h4>
-              <p>Binary flags for the absence of top-ranked players by salary or xG contribution. Even a single top-5% earner missing significantly shifts expected goal distributions, and therefore correct match probabilities.</p>
+              <h4>Named injury features</h4>
+              <p>The model already uses a coarse FPL unavailable-count. Player-specific flags (top xG contributor out) would need a stable historical injury archive aligned to kick-off, not just the live list.</p>
             </div>
           </div>
 
@@ -568,8 +591,8 @@
           <div class="method-step">
             <div class="method-step-num">F</div>
             <div class="method-step-body">
-              <h4>Improved draw modelling</h4>
-              <p>A dedicated binary classifier for draws, or a Dixon–Coles / Poisson model that estimates draw probability directly from scored-goal distributions, would allow the ~25% of fixtures currently excluded to be re-evaluated with a better calibrated draw probability.</p>
+              <h4>Dixon–Coles correction</h4>
+              <p>The Poisson model treats home and away goals as independent. A one-parameter Dixon–Coles adjustment on the 0–0, 1–0, 0–1, and 1–1 cells, fitted on the tune window, would tighten low-score draw calibration without changing the rest of the stack.</p>
             </div>
           </div>
 
@@ -654,7 +677,9 @@
       const brier     = e && e.brier_score !== null ? fmt(e.brier_score, 3) : null;
       const logLoss   = e && e.log_loss   !== null ? fmt(e.log_loss,   3) : null;
       const accuracy  = e && e.accuracy   !== null ? pctFmt(e.accuracy)   : null;
-      const seasons   = (e && e.test_seasons) || '2022/23–2024/25';
+      const seasons   = (e && e.test_seasons) || '2022/23–2025/26';
+      const header = document.getElementById('headerEvalSeasons');
+      if (header) header.textContent = 'Eval window: ' + seasons;
       const nMatches  = e && e.n_test_matches !== null ? e.n_test_matches : null;
 
       document.getElementById('glanceTiles').innerHTML =
@@ -713,22 +738,35 @@
       const flatPnl   = g && g.flat_pnl     !== null ? fmt(g.flat_pnl,     2)      : null;
       const kellyPnl  = g && g.kelly_pnl    !== null ? fmt(g.kelly_pnl,    2)      : null;
       const sharpe    = g && g.sharpe_ratio  !== null ? fmt(g.sharpe_ratio, 2)      : null;
-      const threshold = (g && g.value_bet_threshold) || 1.05;
+      const threshold = g && g.value_bet_threshold;
+      const bettingOn = !(e && e.strategy && e.strategy.betting_enabled === false);
 
       const flatRoiClass  = (g && g.flat_roi_pct !== null) ? (g.flat_roi_pct >= 0 ? 'positive' : 'negative') : '';
       const kellyPnlClass = (g && g.kelly_pnl    !== null) ? (g.kelly_pnl    >= 0 ? 'positive' : 'negative') : '';
 
-      const edgePct = ((threshold - 1) * 100).toFixed(0);
-      const outcomes = (e && e.strategy && e.strategy.allowed_outcomes)
+      const edgePct = (threshold != null) ? ((threshold - 1) * 100).toFixed(0) : null;
+      const outcomes = (e && e.strategy && e.strategy.allowed_outcomes && e.strategy.allowed_outcomes.length)
         ? e.strategy.allowed_outcomes.map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(' & ')
         : 'Home & Away';
+      const roiDesc = bettingOn && edgePct != null
+        ? `1 unit per bet · gross EV ≥ ${edgePct}% · ${outcomes} · chosen on tune-window CV`
+        : 'No +ROI tune-window CV cell — 1X2 flags off';
 
       document.getElementById('gamblingTiles').innerHTML =
-        makeGamblingTile(flatRoi,  'Flat ROI',    `1 unit per bet · EV > ${edgePct}% · ${outcomes}`, flatRoiClass) +
-        makeGamblingTile(flatBets, 'Value bets',  'Total qualifying bets in test period', '') +
-        makeGamblingTile(flatPnl,  'Flat P&amp;L', 'Net units at 1 unit per bet', flatRoiClass) +
-        makeGamblingTile(kellyPnl, 'Kelly P&amp;L','Net units using Kelly fraction', kellyPnlClass) +
+        makeGamblingTile(flatRoi,  'Flat ROI',    roiDesc, flatRoiClass) +
+        makeGamblingTile(flatBets, 'Value bets',  'Total qualifying bets in the eval window', '') +
+        makeGamblingTile(flatPnl,  'Flat P&amp;L', 'Net units at 1 unit per bet after 5% commission', flatRoiClass) +
+        makeGamblingTile(kellyPnl, 'Kelly P&amp;L','Net units using Kelly fraction after 5% commission', kellyPnlClass) +
         makeGamblingTile(sharpe,   'Sharpe ratio', 'Risk-adjusted return (flat)', '');
+
+      const note = document.getElementById('sampleSizeNote');
+      const evalSeasons = (e && e.test_seasons) || '';
+      if (note && g && g.flat_bets != null && evalSeasons) {
+        const roi = g.flat_roi_pct != null ? g.flat_roi_pct.toFixed(1) + '%' : 'the reported ROI';
+        note.textContent = g.flat_bets + ' qualifying bets across ' + evalSeasons
+          + ' is a modest sample; confidence intervals on ROI remain wide. A single bad variance run can flip '
+          + roi + ' to negative.';
+      }
     }
 
     loadEvaluation();

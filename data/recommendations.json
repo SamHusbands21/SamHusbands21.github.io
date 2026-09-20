@@ -1,9 +1,9 @@
 {
   "schema_version": 5,
-  "updated_at": "2026-09-20T08:02:20.562371+00:00",
+  "updated_at": "2026-09-20T10:57:54.806833+00:00",
   "betting_enabled": false,
   "clv": {
-    "n_open": 0,
+    "n_open": 4,
     "n_settled": 0,
     "mean_clv_pct": null
   },
@@ -20,7 +20,7 @@
       "betfair_odds": {
         "home": 3.25,
         "draw": 3.9,
-        "away": 2.24
+        "away": 2.26
       },
       "value_bets": [],
       "xg_poisson": {
@@ -351,8 +351,8 @@
         "away": 0.2329
       },
       "betfair_odds": {
-        "home": 1.77,
-        "draw": 4.0,
+        "home": 1.76,
+        "draw": 4.1,
         "away": 5.2
       },
       "value_bets": [],
@@ -676,7 +676,7 @@
         "away": 0.0903
       },
       "betfair_odds": {
-        "home": 1.35,
+        "home": 1.36,
         "draw": 5.8,
         "away": 10.5
       },
@@ -985,9 +985,9 @@
         "away": 0.4852
       },
       "betfair_odds": {
-        "home": 3.65,
-        "draw": 4.0,
-        "away": 2.06
+        "home": 3.6,
+        "draw": 3.95,
+        "away": 2.1
       },
       "value_bets": [],
       "xg_poisson": {
@@ -1310,7 +1310,7 @@
         "away": 0.141
       },
       "betfair_odds": {
-        "home": 1.34,
+        "home": 1.35,
         "draw": 5.6,
         "away": 11.0
       },
@@ -1607,9 +1607,9 @@
         "away": 0.4912
       },
       "betfair_odds": {
-        "home": 3.05,
+        "home": 2.96,
         "draw": 3.6,
-        "away": 2.5
+        "away": 2.58
       },
       "value_bets": [],
       "xg_poisson": {
@@ -2518,9 +2518,9 @@
         "away": 0.327
       },
       "betfair_odds": {
-        "home": 2.72,
+        "home": 2.74,
         "draw": 3.65,
-        "away": 2.7
+        "away": 2.66
       },
       "value_bets": [],
       "xg_poisson": {
@@ -3148,7 +3148,7 @@
         "away": 0.3946
       },
       "betfair_odds": {
-        "home": 2.74,
+        "home": 2.76,
         "draw": 3.35,
         "away": 2.8
       },
@@ -3445,7 +3445,7 @@
         "away": 0.4989
       },
       "betfair_odds": {
-        "home": 3.7,
+        "home": 3.85,
         "draw": 3.3,
         "away": 2.16
       },
@@ -3758,8 +3758,8 @@
         "away": 0.4788
       },
       "betfair_odds": {
-        "home": 2.78,
-        "draw": 3.55,
+        "home": 3.0,
+        "draw": 3.85,
         "away": 2.34
       },
       "value_bets": [],
@@ -4384,9 +4384,9 @@
         "away": 0.311
       },
       "betfair_odds": {
-        "home": 1.1,
-        "draw": 1.1,
-        "away": 1.1
+        "home": null,
+        "draw": null,
+        "away": null
       },
       "value_bets": [],
       "xg_poisson": {
@@ -4689,9 +4689,9 @@
         "away": 0.1719
       },
       "betfair_odds": {
-        "home": 1.56,
-        "draw": 1.12,
-        "away": 1.26
+        "home": null,
+        "draw": null,
+        "away": null
       },
       "value_bets": [],
       "xg_poisson": {
@@ -4998,9 +4998,9 @@
         "away": 0.3367
       },
       "betfair_odds": {
-        "home": 1.58,
-        "draw": 1.12,
-        "away": 1.51
+        "home": null,
+        "draw": null,
+        "away": null
       },
       "value_bets": [],
       "xg_poisson": {
@@ -5311,9 +5311,9 @@
         "away": 0.0363
       },
       "betfair_odds": {
-        "home": 1.18,
-        "draw": 1.1,
-        "away": 1.11
+        "home": null,
+        "draw": null,
+        "away": null
       },
       "value_bets": [],
       "xg_poisson": {
@@ -5596,9 +5596,9 @@
         "away": 0.3454
       },
       "betfair_odds": {
-        "home": 1.1,
-        "draw": 1.1,
-        "away": 1.1
+        "home": null,
+        "draw": null,
+        "away": null
       },
       "value_bets": [],
       "xg_poisson": {
@@ -5925,9 +5925,9 @@
         "away": 0.395
       },
       "betfair_odds": {
-        "home": 1.58,
-        "draw": 1.1,
-        "away": 1.12
+        "home": null,
+        "draw": null,
+        "away": null
       },
       "value_bets": [],
       "xg_poisson": {
@@ -6234,9 +6234,9 @@
         "away": 0.1856
       },
       "betfair_odds": {
-        "home": 1.13,
-        "draw": 1.1,
-        "away": 1.13
+        "home": null,
+        "draw": null,
+        "away": null
       },
       "value_bets": [],
       "xg_poisson": {
@@ -6555,9 +6555,9 @@
         "away": 0.2089
       },
       "betfair_odds": {
-        "home": 1.92,
-        "draw": 1.6,
-        "away": 1.58
+        "home": null,
+        "draw": null,
+        "away": null
       },
       "value_bets": [],
       "xg_poisson": {
@@ -6852,9 +6852,9 @@
         "away": 0.6327
       },
       "betfair_odds": {
-        "home": 1.26,
-        "draw": 2.42,
-        "away": 1.4
+        "home": null,
+        "draw": null,
+        "away": null
       },
       "value_bets": [],
       "xg_poisson": {
@@ -7145,9 +7145,9 @@
         "away": 0.2264
       },
       "betfair_odds": {
-        "home": 1.1,
-        "draw": 1.01,
-        "away": 1.06
+        "home": null,
+        "draw": null,
+        "away": null
       },
       "value_bets": [],
       "xg_poisson": {
