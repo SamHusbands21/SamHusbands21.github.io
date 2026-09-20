@@ -247,6 +247,13 @@
     }
     .team-flag.promo { color: #166534; background: #f0fdf4; border-color: #bbf7d0; }
     .team-flag.euro { color: #1e3a8a; background: #eff6ff; border-color: #bfdbfe; }
+    .team-flag.key { color: #9a3412; background: #fff7ed; border-color: #fed7aa; }
+    .poisson-line {
+      margin-top: 0.45rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
     .injury-list, .lineup-list {
       margin: 0;
       padding-left: 1.1rem;
@@ -745,7 +752,7 @@
   <div class="betting-header">
     <div class="container">
       <h1>PL Betting Model</h1>
-      <p>Live value bet recommendations for upcoming Premier League fixtures, updated daily.</p>
+      <p>This week and next: the two or three least-bad Home/Away disagreements, scored going forward by CLV.</p>
     </div>
   </div>
 
@@ -810,7 +817,7 @@
 
         <div class="method-card">
           <h4>Features</h4>
-          <p>Match features include both Elo deltas, rolling points-per-game (last 5 and 10 matches), rolling xG for/against, actual goals for/against, days of rest, and head-to-head win rate from the last five meetings.</p>
+          <p>Elo deltas, rolling form and xG, rest, head-to-head, a midweek-UEFA hangover (last European tie on Tue–Thu and this PL match within four days), FPL injury counts, and a key-player-out flag (top five by price or 500+ minutes, status injured/unavailable).</p>
         </div>
 
         <div class="method-card">
@@ -820,12 +827,12 @@
 
         <div class="method-card">
           <h4>Value bets</h4>
-          <p>A bet is flagged when <em>model probability × Betfair decimal odds</em> clears a threshold chosen on 2014/15–2021/22 walk-forward validation (not the eval seasons). The sweep keeps the cell with the best mean-fold flat ROI above zero; Home/Away usually wins ties. Thin far-horizon books are dropped. Kelly is shown as a conservative stake (capped at 25%, after Exchange commission on net winnings).</p>
+          <p>These are the largest model-vs-market gaps each ISO week — the top two or three Home/Away sides by gross EV (<em>p × odds</em>), tagged high or medium edge. They are not a locked +ROI rule. The CLV pill is how we will know if they were any good. Thin far-horizon books are dropped. Kelly is a conservative stake only.</p>
         </div>
 
         <div class="method-card">
           <h4>Test set performance</h4>
-          <p>The model is evaluated strictly on held-out seasons 2022/23–2024/25 (never seen during training). Metrics include log loss, Brier score, calibration curves, and flat/Kelly staking ROI vs. a naive always-favourite baseline.</p>
+          <p>The holdout model is scored on completed seasons after 2021/22: log loss, Brier, calibration, and model probability vs implied <em>1/odds</em>. Live flags are judged going forward by closing-line value, not by a historical ROI cell.</p>
         </div>
 
       </div>
@@ -922,12 +929,51 @@
     }
 
     function confidenceTag(vb, p) {
+      const edge = String(vb?.edge || '').toLowerCase();
+      if (edge === 'high') return { label: 'High edge', cls: 'good' };
+      if (edge === 'medium') return { label: 'Medium edge', cls: '' };
       const ev = Number(vb?.ev);
       if (!isFinite(ev)) return { label: 'Low info', cls: 'warn' };
-      if (ev >= 1.55) return { label: 'High edge', cls: 'good' };
-      if (ev >= 1.35 && typeof p === 'number' && p >= 0.35) return { label: 'High edge', cls: 'good' };
+      if (ev >= 1.40) return { label: 'High edge', cls: 'good' };
       if (ev >= 1.25) return { label: 'Medium edge', cls: '' };
       return { label: 'Low edge', cls: 'warn' };
+    }
+
+    function poissonPickLine(xg) {
+      if (!xg) return '';
+      const bits = [];
+      const top = Array.isArray(xg.scorelines) ? xg.scorelines[0] : null;
+      if (top && top.home != null && top.away != null) {
+        const pct = typeof top.p === 'number' ? Math.round(top.p * 100) + '%' : '—';
+        bits.push(`Most likely ${top.home}–${top.away} (${pct})`);
+      }
+      if (typeof xg.btts === 'number' && xg.btts >= 0.55) {
+        bits.push(`BTTS ${Math.round(xg.btts * 100)}%`);
+      }
+      if (typeof xg.over_25 === 'number' && xg.over_25 >= 0.55) {
+        bits.push(`Over 2.5 ${Math.round(xg.over_25 * 100)}%`);
+      }
+      if (!bits.length) return '';
+      return `<div class="poisson-line">${bits.join(' · ')}</div>`;
+    }
+
+    function startOfToday() {
+      const d = new Date();
+      d.setHours(0, 0, 0, 0);
+      return d;
+    }
+
+    function endOfNextIsoWeek(from) {
+      const d = new Date(from);
+      d.setHours(0, 0, 0, 0);
+      const dow = d.getDay();
+      const daysFromMonday = dow === 0 ? 6 : dow - 1;
+      const thisMonday = new Date(d);
+      thisMonday.setDate(d.getDate() - daysFromMonday);
+      const nextSunday = new Date(thisMonday);
+      nextSunday.setDate(thisMonday.getDate() + 13);
+      nextSunday.setHours(23, 59, 59, 999);
+      return nextSunday;
     }
 
     function betRationale(fixture, vb) {
@@ -987,6 +1033,7 @@
       const marks = [];
       if (flags && flags.promoted) marks.push('<span class="team-flag promo">Promoted</span>');
       if (flags && flags.europe) marks.push('<span class="team-flag euro">Europe</span>');
+      if (flags && flags.keyOut) marks.push('<span class="team-flag key">Key out</span>');
       return `<span class="team-block">${img}<span class="team-name">${escapeHtml(name)}</span>${marks.join('')}</span>`;
     }
 
@@ -1200,8 +1247,9 @@
               <span class="kelly">· Kelly ${typeof vb.kelly_fraction === 'number' ? (vb.kelly_fraction * 100).toFixed(1) + '%' : '—'}</span>
             </span>
           `).join('')
+          + poissonPickLine(fixture.xg_poisson)
           + value_bets.map(vb => betRationale(fixture, vb)).join(''))
-        : '<span class="no-value">No value bets identified</span>';
+        : '<span class="no-value">Not a weekly pick</span>';
 
       const cardAttrs = hasDetails
         ? ` role="button" tabindex="0" aria-expanded="false" aria-label="Toggle details for ${escapeHtml(home)} versus ${escapeHtml(away)}"`
@@ -1218,12 +1266,14 @@
             <div class="fixture-teams">
               ${teamBlock(home, crests, {
                 promoted: fixture.match_context && fixture.match_context.promoted && fixture.match_context.promoted.home,
-                europe: fixture.match_context && fixture.match_context.euro_hangover && fixture.match_context.euro_hangover.home
+                europe: fixture.match_context && fixture.match_context.euro_hangover && fixture.match_context.euro_hangover.home,
+                keyOut: fixture.match_context && fixture.match_context.key_out && fixture.match_context.key_out.home
               })}
               <span class="fixture-vs">vs</span>
               ${teamBlock(away, crests, {
                 promoted: fixture.match_context && fixture.match_context.promoted && fixture.match_context.promoted.away,
-                europe: fixture.match_context && fixture.match_context.euro_hangover && fixture.match_context.euro_hangover.away
+                europe: fixture.match_context && fixture.match_context.euro_hangover && fixture.match_context.euro_hangover.away,
+                keyOut: fixture.match_context && fixture.match_context.key_out && fixture.match_context.key_out.away
               })}
             </div>
             ${fixture.xg_poisson && fixture.xg_poisson.lambda_home != null && fixture.xg_poisson.lambda_away != null
@@ -1458,8 +1508,11 @@
 
         updatedEl.textContent = formatUpdated(data.updated_at);
 
+        const from = startOfToday();
+        const to = endOfNextIsoWeek(from);
         const upcoming = (data.fixtures || []).filter(f => {
-          return new Date(f.date) > new Date();
+          const dt = new Date(f.date);
+          return dt >= from && dt <= to;
         });
 
         const countValue = upcoming.filter(f => (f.value_bets || []).length > 0).length;
@@ -1489,8 +1542,8 @@
           container.innerHTML = `
             <div class="state-box">
               <div class="icon">📅</div>
-              <h3>No upcoming fixtures</h3>
-              <p>The model runs daily at 08:00 UTC. Check back closer to the next round of fixtures.</p>
+              <h3>No fixtures this week or next</h3>
+              <p>The model runs daily at 08:00 UTC. Check back closer to the next Premier League round.</p>
             </div>`;
           return;
         }
@@ -1511,18 +1564,10 @@
                </div>`
             : '';
 
-          const noValueNote = (countValue === 0 && anyOdds && (!valueOnly || !valueOnly.checked))
-            ? `<div class="state-box" style="padding:1.5rem 1rem 2.25rem;">
-                 <div class="icon">✅</div>
-                 <h3>No value bets today</h3>
-                 <p>There are upcoming fixtures, but none pass the EV threshold (Home/Away only). Check back after the next daily run.</p>
-               </div>`
-            : '';
-
           const valueHeader = withValue.length
             ? `<div class="section-header">
                  <div class="title">Value bets</div>
-                 <div class="sub">${withValue.length} fixture${withValue.length === 1 ? '' : 's'}</div>
+                 <div class="sub">${withValue.length} weekly pick${withValue.length === 1 ? '' : 's'}</div>
                </div>`
             : '';
           const allHeader = withoutValue.length
@@ -1534,7 +1579,6 @@
 
           container.innerHTML = `
             ${oddsOnlyNote}
-            ${noValueNote}
             ${valueHeader}
             ${withValue.length ? `<div class="fixture-grid">${withValue.map(f => buildCard(f, crests)).join('')}</div>` : ''}
             ${allHeader}
@@ -1548,12 +1592,7 @@
           if (only) {
             const v = upcoming.filter(f => (f.value_bets || []).length > 0);
             if (!v.length) {
-              container.innerHTML = `
-                <div class="state-box">
-                  <div class="icon">🔎</div>
-                  <h3>No value bets found</h3>
-                  <p>Try turning off “Value bets only”, or check back after the next daily run.</p>
-                </div>`;
+              render(upcoming);
               return;
             }
             render(v);

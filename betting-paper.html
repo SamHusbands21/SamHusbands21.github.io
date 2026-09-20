@@ -331,7 +331,7 @@
             <div class="method-step-num">2</div>
             <div class="method-step-body">
               <h4>Feature engineering</h4>
-              <p>Elo deltas, rolling points-per-game (last 5 &amp; 10), rolling xG for/against, goals for/against, days of rest, and head-to-head win rate over the last 5 meetings. All features calculated strictly before match kick-off.</p>
+              <p>Elo deltas, rolling points-per-game (last 5 &amp; 10), rolling xG for/against, goals for/against, days of rest, and head-to-head win rate over the last 5 meetings. Plus a midweek-UEFA hangover (last European match on Tue–Thu, this PL match within four days), FPL injury counts, and a key-player-out flag. All features calculated strictly before match kick-off.</p>
             </div>
           </div>
           <div class="method-step">
@@ -346,17 +346,16 @@
             <div class="method-step-body">
               <h4>Poisson xG goal model</h4>
               <p>Independent Poisson scorelines from pre-match 10-game rolling xG attack and defence, versus a tune-window league mean and home-advantage multiplier.
-              Published 1X2 is <em>(1 − w) × tree + w × Poisson</em>, with <em>w</em> chosen to minimise tune-window out-of-fold log-loss. Cards also show expected goals and the top scorelines. A Dixon–Coles low-score correction is not used yet.</p>
+              Published 1X2 is <em>(1 − w) × tree + w × Poisson</em> with <em>w ≈ 0.5</em> from tune-window out-of-fold log-loss. Recommended cards also show the top scoreline plus BTTS / over 2.5 when those Poisson probabilities are at least 55% — analysis, not extra flags. A Dixon–Coles low-score correction is not used yet.</p>
             </div>
           </div>
           <div class="method-step">
             <div class="method-step-num">5</div>
             <div class="method-step-body">
-              <h4>Value bet identification</h4>
-              <p>Expected value for flags is gross: <em>model probability × Betfair decimal odds</em>.
-              The threshold and Home/Away vs all-outcomes filter are chosen on 2014/15–2021/22
-              walk-forward validation folds — the cell with the best mean-fold flat ROI above zero
-              and enough bets. The eval window is never used to pick that hyperparameter.
+              <h4>Weekly least-bad picks</h4>
+              <p>Each ISO week we rank Home/Away sides by gross EV (<em>p × odds</em>) and keep the top two or three.
+              High edge is <em>EV ≥ 1.40</em>, or the week’s #1 if <em>EV ≥ 1.25</em>; otherwise medium.
+              These are the largest model-vs-market gaps, not a locked +ROI rule. Going-forward CLV is the scoreboard.
               Kelly (capped at 25%) uses Exchange net odds as a conservative stake.
               Far-horizon books whose implied overround is outside 1.00–1.20 are treated as unavailable.</p>
             </div>
@@ -365,7 +364,7 @@
             <div class="method-step-num">6</div>
             <div class="method-step-body">
               <h4>Context features</h4>
-              <p>The trees also see promoted-side flags, a UEFA hangover (last European club match within four days), days of rest from an all-competition calendar (PL + UEFA + FA Cup + EFL Cup), and a count of unavailable FPL first-teamers. Named injuries and expected XIs appear on the card from Fotmob when the unofficial API responds; they are not trained. Rest and form use a repaired PL table that fills football-data holes from Understat.</p>
+              <p>The trees also see promoted-side flags, a midweek-UEFA hangover (not a Sunday after a Saturday European game), days of rest from an all-competition calendar (PL + UEFA + FA Cup + EFL Cup), FPL first-teamer injury counts, and a key-player-out flag (top five by <code>now_cost</code> or 500+ minutes, status injured/unavailable; zeros before FPL history). Named injuries and expected XIs appear on the card from Fotmob when the unofficial API responds; they are display-only. Rest and form use a repaired PL table that fills football-data holes from Understat.</p>
             </div>
           </div>
         </div>
@@ -420,11 +419,12 @@
 
       <!-- GAMBLING PERFORMANCE -->
       <section class="paper-section">
-        <div class="paper-section-heading" id="gamblingHeading">Gambling performance — locked strategy on the eval window</div>
+        <div class="paper-section-heading" id="gamblingHeading">Live scoreboard — closing-line value</div>
         <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1.25rem; max-width:680px;" id="gamblingIntro">
-          Simulated staking using the EV rule frozen on tune-window walk-forward CV (gross EV).
-          Flat staking uses 1 unit per bet; a win pays odds − 1. Kelly uses Exchange net odds.
-          Both run against historical Betfair / Bet365 odds on seasons the holdout model did not train on.
+          Weekly least-bad Home/Away picks are recorded at the odds we would have taken.
+          After football-data publishes Betfair closing prices (BFEH / BFED / BFEA), CLV is
+          <em>odds taken / close − 1</em>. Flat historical ROI is a caption only — the model
+          does not claim a +ROI threshold.
         </p>
         <div class="gambling-tiles" id="gamblingTiles">
           <!-- Populated by JS -->
@@ -440,9 +440,32 @@
             <p>Cumulative P&amp;L chart will appear here once generated by the model pipeline.</p>
           </div>
         </div>
-        <div class="plot-caption">
-          Cumulative flat P&amp;L per bet, ordered by match date. Each step represents one bet at 1 unit stake.
-          Strategy locked on the tune-window walk-forward sweep. Flat P&amp;L is gross (odds − 1).
+        <div class="plot-caption" id="roiCaption">
+          Historical flat P&amp;L from the old EV sweep is kept as a reference curve, not as a live claim.
+          Live flags are judged by CLV, not by this plot.
+        </div>
+      </section>
+
+      <!-- MARKET CALIBRATION -->
+      <section class="paper-section">
+        <div class="paper-section-heading">Model vs market implied probability</div>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:0.75rem; max-width:720px;" id="marketCalIntro">
+          Eval-window Home and Away: the model’s probability against the book’s implied <em>1 / odds</em>.
+          Points on the diagonal agree with the market. A short note below says which side is better calibrated (Brier).
+        </p>
+        <div class="plot-frame" id="marketCalFrame" style="max-width:860px;">
+          <img id="marketCalImg"
+               src="data/market_calibration.png"
+               alt="Model probability versus implied 1/odds"
+               style="display:none;"
+               onload="this.style.display='block'; document.getElementById('marketCalPh').style.display='none';" />
+          <div id="marketCalPh" class="plot-placeholder">
+            <div class="ph-icon">📐</div>
+            <p>Market calibration plot will appear here once generated by the model pipeline.</p>
+          </div>
+        </div>
+        <div class="plot-caption" id="marketCalCaption">
+          Home and Away only. Draws are omitted because weekly picks never flag them.
         </div>
       </section>
 
@@ -538,7 +561,7 @@
             <div class="method-step-num" style="background:#f59e0b;">!</div>
             <div class="method-step-body">
               <h4>Player-level data is still coarse</h4>
-              <p>The trees see an FPL first-teamer injury count, not who is missing. Named injuries and expected XIs show on the card when Fotmob answers. Confirmed sheets are rare at the 08:00 UTC run. FPL status history is sparse before 2019/20 (end-of-season archives from then; 2014/15–2018/19 stay 0).</p>
+              <p>The trees now see an FPL injury count and a key-player-out flag (top five by price or 500+ minutes). They still do not know which name is missing. Named injuries and expected XIs show on the card when Fotmob answers. Confirmed sheets are rare at the 08:00 UTC run. FPL status history is sparse before 2019/20 (zeros earlier).</p>
             </div>
           </div>
 
@@ -560,7 +583,7 @@
             <div class="method-step-num">B</div>
             <div class="method-step-body">
               <h4>Named injury features</h4>
-              <p>The model already uses a coarse FPL unavailable-count. Player-specific flags (top xG contributor out) would need a stable historical injury archive aligned to kick-off, not just the live list.</p>
+              <p>The trained key-out flag is FPL-only so it exists from 2016/17. A named top-xG-contributor-out feature would still need a kick-off-aligned archive, not just the live Fotmob list.</p>
             </div>
           </div>
 
@@ -682,11 +705,19 @@
       if (header) header.textContent = 'Eval window: ' + seasons;
       const nMatches  = e && e.n_test_matches !== null ? e.n_test_matches : null;
 
+      const clv = e && e.clv;
+      const meanClv = clv && clv.mean_clv_pct != null
+        ? ((clv.mean_clv_pct > 0 ? '+' : '') + Number(clv.mean_clv_pct).toFixed(1) + '%')
+        : (clv && clv.n_settled === 0 ? '—' : null);
+      const clvSub = clv
+        ? `${clv.n_settled || 0} settled · ${clv.n_open || 0} open`
+        : 'going-forward ledger';
+
       document.getElementById('glanceTiles').innerHTML =
+        makeTile(meanClv,  'Mean CLV',    clvSub) +
         makeTile(rocAuc,   'ROC-AUC',    'multiclass OVR') +
         makeTile(brier,    'Brier score', 'lower is better') +
         makeTile(logLoss,  'Log loss',    'lower is better') +
-        makeTile(accuracy, 'Accuracy',    'vs ~47% baseline') +
         makeTile(nMatches ? nMatches + ' matches' : null, 'Test set', seasons);
     }
 
@@ -732,40 +763,44 @@
     }
 
     function renderGambling(e) {
+      const clv = e && e.clv;
+      const meanClv = clv && clv.mean_clv_pct != null
+        ? ((clv.mean_clv_pct > 0 ? '+' : '') + Number(clv.mean_clv_pct).toFixed(1) + '%')
+        : null;
+      const settled = clv && clv.n_settled != null ? String(clv.n_settled) : '0';
+      const openN = clv && clv.n_open != null ? String(clv.n_open) : '0';
+      const clvClass = (clv && clv.mean_clv_pct != null)
+        ? (clv.mean_clv_pct >= 0 ? 'positive' : 'negative')
+        : '';
+
       const g = e && e.gambling;
-      const flatRoi   = g && g.flat_roi_pct !== null ? fmt(g.flat_roi_pct, 1, '%') : null;
-      const flatBets  = g && g.flat_bets    !== null ? g.flat_bets + ' bets'       : null;
-      const flatPnl   = g && g.flat_pnl     !== null ? fmt(g.flat_pnl,     2)      : null;
-      const kellyPnl  = g && g.kelly_pnl    !== null ? fmt(g.kelly_pnl,    2)      : null;
-      const sharpe    = g && g.sharpe_ratio  !== null ? fmt(g.sharpe_ratio, 2)      : null;
-      const threshold = g && g.value_bet_threshold;
-      const bettingOn = !(e && e.strategy && e.strategy.betting_enabled === false);
-
-      const flatRoiClass  = (g && g.flat_roi_pct !== null) ? (g.flat_roi_pct >= 0 ? 'positive' : 'negative') : '';
-      const kellyPnlClass = (g && g.kelly_pnl    !== null) ? (g.kelly_pnl    >= 0 ? 'positive' : 'negative') : '';
-
-      const edgePct = (threshold != null) ? ((threshold - 1) * 100).toFixed(0) : null;
-      const outcomes = (e && e.strategy && e.strategy.allowed_outcomes && e.strategy.allowed_outcomes.length)
-        ? e.strategy.allowed_outcomes.map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(' & ')
-        : 'Home & Away';
-      const roiDesc = bettingOn && edgePct != null
-        ? `1 unit per bet · gross EV ≥ ${edgePct}% · ${outcomes} · chosen on tune-window CV`
-        : 'No +ROI tune-window CV cell — 1X2 flags off';
+      const flatRoi = g && g.flat_roi_pct != null ? fmt(g.flat_roi_pct, 1, '%') : '—';
 
       document.getElementById('gamblingTiles').innerHTML =
-        makeGamblingTile(flatRoi,  'Flat ROI',    roiDesc, flatRoiClass) +
-        makeGamblingTile(flatBets, 'Value bets',  'Total qualifying bets in the eval window', '') +
-        makeGamblingTile(flatPnl,  'Flat P&amp;L', 'Net units at 1 unit per bet after 5% commission', flatRoiClass) +
-        makeGamblingTile(kellyPnl, 'Kelly P&amp;L','Net units using Kelly fraction after 5% commission', kellyPnlClass) +
-        makeGamblingTile(sharpe,   'Sharpe ratio', 'Risk-adjusted return (flat)', '');
+        makeGamblingTile(meanClv, 'Mean CLV', 'odds taken / close − 1 on settled weekly picks', clvClass) +
+        makeGamblingTile(settled, 'Settled', 'Picks with a Betfair closing price', '') +
+        makeGamblingTile(openN, 'Open', 'Picks still waiting for a close', '');
+
+      const cap = document.getElementById('roiCaption');
+      if (cap) {
+        const extra = (g && g.flat_roi_pct != null && g.flat_bets != null)
+          ? ` Old-sweep flat ROI on the eval window was ${flatRoi} over ${g.flat_bets} bets — a caption, not a hero number.`
+          : '';
+        cap.textContent = 'Historical flat P&L from the old EV sweep is kept as a reference curve, not as a live claim. Live flags are judged by CLV, not by this plot.' + extra;
+      }
+
+      const mkt = e && e.market_calibration;
+      const mktCap = document.getElementById('marketCalCaption');
+      if (mktCap && mkt && mkt.model_brier != null && mkt.market_brier != null) {
+        const winner = mkt.market_better_calibrated
+          ? 'The market is better calibrated on this window (lower Brier).'
+          : 'The model is at least as well calibrated as the market on this window.';
+        mktCap.textContent = `Home/Away Brier — model ${mkt.model_brier}, market ${mkt.market_brier}. ${winner}`;
+      }
 
       const note = document.getElementById('sampleSizeNote');
-      const evalSeasons = (e && e.test_seasons) || '';
-      if (note && g && g.flat_bets != null && evalSeasons) {
-        const roi = g.flat_roi_pct != null ? g.flat_roi_pct.toFixed(1) + '%' : 'the reported ROI';
-        note.textContent = g.flat_bets + ' qualifying bets across ' + evalSeasons
-          + ' is a modest sample; confidence intervals on ROI remain wide. A single bad variance run can flip '
-          + roi + ' to negative.';
+      if (note) {
+        note.textContent = 'CLV is the live scoreboard. Historical ROI cells were never stable enough to lock a +EV threshold; weekly least-bad picks are disagreements, not a profitability claim.';
       }
     }
 
