@@ -752,7 +752,7 @@
   <div class="betting-header">
     <div class="container">
       <h1>PL Betting Model</h1>
-      <p>This week and next: the two or three least-bad Home/Away disagreements, scored going forward by CLV.</p>
+      <p>This week and next: the two or three punchiest Home/Away disagreements. Holdout ROI is the scoreboard (figures ignore commission).</p>
     </div>
   </div>
 
@@ -770,7 +770,7 @@
             <span class="kpi-pill"><span class="k">Fixtures</span>—</span>
             <span class="kpi-pill"><span class="k">Value</span>—</span>
             <span class="kpi-pill"><span class="k">Odds</span>—</span>
-            <span class="kpi-pill"><span class="k">CLV</span>—</span>
+            <span class="kpi-pill"><span class="k">Holdout ROI</span>—</span>
           </div>
           <label class="toggle-pill" title="Show only fixtures with value bets">
             <input type="checkbox" id="showValueOnly" />
@@ -827,7 +827,7 @@
 
         <div class="method-card">
           <h4>Value bets</h4>
-          <p>These are the largest model-vs-market gaps each ISO week — the top two or three Home/Away sides by gross EV (<em>p × odds</em>), tagged high or medium edge. They are not a locked +ROI rule. The CLV pill is how we will know if they were any good. Thin far-horizon books are dropped. Kelly is a conservative stake only.</p>
+          <p>Each ISO week we flag the top two or three Home/Away sides by gross EV (<em>p × odds</em>), tagged high or medium edge. The holdout ROI pill is how that same weekly rule did on later seasons — 1 unit a pop, a win pays odds − 1. Those figures ignore Betfair commission. Thin far-horizon books are dropped.</p>
         </div>
 
         <div class="method-card">
@@ -1032,8 +1032,6 @@
         : '';
       const marks = [];
       if (flags && flags.promoted) marks.push('<span class="team-flag promo">Promoted</span>');
-      if (flags && flags.europe) marks.push('<span class="team-flag euro">Europe</span>');
-      if (flags && flags.keyOut) marks.push('<span class="team-flag key">Key out</span>');
       return `<span class="team-block">${img}<span class="team-name">${escapeHtml(name)}</span>${marks.join('')}</span>`;
     }
 
@@ -1265,15 +1263,11 @@
             </div>
             <div class="fixture-teams">
               ${teamBlock(home, crests, {
-                promoted: fixture.match_context && fixture.match_context.promoted && fixture.match_context.promoted.home,
-                europe: fixture.match_context && fixture.match_context.euro_hangover && fixture.match_context.euro_hangover.home,
-                keyOut: fixture.match_context && fixture.match_context.key_out && fixture.match_context.key_out.home
+                promoted: fixture.match_context && fixture.match_context.promoted && fixture.match_context.promoted.home
               })}
               <span class="fixture-vs">vs</span>
               ${teamBlock(away, crests, {
-                promoted: fixture.match_context && fixture.match_context.promoted && fixture.match_context.promoted.away,
-                europe: fixture.match_context && fixture.match_context.euro_hangover && fixture.match_context.euro_hangover.away,
-                keyOut: fixture.match_context && fixture.match_context.key_out && fixture.match_context.key_out.away
+                promoted: fixture.match_context && fixture.match_context.promoted && fixture.match_context.promoted.away
               })}
             </div>
             ${fixture.xg_poisson && fixture.xg_poisson.lambda_home != null && fixture.xg_poisson.lambda_away != null
@@ -1497,9 +1491,10 @@
       const valueOnly = document.getElementById('showValueOnly');
 
       try {
-        const [recResp, crestResp] = await Promise.all([
+        const [recResp, crestResp, evalResp] = await Promise.all([
           fetch('data/recommendations.json?t=' + Date.now()),
-          fetch('data/team-crests.json').catch(() => null)
+          fetch('data/team-crests.json').catch(() => null),
+          fetch('data/evaluation.json?t=' + Date.now()).catch(() => null)
         ]);
 
         if (!recResp.ok) throw new Error('Failed to fetch recommendations.json');
@@ -1520,21 +1515,24 @@
         const allOdds = upcoming.length > 0 && upcoming.every(f => f.betfair_odds && Object.values(f.betfair_odds).some(v => typeof v === 'number' && isFinite(v) && v > 1));
         const oddsLabel = allOdds ? 'Betfair' : (anyOdds ? 'Partial' : 'None');
 
-        function formatClv(clv) {
-          const n = clv && clv.n_settled != null ? clv.n_settled : 0;
-          if (!n) return 'CLV ledger started · 0 settled';
-          const mean = clv.mean_clv_pct;
-          const sign = mean > 0 ? '+' : '';
-          const meanTxt = (mean == null) ? '—' : `${sign}${Number(mean).toFixed(1)}%`;
-          return `CLV ${n} settled · ${meanTxt}`;
+        function formatHoldoutRoi(evalData) {
+          const g = evalData && evalData.gambling;
+          if (!g || g.flat_roi_pct == null) return '—';
+          const sign = g.flat_roi_pct > 0 ? '+' : '';
+          return `${sign}${Number(g.flat_roi_pct).toFixed(1)}%`;
         }
+
+        let evalData = null;
+        try {
+          if (evalResp && evalResp.ok) evalData = await evalResp.json();
+        } catch (_) { /* optional */ }
 
         if (metaKpis) {
           metaKpis.innerHTML = `
             <span class="kpi-pill"><span class="k">Fixtures</span>${upcoming.length}</span>
             <span class="kpi-pill"><span class="k">Value</span>${countValue}</span>
             <span class="kpi-pill"><span class="k">Odds</span>${oddsLabel}</span>
-            <span class="kpi-pill"><span class="k">CLV</span>${formatClv(data.clv)}</span>
+            <span class="kpi-pill" title="Weekly top 2–3 Home/Away on the holdout seasons. Ignores Betfair commission."><span class="k">Holdout ROI</span>${formatHoldoutRoi(evalData)}</span>
           `;
         }
 

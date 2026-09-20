@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PL Betting Model – Project Paper – Sam Husbands</title>
-  <meta name="description" content="Project paper: Premier League match outcome model. Hyperparameters locked on 2014/15–2021/22. Live flags are weekly least-bad Home/Away picks, scored going forward by CLV." />
+  <meta name="description" content="Project paper: Premier League match outcome model. Weekly top 2–3 Home/Away picks, scored on later seasons by flat ROI (commission ignored)." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -289,7 +289,7 @@
   <div class="paper-header">
     <div class="container">
       <h1>PL Betting Model</h1>
-      <p>Project paper — hyperparameters and the Poisson mix are locked on 2014/15–2021/22 walk-forward validation. Classification metrics use later completed seasons. Live flags are the week’s two or three largest Home/Away disagreements, scored going forward by CLV rather than a locked +ROI threshold.</p>
+      <p>Weekly top two or three Home/Away disagreements, scored on later seasons by flat ROI. Hyperparameters and the Poisson mix stay locked on 2014/15–2021/22. Reported ROI ignores Betfair commission — a win pays odds − 1.</p>
       <div class="header-meta">
         <span>Premier League</span>
         <span id="headerEvalSeasons">Eval window: 2022/23–2025/26</span>
@@ -352,11 +352,11 @@
           <div class="method-step">
             <div class="method-step-num">5</div>
             <div class="method-step-body">
-              <h4>Weekly least-bad picks</h4>
+              <h4>Weekly picks</h4>
               <p>Each ISO week we rank Home/Away sides by gross EV (<em>p × odds</em>) and keep the top two or three.
               High edge is <em>EV ≥ 1.40</em>, or the week’s #1 if <em>EV ≥ 1.25</em>; otherwise medium.
-              These are the largest model-vs-market gaps, not a locked +ROI rule. Going-forward CLV is the scoreboard.
-              Kelly (capped at 25%) uses Exchange net odds as a conservative stake.
+              Holdout ROI is that same rule, 1 unit per pick, on later completed seasons.
+              Figures ignore Betfair commission (a win pays odds − 1).
               Far-horizon books whose implied overround is outside 1.00–1.20 are treated as unavailable.</p>
             </div>
           </div>
@@ -419,12 +419,11 @@
 
       <!-- GAMBLING PERFORMANCE -->
       <section class="paper-section">
-        <div class="paper-section-heading" id="gamblingHeading">Live scoreboard — closing-line value</div>
+        <div class="paper-section-heading" id="gamblingHeading">How the weekly picks did on later seasons</div>
         <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1.25rem; max-width:680px;" id="gamblingIntro">
-          Weekly least-bad Home/Away picks are recorded at the odds we would have taken.
-          After football-data publishes Betfair closing prices (BFEH / BFED / BFEA), CLV is
-          <em>odds taken / close − 1</em>. Flat historical ROI is a caption only — the model
-          does not claim a +ROI threshold.
+          Same rule as the live cards: top two or three Home/Away sides each ISO week by gross EV.
+          Flat staking is 1 unit per pick. A win pays odds − 1.
+          <strong>These figures ignore Betfair commission.</strong>
         </p>
         <div class="gambling-tiles" id="gamblingTiles">
           <!-- Populated by JS -->
@@ -441,8 +440,8 @@
           </div>
         </div>
         <div class="plot-caption" id="roiCaption">
-          Historical flat P&amp;L from the old EV sweep is kept as a reference curve, not as a live claim.
-          Live flags are judged by CLV, not by this plot.
+          Cumulative flat P&amp;L from the weekly Home/Away picks, chronological, 1 unit a pop.
+          Ignores Betfair commission.
         </div>
       </section>
 
@@ -537,7 +536,7 @@
             <div class="method-step-num" style="background:#f59e0b;">!</div>
             <div class="method-step-body">
               <h4>Static odds snapshot</h4>
-              <p>Predictions use a single odds snapshot from the daily pipeline run (~08:00 UTC). The optimal bet-placement window — often closer to kick-off once lineups are confirmed — is not exploited. A going-forward CLV ledger now records odds taken vs football-data Betfair closing prices once those matches settle. Far-horizon MATCH_ODDS books are often empty except for 1.01–1.18 leftovers; those prices are dropped unless implied overround sits between 1.00 and 1.20.</p>
+              <p>Predictions use a single odds snapshot from the daily pipeline run (~08:00 UTC). The optimal bet-placement window — often closer to kick-off once lineups are confirmed — is not exploited. Far-horizon MATCH_ODDS books are often empty except for 1.01–1.18 leftovers; those prices are dropped unless implied overround sits between 1.00 and 1.20.</p>
             </div>
           </div>
 
@@ -705,16 +704,16 @@
       if (header) header.textContent = 'Eval window: ' + seasons;
       const nMatches  = e && e.n_test_matches !== null ? e.n_test_matches : null;
 
-      const clv = e && e.clv;
-      const meanClv = clv && clv.mean_clv_pct != null
-        ? ((clv.mean_clv_pct > 0 ? '+' : '') + Number(clv.mean_clv_pct).toFixed(1) + '%')
-        : (clv && clv.n_settled === 0 ? '—' : null);
-      const clvSub = clv
-        ? `${clv.n_settled || 0} settled · ${clv.n_open || 0} open`
-        : 'going-forward ledger';
+      const g = e && e.gambling;
+      const roi = g && g.flat_roi_pct != null
+        ? ((g.flat_roi_pct > 0 ? '+' : '') + Number(g.flat_roi_pct).toFixed(1) + '%')
+        : null;
+      const roiSub = g && g.flat_bets != null
+        ? `${g.flat_bets} weekly picks · no commission`
+        : 'weekly picks, no commission';
 
       document.getElementById('glanceTiles').innerHTML =
-        makeTile(meanClv,  'Mean CLV',    clvSub) +
+        makeTile(roi,      'Holdout ROI', roiSub) +
         makeTile(rocAuc,   'ROC-AUC',    'multiclass OVR') +
         makeTile(brier,    'Brier score', 'lower is better') +
         makeTile(logLoss,  'Log loss',    'lower is better') +
@@ -763,30 +762,23 @@
     }
 
     function renderGambling(e) {
-      const clv = e && e.clv;
-      const meanClv = clv && clv.mean_clv_pct != null
-        ? ((clv.mean_clv_pct > 0 ? '+' : '') + Number(clv.mean_clv_pct).toFixed(1) + '%')
-        : null;
-      const settled = clv && clv.n_settled != null ? String(clv.n_settled) : '0';
-      const openN = clv && clv.n_open != null ? String(clv.n_open) : '0';
-      const clvClass = (clv && clv.mean_clv_pct != null)
-        ? (clv.mean_clv_pct >= 0 ? 'positive' : 'negative')
-        : '';
-
       const g = e && e.gambling;
-      const flatRoi = g && g.flat_roi_pct != null ? fmt(g.flat_roi_pct, 1, '%') : '—';
+      const flatRoi   = g && g.flat_roi_pct != null ? fmt(g.flat_roi_pct, 1, '%') : null;
+      const flatBets  = g && g.flat_bets    != null ? g.flat_bets + ' bets'       : null;
+      const flatPnl   = g && g.flat_pnl     != null ? fmt(g.flat_pnl,     2)      : null;
+      const winRate   = g && g.win_rate_pct != null ? fmt(g.win_rate_pct, 1, '%') : null;
+      const roiClass  = (g && g.flat_roi_pct != null) ? (g.flat_roi_pct >= 0 ? 'positive' : 'negative') : '';
+      const pnlClass  = (g && g.flat_pnl     != null) ? (g.flat_pnl     >= 0 ? 'positive' : 'negative') : '';
 
       document.getElementById('gamblingTiles').innerHTML =
-        makeGamblingTile(meanClv, 'Mean CLV', 'odds taken / close − 1 on settled weekly picks', clvClass) +
-        makeGamblingTile(settled, 'Settled', 'Picks with a Betfair closing price', '') +
-        makeGamblingTile(openN, 'Open', 'Picks still waiting for a close', '');
+        makeGamblingTile(flatRoi,  'Flat ROI',    '1 unit per weekly pick · ignores commission', roiClass) +
+        makeGamblingTile(flatBets, 'Picks',       'Top 2–3 Home/Away each ISO week on the holdout', '') +
+        makeGamblingTile(flatPnl,  'Flat P&amp;L', 'Net units after a win pays odds − 1', pnlClass) +
+        makeGamblingTile(winRate,  'Win rate',    'Share of weekly picks that landed', '');
 
       const cap = document.getElementById('roiCaption');
       if (cap) {
-        const extra = (g && g.flat_roi_pct != null && g.flat_bets != null)
-          ? ` Old-sweep flat ROI on the eval window was ${flatRoi} over ${g.flat_bets} bets — a caption, not a hero number.`
-          : '';
-        cap.textContent = 'Historical flat P&L from the old EV sweep is kept as a reference curve, not as a live claim. Live flags are judged by CLV, not by this plot.' + extra;
+        cap.textContent = 'Cumulative flat P&L from the weekly Home/Away picks, chronological, 1 unit a pop. Ignores Betfair commission.';
       }
 
       const mkt = e && e.market_calibration;
@@ -799,8 +791,12 @@
       }
 
       const note = document.getElementById('sampleSizeNote');
-      if (note) {
-        note.textContent = 'CLV is the live scoreboard. Historical ROI cells were never stable enough to lock a +EV threshold; weekly least-bad picks are disagreements, not a profitability claim.';
+      const evalSeasons = (e && e.test_seasons) || '';
+      if (note && g && g.flat_bets != null) {
+        const roi = g.flat_roi_pct != null ? g.flat_roi_pct.toFixed(1) + '%' : 'the reported ROI';
+        note.textContent = g.flat_bets + ' weekly picks across ' + evalSeasons
+          + '. That is still a modest sample; a bad run can flip '
+          + roi + '. Figures ignore Betfair commission.';
       }
     }
 
