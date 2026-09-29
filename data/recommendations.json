@@ -1,6 +1,6 @@
 {
   "schema_version": 5,
-  "updated_at": "2026-09-28T08:02:01.240350+00:00",
+  "updated_at": "2026-09-29T08:01:56.378798+00:00",
   "betting_enabled": true,
   "fixtures": [
     {
@@ -14,16 +14,16 @@
       },
       "betfair_odds": {
         "home": 1.39,
-        "draw": 5.4,
-        "away": 9.6
+        "draw": 5.5,
+        "away": 9.4
       },
       "value_bets": [
         {
           "outcome": "away",
           "p_model": 0.1278,
-          "odds": 9.6,
-          "ev": 1.2269,
-          "kelly_fraction": 0.021,
+          "odds": 9.4,
+          "ev": 1.2013,
+          "kelly_fraction": 0.0185,
           "edge": "medium",
           "week_rank": 3
         }
@@ -324,15 +324,15 @@
       "betfair_odds": {
         "home": 1.77,
         "draw": 4.3,
-        "away": 4.8
+        "away": 4.7
       },
       "value_bets": [
         {
           "outcome": "away",
           "p_model": 0.3665,
-          "odds": 4.8,
-          "ev": 1.7592,
-          "kelly_fraction": 0.191,
+          "odds": 4.7,
+          "ev": 1.7226,
+          "kelly_fraction": 0.1863,
           "edge": "high",
           "week_rank": 1
         }
@@ -651,8 +651,8 @@
         "away": 0.3366
       },
       "betfair_odds": {
-        "home": 2.74,
-        "draw": 3.6,
+        "home": 2.76,
+        "draw": 3.65,
         "away": 2.7
       },
       "value_bets": [],
@@ -974,9 +974,9 @@
         "away": 0.4841
       },
       "betfair_odds": {
-        "home": 3.1,
+        "home": 3.15,
         "draw": 3.55,
-        "away": 2.44
+        "away": 2.46
       },
       "value_bets": [],
       "xg_poisson": {
@@ -1297,17 +1297,17 @@
         "away": 0.5405
       },
       "betfair_odds": {
-        "home": 2.82,
+        "home": 2.8,
         "draw": 3.65,
-        "away": 2.62
+        "away": 2.64
       },
       "value_bets": [
         {
           "outcome": "away",
           "p_model": 0.5405,
-          "odds": 2.62,
-          "ev": 1.4161,
-          "kelly_fraction": 0.2419,
+          "odds": 2.64,
+          "ev": 1.4269,
+          "kelly_fraction": 0.2456,
           "edge": "high",
           "week_rank": 2
         }
@@ -1602,9 +1602,9 @@
         "away": 0.1867
       },
       "betfair_odds": {
-        "home": 1.79,
+        "home": 1.77,
         "draw": 4.3,
-        "away": 4.5
+        "away": 4.6
       },
       "value_bets": [],
       "xg_poisson": {
@@ -1912,14 +1912,14 @@
       "away": "Everton",
       "date": "2026-10-11T13:00:00+00:00",
       "model_probs": {
-        "home": 0.2548,
-        "draw": 0.2265,
-        "away": 0.5187
+        "home": 0.2591,
+        "draw": 0.2255,
+        "away": 0.5153
       },
       "betfair_odds": {
-        "home": 3.9,
+        "home": 3.85,
         "draw": 3.45,
-        "away": 2.16
+        "away": 2.18
       },
       "value_bets": [],
       "xg_poisson": {
@@ -2113,7 +2113,7 @@
             "feature": "xg_elo_diff",
             "human_name": "xG-Elo difference (Home \u2212 Away)",
             "value": -91.4029,
-            "shap": 0.2598
+            "shap": 0.2602
           },
           {
             "feature": "elo_diff",
@@ -2143,7 +2143,7 @@
             "feature": "xg_elo_home",
             "human_name": "Home xG-Elo rating",
             "value": 1436.6734,
-            "shap": 0.0379
+            "shap": 0.0381
           },
           {
             "feature": "away_xgf_10",
@@ -2161,7 +2161,7 @@
             "feature": "xg_elo_away",
             "human_name": "Away xG-Elo rating",
             "value": 1528.0763,
-            "shap": 0.0234
+            "shap": 0.0239
           },
           {
             "feature": "home_xga_10",
@@ -2236,7 +2236,7 @@
         "away": 0.3782
       },
       "betfair_odds": {
-        "home": 2.76,
+        "home": 2.74,
         "draw": 3.4,
         "away": 2.82
       },
@@ -2539,9 +2539,9 @@
         "away": 0.4514
       },
       "betfair_odds": {
-        "home": 2.74,
-        "draw": 3.85,
-        "away": 2.62
+        "home": 2.84,
+        "draw": 3.9,
+        "away": 2.5
       },
       "value_bets": [],
       "xg_poisson": {
@@ -2838,7 +2838,7 @@
         "away": 0.4061
       },
       "betfair_odds": {
-        "home": 3.35,
+        "home": 3.4,
         "draw": 3.75,
         "away": 2.24
       },
@@ -2846,9 +2846,9 @@
         {
           "outcome": "home",
           "p_model": 0.3572,
-          "odds": 3.35,
-          "ev": 1.1966,
-          "kelly_fraction": 0.0693,
+          "odds": 3.4,
+          "ev": 1.2145,
+          "kelly_fraction": 0.0753,
           "edge": "medium",
           "week_rank": 3
         }
@@ -3185,7 +3185,7 @@
       "betfair_odds": {
         "home": 2.96,
         "draw": 3.75,
-        "away": 2.38
+        "away": 2.36
       },
       "value_bets": [
         {
@@ -3389,7 +3389,7 @@
             "feature": "xg_elo_diff",
             "human_name": "xG-Elo difference (Home \u2212 Away)",
             "value": -36.1733,
-            "shap": -0.1354
+            "shap": -0.1358
           },
           {
             "feature": "away_xga_5",
@@ -3499,9 +3499,9 @@
       "away": "Hull",
       "date": "2026-10-17T14:00:00+00:00",
       "model_probs": {
-        "home": 0.615,
-        "draw": 0.2045,
-        "away": 0.1806
+        "home": 0.6271,
+        "draw": 0.2029,
+        "away": 0.1699
       },
       "betfair_odds": {
         "home": 1.74,
@@ -3700,25 +3700,19 @@
             "feature": "xg_elo_diff",
             "human_name": "xG-Elo difference (Home \u2212 Away)",
             "value": 81.6123,
-            "shap": 0.2196
+            "shap": 0.2198
           },
           {
             "feature": "elo_diff",
             "human_name": "Elo difference (Home \u2212 Away)",
             "value": 102.2338,
-            "shap": 0.1177
+            "shap": 0.1318
           },
           {
             "feature": "away_promoted",
             "human_name": "Away promoted this season",
             "value": 1.0,
             "shap": 0.1004
-          },
-          {
-            "feature": "away_inj_count",
-            "human_name": "Away first-team injuries",
-            "value": 2.0,
-            "shap": -0.0603
           },
           {
             "feature": "elo_away",
@@ -3730,19 +3724,19 @@
             "feature": "away_gf_5",
             "human_name": "Away goals for (last 5)",
             "value": 1.2,
-            "shap": 0.0402
-          },
-          {
-            "feature": "home_xga_10",
-            "human_name": "Home xG against (last 10)",
-            "value": 1.8374,
-            "shap": -0.0321
+            "shap": 0.0347
           },
           {
             "feature": "away_xgf_10",
             "human_name": "Away xG for (last 10)",
             "value": 1.0193,
             "shap": 0.0307
+          },
+          {
+            "feature": "home_xga_10",
+            "human_name": "Home xG against (last 10)",
+            "value": 1.8374,
+            "shap": -0.0291
           },
           {
             "feature": "away_xga_5",
@@ -3755,6 +3749,12 @@
             "human_name": "Home Elo rating",
             "value": 1538.7368,
             "shap": -0.0194
+          },
+          {
+            "feature": "away_xgf_5",
+            "human_name": "Away xG for (last 5)",
+            "value": 1.0769,
+            "shap": 0.0149
           }
         ]
       },
@@ -4138,7 +4138,7 @@
         "away": 0.0409
       },
       "betfair_odds": {
-        "home": 1.24,
+        "home": 1.25,
         "draw": 7.2,
         "away": 12.5
       },
@@ -4429,7 +4429,7 @@
         "away": 0.3322
       },
       "betfair_odds": {
-        "home": 2.12,
+        "home": 2.14,
         "draw": 3.85,
         "away": 3.4
       },
@@ -4764,7 +4764,7 @@
         "away": 0.1485
       },
       "betfair_odds": {
-        "home": 1.66,
+        "home": 1.65,
         "draw": 4.4,
         "away": 5.4
       },
