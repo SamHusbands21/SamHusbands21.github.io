@@ -1,6 +1,6 @@
 {
   "schema_version": 5,
-  "updated_at": "2026-10-28T09:01:51.976036+00:00",
+  "updated_at": "2026-10-30T09:02:26.280419+00:00",
   "betting_enabled": true,
   "fixtures": [
     {
@@ -8,22 +8,22 @@
       "away": "Man United",
       "date": "2026-10-31T12:30:00+00:00",
       "model_probs": {
-        "home": 0.3504,
-        "draw": 0.2258,
-        "away": 0.4239
+        "home": 0.358,
+        "draw": 0.2313,
+        "away": 0.4107
       },
       "betfair_odds": {
-        "home": 1.86,
-        "draw": 4.2,
-        "away": 4.4
+        "home": 1.89,
+        "draw": 4.1,
+        "away": 4.3
       },
       "value_bets": [
         {
           "outcome": "away",
-          "p_model": 0.4239,
-          "odds": 4.4,
-          "ev": 1.8652,
-          "kelly_fraction": 0.2455,
+          "p_model": 0.4107,
+          "odds": 4.3,
+          "ev": 1.766,
+          "kelly_fraction": 0.2227,
           "edge": "high",
           "week_rank": 1
         }
@@ -193,7 +193,7 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 7,
+          "home": 3,
           "away": 6
         },
         "h2h_home_winrate": 0.5,
@@ -219,61 +219,61 @@
             "feature": "xg_elo_home",
             "human_name": "Home xG-Elo rating",
             "value": 1560.9064,
-            "shap": -0.1058
+            "shap": -0.1061
+          },
+          {
+            "feature": "home_days_rest",
+            "human_name": "Home days since last match",
+            "value": 3.0,
+            "shap": -0.0988
           },
           {
             "feature": "elo_diff",
             "human_name": "Elo difference (Home \u2212 Away)",
             "value": -21.54,
-            "shap": -0.071
+            "shap": -0.0608
           },
           {
             "feature": "away_xgf_5",
             "human_name": "Away xG for (last 5)",
             "value": 1.9348,
-            "shap": 0.0392
-          },
-          {
-            "feature": "away_inj_count",
-            "human_name": "Away first-team injuries",
-            "value": 4.0,
-            "shap": 0.0355
+            "shap": 0.0391
           },
           {
             "feature": "home_xgf_10",
             "human_name": "Home xG for (last 10)",
             "value": 1.4528,
-            "shap": 0.0314
+            "shap": 0.0362
+          },
+          {
+            "feature": "away_xga_5",
+            "human_name": "Away xG against (last 5)",
+            "value": 1.5508,
+            "shap": 0.0347
+          },
+          {
+            "feature": "away_inj_count",
+            "human_name": "Away first-team injuries",
+            "value": 3.0,
+            "shap": 0.0347
           },
           {
             "feature": "elo_home",
             "human_name": "Home Elo rating",
             "value": 1599.7411,
-            "shap": -0.0278
+            "shap": -0.0284
           },
           {
             "feature": "away_xgf_10",
             "human_name": "Away xG for (last 10)",
             "value": 2.1159,
-            "shap": 0.0261
-          },
-          {
-            "feature": "home_days_rest",
-            "human_name": "Home days since last match",
-            "value": 7.0,
-            "shap": 0.0255
+            "shap": 0.0275
           },
           {
             "feature": "xg_elo_away",
             "human_name": "Away xG-Elo rating",
             "value": 1563.7227,
-            "shap": 0.0239
-          },
-          {
-            "feature": "h2h_home_win_rate",
-            "human_name": "H2H home win rate (last 5 meetings)",
-            "value": 0.5,
-            "shap": 0.0182
+            "shap": 0.0231
           }
         ]
       },
@@ -369,9 +369,9 @@
       "away": "Brighton",
       "date": "2026-10-31T15:00:00+00:00",
       "model_probs": {
-        "home": 0.5542,
-        "draw": 0.2243,
-        "away": 0.2214
+        "home": 0.5643,
+        "draw": 0.2249,
+        "away": 0.2108
       },
       "betfair_odds": {
         "home": 1.68,
@@ -544,8 +544,8 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 7,
-          "away": 6
+          "home": 3,
+          "away": 3
         },
         "h2h_home_winrate": 0.4,
         "promoted": {
@@ -570,7 +570,7 @@
             "feature": "xg_elo_diff",
             "human_name": "xG-Elo difference (Home \u2212 Away)",
             "value": 57.5299,
-            "shap": 0.1383
+            "shap": 0.1381
           },
           {
             "feature": "elo_diff",
@@ -600,7 +600,7 @@
             "feature": "xg_elo_home",
             "human_name": "Home xG-Elo rating",
             "value": 1646.2514,
-            "shap": 0.0673
+            "shap": 0.0675
           },
           {
             "feature": "away_xgf_5",
@@ -659,12 +659,12 @@
           "lineup_status": "expected",
           "lineup": [
             "Bart Verbruggen",
-            "Ferdi Kad\u0131o\u011flu",
+            "Jaouen Hadjam",
             "Luka Vu\u0161kovi\u0107",
             "Lewis Dunk",
             "Olivier Boscagli",
             "Pascal Gro\u00df",
-            "Chema Andr\u00e9s",
+            "Jack Hinshelwood",
             "Diego G\u00f3mez",
             "Yasin Ayari",
             "Maxim De Cuyper",
@@ -717,9 +717,9 @@
         "away": 0.38
       },
       "betfair_odds": {
-        "home": 2.78,
+        "home": 2.7,
         "draw": 3.5,
-        "away": 2.82
+        "away": 2.86
       },
       "value_bets": [],
       "xg_poisson": {
@@ -1055,14 +1055,14 @@
       "away": "Leeds",
       "date": "2026-10-31T15:00:00+00:00",
       "model_probs": {
-        "home": 0.5526,
-        "draw": 0.2171,
-        "away": 0.2303
+        "home": 0.5557,
+        "draw": 0.2185,
+        "away": 0.2258
       },
       "betfair_odds": {
         "home": 2.22,
-        "draw": 3.55,
-        "away": 3.65
+        "draw": 3.5,
+        "away": 3.7
       },
       "value_bets": [],
       "xg_poisson": {
@@ -1230,7 +1230,7 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 6,
+          "home": 3,
           "away": 6
         },
         "h2h_home_winrate": 0.5,
@@ -1256,7 +1256,7 @@
             "feature": "xg_elo_diff",
             "human_name": "xG-Elo difference (Home \u2212 Away)",
             "value": 56.4034,
-            "shap": 0.1312
+            "shap": 0.1317
           },
           {
             "feature": "elo_diff",
@@ -1310,7 +1310,7 @@
             "feature": "away_xga_5",
             "human_name": "Away xG against (last 5)",
             "value": 1.5089,
-            "shap": 0.0232
+            "shap": 0.0226
           }
         ]
       },
@@ -1386,13 +1386,13 @@
       "away": "Nott'm Forest",
       "date": "2026-10-31T15:00:00+00:00",
       "model_probs": {
-        "home": 0.4261,
-        "draw": 0.24,
-        "away": 0.334
+        "home": 0.4294,
+        "draw": 0.242,
+        "away": 0.3287
       },
       "betfair_odds": {
-        "home": 2.1,
-        "draw": 3.85,
+        "home": 2.14,
+        "draw": 3.8,
         "away": 3.65
       },
       "value_bets": [],
@@ -1561,7 +1561,7 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 6,
+          "home": 3,
           "away": 8
         },
         "h2h_home_winrate": 0.4,
@@ -1587,7 +1587,7 @@
             "feature": "xg_elo_diff",
             "human_name": "xG-Elo difference (Home \u2212 Away)",
             "value": 17.0152,
-            "shap": 0.1268
+            "shap": 0.1273
           },
           {
             "feature": "elo_diff",
@@ -1614,12 +1614,6 @@
             "shap": 0.0286
           },
           {
-            "feature": "away_xga_5",
-            "human_name": "Away xG against (last 5)",
-            "value": 1.2858,
-            "shap": 0.021
-          },
-          {
             "feature": "xg_elo_away",
             "human_name": "Away xG-Elo rating",
             "value": 1533.6244,
@@ -1630,6 +1624,12 @@
             "human_name": "Home xG-Elo rating",
             "value": 1550.6395,
             "shap": 0.0207
+          },
+          {
+            "feature": "away_xga_5",
+            "human_name": "Away xG against (last 5)",
+            "value": 1.2858,
+            "shap": 0.0203
           },
           {
             "feature": "away_xgf_10",
@@ -1690,7 +1690,7 @@
             "Daniel Mu\u00f1oz",
             "James McAtee",
             "Xaver Schlager",
-            "Neco Williams",
+            "Luca Netz",
             "Morgan Gibbs-White",
             "Dan Ndoye",
             "Liam Delap"
@@ -1713,14 +1713,14 @@
       "away": "Sunderland",
       "date": "2026-10-31T15:00:00+00:00",
       "model_probs": {
-        "home": 0.3469,
-        "draw": 0.2453,
-        "away": 0.4079
+        "home": 0.3471,
+        "draw": 0.2446,
+        "away": 0.4083
       },
       "betfair_odds": {
-        "home": 3.3,
+        "home": 3.35,
         "draw": 3.45,
-        "away": 2.42
+        "away": 2.4
       },
       "value_bets": [],
       "xg_poisson": {
@@ -1889,7 +1889,7 @@
       "match_context": {
         "rest_days": {
           "home": 7,
-          "away": 6
+          "away": 3
         },
         "h2h_home_winrate": 0.5,
         "promoted": {
@@ -1978,7 +1978,7 @@
           "lineup": [
             "Carl Rushworth",
             "Milan van Ewijk",
-            "Bobby Thomas",
+            "Stephen Mfuni",
             "Ethan Pinnock",
             "Jay Dasilva",
             "Caleb Yirenkyi",
@@ -2012,7 +2012,7 @@
           "lineup": [
             "Robin Roefs",
             "Trai Hume",
-            "Nordi Mukiele",
+            "Kevin Danso",
             "Luke O'Nien",
             "Reinildo",
             "Granit Xhaka",
@@ -2052,22 +2052,22 @@
       "away": "Crystal Palace",
       "date": "2026-10-31T17:30:00+00:00",
       "model_probs": {
-        "home": 0.5164,
-        "draw": 0.2288,
-        "away": 0.2548
+        "home": 0.5058,
+        "draw": 0.2343,
+        "away": 0.2599
       },
       "betfair_odds": {
-        "home": 1.59,
+        "home": 1.6,
         "draw": 4.7,
         "away": 6.0
       },
       "value_bets": [
         {
           "outcome": "away",
-          "p_model": 0.2548,
+          "p_model": 0.2599,
           "odds": 6.0,
-          "ev": 1.5288,
-          "kelly_fraction": 0.0979,
+          "ev": 1.5594,
+          "kelly_fraction": 0.1041,
           "edge": "high",
           "week_rank": 2
         }
@@ -2238,7 +2238,7 @@
       "match_context": {
         "rest_days": {
           "home": 7,
-          "away": 6
+          "away": 3
         },
         "h2h_home_winrate": 0.4,
         "promoted": {
@@ -2251,7 +2251,7 @@
         },
         "key_out": {
           "home": 1,
-          "away": 0
+          "away": 1
         }
       },
       "explanation": {
@@ -2263,7 +2263,7 @@
             "feature": "xg_elo_diff",
             "human_name": "xG-Elo difference (Home \u2212 Away)",
             "value": 3.1964,
-            "shap": -0.1506
+            "shap": -0.1485
           },
           {
             "feature": "away_xga_5",
@@ -2278,34 +2278,28 @@
             "shap": 0.0412
           },
           {
+            "feature": "elo_home",
+            "human_name": "Home Elo rating",
+            "value": 1510.0142,
+            "shap": -0.033
+          },
+          {
             "feature": "away_xgf_5",
             "human_name": "Away xG for (last 5)",
             "value": 1.5203,
             "shap": -0.033
           },
           {
-            "feature": "elo_home",
-            "human_name": "Home Elo rating",
-            "value": 1510.0142,
-            "shap": -0.0326
-          },
-          {
             "feature": "elo_diff",
             "human_name": "Elo difference (Home \u2212 Away)",
             "value": -18.1925,
-            "shap": -0.0314
+            "shap": -0.0307
           },
           {
             "feature": "xg_elo_home",
             "human_name": "Home xG-Elo rating",
             "value": 1537.4481,
             "shap": 0.0285
-          },
-          {
-            "feature": "away_promoted",
-            "human_name": "Away promoted this season",
-            "value": 0.0,
-            "shap": -0.0194
           },
           {
             "feature": "away_xgf_10",
@@ -2318,6 +2312,12 @@
             "human_name": "Home xG for (last 5)",
             "value": 1.4196,
             "shap": -0.0142
+          },
+          {
+            "feature": "away_promoted",
+            "human_name": "Away promoted this season",
+            "value": 0.0,
+            "shap": -0.0141
           }
         ]
       },
@@ -2333,7 +2333,7 @@
             "Sandro Tonali",
             "Mateus Fernandes",
             "Mohammed Kudus",
-            "James Maddison",
+            "Conor Gallagher",
             "Mathys Tel",
             "Omar Marmoush"
           ],
@@ -2417,22 +2417,22 @@
       "away": "Fulham",
       "date": "2026-10-31T20:00:00+00:00",
       "model_probs": {
-        "home": 0.4435,
-        "draw": 0.2335,
-        "away": 0.323
+        "home": 0.4539,
+        "draw": 0.2327,
+        "away": 0.3134
       },
       "betfair_odds": {
-        "home": 2.08,
-        "draw": 3.8,
-        "away": 3.8
+        "home": 2.0,
+        "draw": 3.85,
+        "away": 4.1
       },
       "value_bets": [
         {
           "outcome": "away",
-          "p_model": 0.323,
-          "odds": 3.8,
-          "ev": 1.2274,
-          "kelly_fraction": 0.0685,
+          "p_model": 0.3134,
+          "odds": 4.1,
+          "ev": 1.2849,
+          "kelly_fraction": 0.0803,
           "edge": "medium",
           "week_rank": 3
         }
@@ -2602,8 +2602,8 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 7,
-          "away": 7
+          "home": 3,
+          "away": 3
         },
         "h2h_home_winrate": 0.8,
         "promoted": {
@@ -2628,7 +2628,7 @@
             "feature": "xg_elo_diff",
             "human_name": "xG-Elo difference (Home \u2212 Away)",
             "value": 11.3857,
-            "shap": 0.1444
+            "shap": 0.1446
           },
           {
             "feature": "elo_diff",
@@ -2640,13 +2640,13 @@
             "feature": "elo_home",
             "human_name": "Home Elo rating",
             "value": 1644.6482,
-            "shap": 0.0823
+            "shap": 0.0809
           },
           {
             "feature": "away_xgf_5",
             "human_name": "Away xG for (last 5)",
             "value": 1.915,
-            "shap": -0.0442
+            "shap": -0.0438
           },
           {
             "feature": "xg_elo_away",
@@ -2658,7 +2658,7 @@
             "feature": "home_xga_10",
             "human_name": "Home xG against (last 10)",
             "value": 1.7701,
-            "shap": -0.0346
+            "shap": -0.0338
           },
           {
             "feature": "away_inj_count",
@@ -2667,16 +2667,16 @@
             "shap": 0.0286
           },
           {
-            "feature": "away_xga_5",
-            "human_name": "Away xG against (last 5)",
-            "value": 1.5346,
-            "shap": 0.0222
-          },
-          {
             "feature": "xg_elo_home",
             "human_name": "Home xG-Elo rating",
             "value": 1539.7072,
             "shap": 0.022
+          },
+          {
+            "feature": "away_xga_5",
+            "human_name": "Away xG against (last 5)",
+            "value": 1.5346,
+            "shap": 0.0216
           },
           {
             "feature": "away_promoted",
@@ -2750,14 +2750,14 @@
       "away": "Arsenal",
       "date": "2026-11-01T16:30:00+00:00",
       "model_probs": {
-        "home": 0.3012,
-        "draw": 0.223,
-        "away": 0.4758
+        "home": 0.305,
+        "draw": 0.2267,
+        "away": 0.4683
       },
       "betfair_odds": {
         "home": 3.1,
-        "draw": 3.55,
-        "away": 2.46
+        "draw": 3.5,
+        "away": 2.52
       },
       "value_bets": [],
       "xg_poisson": {
@@ -2925,7 +2925,7 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 7,
+          "home": 4,
           "away": 5
         },
         "h2h_home_winrate": 0.5,
@@ -2984,16 +2984,16 @@
             "shap": 0.0346
           },
           {
+            "feature": "home_days_rest",
+            "human_name": "Home days since last match",
+            "value": 4.0,
+            "shap": 0.0314
+          },
+          {
             "feature": "away_xgf_10",
             "human_name": "Away xG for (last 10)",
             "value": 2.2387,
             "shap": 0.0309
-          },
-          {
-            "feature": "home_days_rest",
-            "human_name": "Home days since last match",
-            "value": 7.0,
-            "shap": 0.0308
           },
           {
             "feature": "away_xgf_5",
@@ -3055,16 +3055,16 @@
         "away": {
           "lineup_status": "expected",
           "lineup": [
-            "Illan Meslier",
-            "Jurri\u00ebn Timber",
-            "Cristhian Mosquera",
-            "Marli Salmon",
-            "Piero Hincapi\u00e9",
-            "Mart\u00edn Zubimendi",
+            "David Raya",
+            "Ben White",
+            "Ezri Konsa",
+            "Gabriel",
             "Myles Lewis-Skelly",
-            "Max Dowman",
+            "Mart\u00edn Zubimendi",
+            "Mikel Merino",
             "Kai Havertz",
-            "Ceadach O'Neill",
+            "Martin \u00d8degaard",
+            "Eberechi Eze",
             "Viktor Gy\u00f6keres"
           ],
           "injuries": [
@@ -3089,13 +3089,13 @@
       "away": "Everton",
       "date": "2026-11-02T20:00:00+00:00",
       "model_probs": {
-        "home": 0.4197,
-        "draw": 0.244,
-        "away": 0.3363
+        "home": 0.4207,
+        "draw": 0.2449,
+        "away": 0.3344
       },
       "betfair_odds": {
-        "home": 2.4,
-        "draw": 3.65,
+        "home": 2.46,
+        "draw": 3.6,
         "away": 3.1
       },
       "value_bets": [],
@@ -3264,8 +3264,8 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 8,
-          "away": 9
+          "home": 4,
+          "away": 4
         },
         "h2h_home_winrate": 0.4,
         "promoted": {
@@ -3302,13 +3302,13 @@
             "feature": "away_xgf_5",
             "human_name": "Away xG for (last 5)",
             "value": 1.7213,
-            "shap": -0.0405
+            "shap": -0.0393
           },
           {
             "feature": "elo_home",
             "human_name": "Home Elo rating",
             "value": 1574.3003,
-            "shap": -0.0279
+            "shap": -0.0276
           },
           {
             "feature": "xg_elo_home",
@@ -3320,13 +3320,13 @@
             "feature": "away_promoted",
             "human_name": "Away promoted this season",
             "value": 0.0,
-            "shap": -0.025
+            "shap": -0.0249
           },
           {
             "feature": "home_xga_10",
             "human_name": "Home xG against (last 10)",
             "value": 1.7026,
-            "shap": -0.0231
+            "shap": -0.0232
           },
           {
             "feature": "xg_elo_away",
@@ -3350,8 +3350,20 @@
       },
       "squad": {
         "home": {
-          "lineup_status": "unavailable",
-          "lineup": [],
+          "lineup_status": "expected",
+          "lineup": [
+            "Luk\u00e1s Horn\u00edcek",
+            "Amar Dedi\u0107",
+            "Fabian Sch\u00e4r",
+            "Daniel Burn",
+            "Lewis Hall",
+            "Jacob Ramsey",
+            "Nico Gonz\u00e1lez",
+            "Jacob Murphy",
+            "Joseph Willock",
+            "Harvey Barnes",
+            "William Osula"
+          ],
           "injuries": [
             {
               "name": "Ewen Jaouen",
@@ -3364,8 +3376,20 @@
           ]
         },
         "away": {
-          "lineup_status": "unavailable",
-          "lineup": [],
+          "lineup_status": "expected",
+          "lineup": [
+            "Jordan Pickford",
+            "Merlin R\u00f6hl",
+            "James Tarkowski",
+            "Jake O'Brien",
+            "Vitaliy Mykolenko",
+            "Hayden Hackney",
+            "James Garner",
+            "Tyler Dibling",
+            "Kiernan Dewsbury-Hall",
+            "Tyrique George",
+            "Thierno Barry"
+          ],
           "injuries": []
         }
       }
@@ -3375,9 +3399,9 @@
       "away": "Coventry",
       "date": "2026-11-06T20:00:00+00:00",
       "model_probs": {
-        "home": 0.5822,
-        "draw": 0.2109,
-        "away": 0.2069
+        "home": 0.5834,
+        "draw": 0.2092,
+        "away": 0.2074
       },
       "betfair_odds": {
         "home": 1.75,
@@ -3550,7 +3574,7 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 13,
+          "home": 8,
           "away": 13
         },
         "h2h_home_winrate": 0.5,
@@ -3588,7 +3612,7 @@
             "feature": "elo_diff",
             "human_name": "Elo difference (Home \u2212 Away)",
             "value": 77.514,
-            "shap": 0.0716
+            "shap": 0.0713
           },
           {
             "feature": "home_xgf_5",
@@ -3997,9 +4021,9 @@
         "away": 0.0375
       },
       "betfair_odds": {
-        "home": 1.15,
-        "draw": 8.6,
-        "away": 22.0
+        "home": 1.18,
+        "draw": 7.8,
+        "away": 19.5
       },
       "value_bets": [],
       "xg_poisson": {
@@ -4315,14 +4339,14 @@
       "away": "Newcastle",
       "date": "2026-11-07T15:00:00+00:00",
       "model_probs": {
-        "home": 0.4459,
-        "draw": 0.2454,
-        "away": 0.3087
+        "home": 0.4467,
+        "draw": 0.245,
+        "away": 0.3083
       },
       "betfair_odds": {
         "home": 2.3,
         "draw": 3.7,
-        "away": 3.1
+        "away": 3.15
       },
       "value_bets": [],
       "xg_poisson": {
@@ -4490,8 +4514,8 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 14,
-          "away": 13
+          "home": 10,
+          "away": 9
         },
         "h2h_home_winrate": 0.6,
         "promoted": {
@@ -4534,7 +4558,7 @@
             "feature": "elo_home",
             "human_name": "Home Elo rating",
             "value": 1544.083,
-            "shap": -0.023
+            "shap": -0.0223
           },
           {
             "feature": "home_xga_10",
@@ -4606,9 +4630,9 @@
       "away": "Man City",
       "date": "2026-11-07T17:30:00+00:00",
       "model_probs": {
-        "home": 0.2758,
-        "draw": 0.1972,
-        "away": 0.527
+        "home": 0.2765,
+        "draw": 0.1969,
+        "away": 0.5267
       },
       "betfair_odds": {
         "home": 5.1,
@@ -4618,10 +4642,10 @@
       "value_bets": [
         {
           "outcome": "home",
-          "p_model": 0.2758,
+          "p_model": 0.2765,
           "odds": 5.1,
-          "ev": 1.4066,
-          "kelly_fraction": 0.0899,
+          "ev": 1.4102,
+          "kelly_fraction": 0.0907,
           "edge": "high",
           "week_rank": 1
         }
@@ -4792,7 +4816,7 @@
       "match_context": {
         "rest_days": {
           "home": 15,
-          "away": 14
+          "away": 10
         },
         "h2h_home_winrate": 0.3,
         "promoted": {
@@ -4817,13 +4841,13 @@
             "feature": "elo_diff",
             "human_name": "Elo difference (Home \u2212 Away)",
             "value": -247.984,
-            "shap": 0.3412
+            "shap": 0.3406
           },
           {
             "feature": "xg_elo_diff",
             "human_name": "xG-Elo difference (Home \u2212 Away)",
             "value": -112.627,
-            "shap": 0.2312
+            "shap": 0.2342
           },
           {
             "feature": "home_xgf_10",
@@ -4850,16 +4874,16 @@
             "shap": 0.0519
           },
           {
-            "feature": "away_days_rest",
-            "human_name": "Away days since last match",
-            "value": 14.0,
-            "shap": 0.0406
-          },
-          {
             "feature": "away_xgf_10",
             "human_name": "Away xG for (last 10)",
             "value": 2.1242,
             "shap": 0.0399
+          },
+          {
+            "feature": "away_days_rest",
+            "human_name": "Away days since last match",
+            "value": 10.0,
+            "shap": 0.0381
           },
           {
             "feature": "home_days_rest",
@@ -4911,21 +4935,21 @@
       "away": "Bournemouth",
       "date": "2026-11-08T14:00:00+00:00",
       "model_probs": {
-        "home": 0.1707,
-        "draw": 0.1847,
-        "away": 0.6446
+        "home": 0.1708,
+        "draw": 0.1834,
+        "away": 0.6458
       },
       "betfair_odds": {
-        "home": 3.8,
-        "draw": 3.85,
-        "away": 2.02
+        "home": 3.85,
+        "draw": 3.8,
+        "away": 2.0
       },
       "value_bets": [
         {
           "outcome": "away",
-          "p_model": 0.6446,
-          "odds": 2.02,
-          "ev": 1.3021,
+          "p_model": 0.6458,
+          "odds": 2.0,
+          "ev": 1.2916,
           "kelly_fraction": 0.25,
           "edge": "medium",
           "week_rank": 3
@@ -5097,7 +5121,7 @@
       "match_context": {
         "rest_days": {
           "home": 16,
-          "away": 14
+          "away": 11
         },
         "h2h_home_winrate": 0.5,
         "promoted": {
@@ -5157,7 +5181,7 @@
           {
             "feature": "away_days_rest",
             "human_name": "Away days since last match",
-            "value": 14.0,
+            "value": 11.0,
             "shap": 0.0398
           },
           {
@@ -5224,14 +5248,14 @@
       "away": "Chelsea",
       "date": "2026-11-08T14:00:00+00:00",
       "model_probs": {
-        "home": 0.368,
-        "draw": 0.2204,
-        "away": 0.4116
+        "home": 0.3687,
+        "draw": 0.2187,
+        "away": 0.4126
       },
       "betfair_odds": {
         "home": 3.5,
-        "draw": 3.5,
-        "away": 2.18
+        "draw": 3.6,
+        "away": 2.14
       },
       "value_bets": [],
       "xg_poisson": {
@@ -5399,8 +5423,8 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 14,
-          "away": 15
+          "home": 11,
+          "away": 11
         },
         "h2h_home_winrate": 0.6,
         "promoted": {
@@ -5436,7 +5460,7 @@
           {
             "feature": "home_days_rest",
             "human_name": "Home days since last match",
-            "value": 14.0,
+            "value": 11.0,
             "shap": 0.0621
           },
           {
@@ -5472,7 +5496,7 @@
           {
             "feature": "away_days_rest",
             "human_name": "Away days since last match",
-            "value": 15.0,
+            "value": 11.0,
             "shap": 0.0165
           },
           {
@@ -5552,9 +5576,9 @@
         "away": 0.1963
       },
       "betfair_odds": {
-        "home": 1.97,
+        "home": 1.98,
         "draw": 4.0,
-        "away": 3.95
+        "away": 3.8
       },
       "value_bets": [],
       "xg_poisson": {
@@ -5722,8 +5746,8 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 14,
-          "away": 14
+          "home": 11,
+          "away": 11
         },
         "h2h_home_winrate": 0.6,
         "promoted": {
@@ -5766,7 +5790,7 @@
             "feature": "xg_elo_home",
             "human_name": "Home xG-Elo rating",
             "value": 1588.7215,
-            "shap": 0.0395
+            "shap": 0.0404
           },
           {
             "feature": "away_xga_5",
@@ -5784,7 +5808,7 @@
             "feature": "elo_home",
             "human_name": "Home Elo rating",
             "value": 1623.9667,
-            "shap": 0.0219
+            "shap": 0.0226
           },
           {
             "feature": "home_xga_5",
@@ -5874,14 +5898,14 @@
       "away": "Liverpool",
       "date": "2026-11-08T14:00:00+00:00",
       "model_probs": {
-        "home": 0.2597,
-        "draw": 0.2288,
-        "away": 0.5115
+        "home": 0.2603,
+        "draw": 0.2292,
+        "away": 0.5105
       },
       "betfair_odds": {
         "home": 4.7,
         "draw": 4.2,
-        "away": 1.75
+        "away": 1.73
       },
       "value_bets": [],
       "xg_poisson": {
@@ -6049,8 +6073,8 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 14,
-          "away": 14
+          "home": 11,
+          "away": 11
         },
         "h2h_home_winrate": 0.5,
         "promoted": {
@@ -6062,7 +6086,7 @@
           "away": 0
         },
         "key_out": {
-          "home": 0,
+          "home": 1,
           "away": 1
         }
       },
@@ -6096,16 +6120,16 @@
             "shap": 0.0376
           },
           {
-            "feature": "home_days_rest",
-            "human_name": "Home days since last match",
-            "value": 14.0,
-            "shap": 0.0334
-          },
-          {
             "feature": "away_inj_count",
             "human_name": "Away first-team injuries",
             "value": 2.0,
             "shap": 0.0334
+          },
+          {
+            "feature": "home_days_rest",
+            "human_name": "Home days since last match",
+            "value": 11.0,
+            "shap": 0.0333
           },
           {
             "feature": "away_xgf_10",
@@ -6116,14 +6140,14 @@
           {
             "feature": "away_days_rest",
             "human_name": "Away days since last match",
-            "value": 14.0,
+            "value": 11.0,
             "shap": 0.02
           },
           {
             "feature": "home_xgf_10",
             "human_name": "Home xG for (last 10)",
             "value": 1.3716,
-            "shap": 0.018
+            "shap": 0.0175
           },
           {
             "feature": "xg_elo_home",
@@ -6197,21 +6221,21 @@
       "away": "Aston Villa",
       "date": "2026-11-08T16:30:00+00:00",
       "model_probs": {
-        "home": 0.5936,
-        "draw": 0.2028,
-        "away": 0.2036
+        "home": 0.5946,
+        "draw": 0.2023,
+        "away": 0.2031
       },
       "betfair_odds": {
-        "home": 2.26,
-        "draw": 4.0,
-        "away": 3.05
+        "home": 2.34,
+        "draw": 3.95,
+        "away": 3.0
       },
       "value_bets": [
         {
           "outcome": "home",
-          "p_model": 0.5936,
-          "odds": 2.26,
-          "ev": 1.3415,
+          "p_model": 0.5946,
+          "odds": 2.34,
+          "ev": 1.3914,
           "kelly_fraction": 0.25,
           "edge": "medium",
           "week_rank": 2
@@ -6383,7 +6407,7 @@
       "match_context": {
         "rest_days": {
           "home": 14,
-          "away": 15
+          "away": 11
         },
         "h2h_home_winrate": 0.7,
         "promoted": {
@@ -6417,22 +6441,22 @@
             "shap": 0.0499
           },
           {
-            "feature": "elo_diff",
-            "human_name": "Elo difference (Home \u2212 Away)",
-            "value": -23.3671,
-            "shap": -0.0495
-          },
-          {
             "feature": "elo_home",
             "human_name": "Home Elo rating",
             "value": 1621.2811,
-            "shap": 0.0491
+            "shap": 0.0498
+          },
+          {
+            "feature": "elo_diff",
+            "human_name": "Elo difference (Home \u2212 Away)",
+            "value": -23.3671,
+            "shap": -0.0475
           },
           {
             "feature": "xg_elo_home",
             "human_name": "Home xG-Elo rating",
             "value": 1563.7227,
-            "shap": 0.0415
+            "shap": 0.0457
           },
           {
             "feature": "away_xga_5",
@@ -6526,31 +6550,31 @@
       "away": "Man United",
       "date": "2026-11-22T16:30:00+00:00",
       "model_probs": {
-        "home": 0.457,
-        "draw": 0.2197,
-        "away": 0.3233
+        "home": 0.4568,
+        "draw": 0.22,
+        "away": 0.3232
       },
       "betfair_odds": {
-        "home": 1.72,
-        "draw": 3.4,
-        "away": 4.2
+        "home": 1.71,
+        "draw": 3.95,
+        "away": 4.3
       },
       "value_bets": [
         {
           "outcome": "away",
-          "p_model": 0.3233,
-          "odds": 4.2,
-          "ev": 1.3579,
-          "kelly_fraction": 0.1007,
+          "p_model": 0.3232,
+          "odds": 4.3,
+          "ev": 1.3898,
+          "kelly_fraction": 0.1073,
           "edge": "high",
           "week_rank": 1
         },
         {
           "outcome": "home",
-          "p_model": 0.457,
-          "odds": 1.72,
-          "ev": 0.786,
-          "kelly_fraction": -0.3369,
+          "p_model": 0.4568,
+          "odds": 1.71,
+          "ev": 0.7811,
+          "kelly_fraction": -0.3485,
           "edge": "medium",
           "week_rank": 2
         }
@@ -6720,7 +6744,7 @@
       },
       "match_context": {
         "rest_days": {
-          "home": 28,
+          "home": 25,
           "away": 28
         },
         "h2h_home_winrate": 0.4,
@@ -6769,7 +6793,7 @@
           {
             "feature": "away_inj_count",
             "human_name": "Away first-team injuries",
-            "value": 4.0,
+            "value": 3.0,
             "shap": -0.0379
           },
           {
