@@ -345,8 +345,9 @@
             <div class="method-step-num">4</div>
             <div class="method-step-body">
               <h4>Poisson xG goal model</h4>
-              <p>Independent Poisson scorelines from pre-match 10-game rolling xG attack and defence, versus a tune-window league mean and home-advantage multiplier.
-              Published 1X2 is <em>(1 − w) × tree + w × Poisson</em> with <em>w</em> and Dixon–Coles <em>ρ</em> chosen on tune-window out-of-fold log-loss / scoreline likelihood (currently <em>w ≈ 0.4</em>, <em>ρ ≈ −0.02</em>). Recommended cards also show the top scoreline plus BTTS / over 2.5 when those Poisson probabilities are at least 55% — analysis, not extra flags.</p>
+              <p>Independent Poisson scorelines from pre-match 10-game rolling xG attack and defence, versus a rolling league xG mean (previous 380 matches, so it tracks the post-2022 rise in xG) split into home and away means by a tune-window home-advantage ratio.
+              Published 1X2 is <em>(1 − w) × tree + w × Poisson</em> with <em>w</em> and Dixon–Coles <em>ρ</em> chosen on tune-window out-of-fold log-loss / scoreline likelihood (currently <em>w ≈ 0.4</em>, <em>ρ ≈ −0.03</em>).
+              xG is from Understat; when Understat misses a match (e.g. site outage), FotMob's Opta xG fills the gap, and fixtures whose teams still lack recent xG are kept off the picks. Recommended cards also show the top scoreline plus BTTS / over 2.5 when those Poisson probabilities are at least 55% — analysis, not extra flags.</p>
             </div>
           </div>
           <div class="method-step">
